@@ -1,7 +1,7 @@
 # Ecommerce para una tienda de ropa
 
-Equipo: 5
-Materia: Aplicaciones Web  
+Equipo: 5  
+Materia: Aplicaciones Web    
 Temática: Tienda de Ropa
 
 ## Integrantes del Equipo
