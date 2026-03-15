@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velour — Moda Premium</title>
+    <link rel="stylesheet" href="./css/variables.css">
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/layout.css">
+    <link rel="stylesheet" href="./css/paginas/home.css">
+</head>
+<body>
+
+<!-- ─── HEADER ─── -->
+<header class="site-header">
+    <div class="header-top">
+        Envío gratis en compras mayores a $1,500 MXN &nbsp;·&nbsp;
+        <a href="productos.html">Ver colección →</a>
+    </div>
+    <div class="header-main">
+        <a href="index.html" class="site-logo">
+            <div class="site-logo__wordmark">Vel<span>our</span></div>
+            <div class="site-logo__sub">Moda de Autor</div>
+        </a>
+
+        <nav class="main-nav">
+            <a href="index.html" class="main-nav__link main-nav__link--active">Inicio</a>
+            <a href="productos.html" class="main-nav__link">Colección</a>
+            <a href="productos.html" class="main-nav__link">Novedades</a>
+            <a href="productos.html" class="main-nav__link">Sale</a>
+        </nav>
+
+        <form class="search-form" role="search">
+            <input class="search-form__input" type="search" placeholder="Buscar prendas...">
+            <button class="search-form__btn" type="submit" aria-label="Buscar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/>
+                </svg>
+            </button>
+        </form>
+
+        <div class="header-actions">
+            <a href="login.html" class="header-icon" aria-label="Mi cuenta">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                </svg>
+            </a>
+            <a href="carrito.html" class="header-icon" aria-label="Carrito">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+                </svg>
+                <span class="cart-badge">2</span>
+            </a>
+        </div>
+
+        <button class="header-burger" aria-label="Menú" id="burgerBtn">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="index.html" class="mobile-nav__link">Inicio</a>
+        <a href="productos.html" class="mobile-nav__link">Colección</a>
+        <a href="productos.html" class="mobile-nav__link">Novedades</a>
+        <a href="productos.html" class="mobile-nav__link">Sale</a>
+        <a href="login.html" class="mobile-nav__link">Mi cuenta</a>
+        <a href="carrito.html" class="mobile-nav__link">Carrito (2)</a>
+    </nav>
+</header>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+    <!-- Imagen placeholder con gradiente simulando foto editorial -->
+    <div class="hero__bg-img" style="background: linear-gradient(135deg, #2C2C3E 0%, #4A3728 50%, #1A1A2E 100%);"></div>
+    <div class="hero__bg"></div>
+    <div class="hero__content">
+        <p class="hero__eyebrow">Nueva Colección SS 2025</p>
+        <h1 class="hero__title">La elegancia <em>redefinida</em></h1>
+        <p class="hero__subtitle">Prendas diseñadas para la mujer contemporánea. Cada pieza, una obra de arte portada con intención.</p>
+        <div class="hero__actions">
+            <a href="productos.html" class="btn btn--gold btn--lg">Explorar Colección</a>
+            <a href="productos.html" class="btn btn--outline btn--lg" style="color:#fff; border-color:rgba(255,255,255,0.5);">Ver Novedades</a>
+        </div>
+    </div>
+</section>
+
+<!-- ─── CATEGORÍAS ─── -->
+<section class="categories-section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-header__eyebrow">Explora</span>
+            <h2 class="section-header__title">Categorías</h2>
+        </div>
+        <div class="categories-grid">
+
+            <div class="cat-card cat-card--wide" style="background: linear-gradient(135deg, #2C1810, #5C3A2A);">
+                <div class="cat-card__overlay">
+                    
+                    <p class="cat-card__name">Vestidos</p>
+                    <p class="cat-card__count">24 piezas</p>
+                </div>
+            </div>
+
+            <div class="cat-card" style="background: linear-gradient(135deg, #1A2E1A, #2D5A2D);">
+                <div class="cat-card__overlay">
+                    <p class="cat-card__name">Blusas</p>
+                    <p class="cat-card__count">18 piezas</p>
+                </div>
+            </div>
+
+            <div class="cat-card" style="background: linear-gradient(135deg, #2E1A2E, #5A2D5A);">
+                <div class="cat-card__overlay">
+                    <p class="cat-card__name">Conjuntos</p>
+                    <p class="cat-card__count">12 piezas</p>
+                </div>
+            </div>
+
+            <div class="cat-card" style="background: linear-gradient(135deg, #2E2A1A, #5A522D);">
+                <div class="cat-card__overlay">
+                    <p class="cat-card__name">Faldas</p>
+                    <p class="cat-card__count">15 piezas</p>
+                </div>
+            </div>
+
+            <div class="cat-card" style="background: linear-gradient(135deg, #1A1A2E, #2D2D5A);">
+                <div class="cat-card__overlay">
+                    <p class="cat-card__name">Blazers</p>
+                    <p class="cat-card__count">9 piezas</p>
+                </div>
+            </div>
+
+            <div class="cat-card" style="background: linear-gradient(135deg, #2E1A18, #5A3530);">
+                <div class="cat-card__overlay">
+                    <p class="cat-card__name">Accesorios</p>
+                    <p class="cat-card__count">30 piezas</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── DESTACADOS ─── -->
+<section class="featured-section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-header__eyebrow">Más Vendidos</span>
+            <h2 class="section-header__title">Destacados de la Temporada</h2>
+            <p class="section-header__subtitle">Piezas cuidadosamente seleccionadas que definen el estilo esta temporada.</p>
+        </div>
+
+        <div class="products-grid">
+
+            <div class="product-card">
+                <div class="product-card__img-wrap" style="background: linear-gradient(160deg, #E8E0D4, #C4B49A);">
+                    <div class="product-card__badge">
+                        <span class="badge badge--new">Nuevo</span>
+                    </div>
+                </div>
+                <div class="product-card__body">
+                    <p class="product-card__cat">Vestidos</p>
+                    <h3 class="product-card__name">Vestido Satén Cruzado</h3>
+                    <div class="product-card__price">
+                        <span class="product-card__price-current">$2,890</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-card__img-wrap" style="background: linear-gradient(160deg, #D4D8E0, #9AA4C4);">
+                    <div class="product-card__badge">
+                        <span class="badge badge--sale">–25%</span>
+                    </div>
+                </div>
+                <div class="product-card__body">
+                    <p class="product-card__cat">Blazers</p>
+                    <h3 class="product-card__name">Blazer Estructurado Navy</h3>
+                    <div class="product-card__price">
+                        <span class="product-card__price-current">$1,890</span>
+                        <span class="product-card__price-original">$2,520</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-card__img-wrap" style="background: linear-gradient(160deg, #E0D4D4, #C49A9A);">
+                </div>
+                <div class="product-card__body">
+                    <p class="product-card__cat">Conjuntos</p>
+                    <h3 class="product-card__name">Conjunto Lino Tostado</h3>
+                    <div class="product-card__price">
+                        <span class="product-card__price-current">$3,450</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-card__img-wrap" style="background: linear-gradient(160deg, #D4E0D8, #9AC4A8);">
+                    <div class="product-card__badge">
+                        <span class="badge badge--new">Nuevo</span>
+                    </div>
+                </div>
+                <div class="product-card__body">
+                    <p class="product-card__cat">Blusas</p>
+                    <h3 class="product-card__name">Blusa Seda con Lazada</h3>
+                    <div class="product-card__price">
+                        <span class="product-card__price-current">$1,290</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div style="text-align:center; margin-top: var(--sp-10);">
+            <a href="productos.html" class="btn btn--outline btn--lg">Ver toda la colección</a>
+        </div>
+    </div>
+</section>
+
+<!-- ─── PROMO BANNER ─── -->
+<div class="container">
+    <div class="promo-banner">
+        <div class="promo-banner__text">
+            <p class="promo-banner__eyebrow">Oferta Especial</p>
+            <h2 class="promo-banner__title">Sale de fin<br>de <strong>temporada</strong></h2>
+            <p class="promo-banner__sub">Hasta 40% de descuento en piezas seleccionadas de la colección anterior. Por tiempo limitado.</p>
+            <a href="productos.html" class="btn btn--gold" style="margin-top: var(--sp-6);">Ver Descuentos</a>
+        </div>
+        <div style="width:280px; height:320px; border-radius:var(--r-md); background: linear-gradient(135deg, #C9A96E 0%, #1A1A2E 100%); flex-shrink:0;"></div>
+    </div>
+</div>
+
+<!-- ─── NEWSLETTER ─── -->
+<section class="newsletter-section">
+    <div class="section-header">
+        <span class="section-header__eyebrow">Exclusivo</span>
+        <h2 class="section-header__title">Únete al círculo Velour</h2>
+        <p class="section-header__subtitle">Recibe acceso anticipado a nuevas colecciones, eventos privados y ofertas exclusivas para miembros.</p>
+    </div>
+    <form class="newsletter-form">
+        <input class="form-control" type="email" placeholder="tu@correo.com">
+        <button type="submit" class="btn btn--gold">Suscribirme</button>
+    </form>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer class="site-footer">
+    <div class="footer-top">
+        <div class="footer-brand">
+            <div class="footer-brand__logo">Vel<span>our</span></div>
+            <p class="footer-brand__text">Moda premium diseñada para la mujer contemporánea. Cada prenda es una declaración de elegancia y confianza.</p>
+            <div class="footer-social">
+                <a href="#" class="footer-social__link" aria-label="Instagram">In</a>
+                <a href="#" class="footer-social__link" aria-label="Facebook">Fb</a>
+                <a href="#" class="footer-social__link" aria-label="Pinterest">Pi</a>
+                <a href="#" class="footer-social__link" aria-label="TikTok">Tk</a>
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <p class="footer-col__title">Tienda</p>
+            <div class="footer-col__links">
+                <a href="productos.html">Nueva Colección</a>
+                <a href="productos.html">Vestidos</a>
+                <a href="productos.html">Blazers</a>
+                <a href="productos.html">Conjuntos</a>
+                <a href="productos.html">Sale</a>
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <p class="footer-col__title">Ayuda</p>
+            <div class="footer-col__links">
+                <a href="#">Guía de Tallas</a>
+                <a href="#">Envíos y Devoluciones</a>
+                <a href="#">Cuidado de Prendas</a>
+                <a href="#">Preguntas Frecuentes</a>
+                <a href="#">Contacto</a>
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <p class="footer-col__title">Empresa</p>
+            <div class="footer-col__links">
+                <a href="#">Sobre Velour</a>
+                <a href="#">Sustentabilidad</a>
+                <a href="#">Trabaja con Nosotros</a>
+                <a href="#">Prensa</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2025 Velour. Todos los derechos reservados.</p>
+        <div class="footer-payments">
+            <span>VISA</span>
+            <span>MC</span>
+            <span>AMEX</span>
+            <span>OXXO</span>
+            <span>PayPal</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Toggle menú móvil
+    const burger = document.getElementById('burgerBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    burger.addEventListener('click', () => mobileNav.classList.toggle('is-open'));
+</script>
+</body>
+</html>

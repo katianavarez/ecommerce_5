@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout — Velour</title>
+    <link rel="stylesheet" href="./css/variables.css">
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/layout.css">
+    <link rel="stylesheet" href="./css/paginas/cart.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="header-main">
+        <a href="index.html" class="site-logo">
+            <div class="site-logo__wordmark">Vel<span>our</span></div>
+            <div class="site-logo__sub">Moda de Autor</div>
+        </a>
+        <div style="flex:1; text-align:center;">
+            <p style="font-size:var(--fs-xs); letter-spacing:0.15em; text-transform:uppercase; color:var(--text-muted);">Pago Seguro</p>
+        </div>
+        <div style="display:flex; gap:var(--sp-2);">
+            <span class="card-icon">SSL</span>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="checkout-layout">
+        <div class="checkout-form">
+
+            <!-- Información de entrega -->
+            <div class="checkout-section">
+                <h2 class="checkout-section__title">
+                    <span class="checkout-section__num">1</span>
+                    Información de Entrega
+                </h2>
+
+                <div style="display:flex; flex-direction:column; gap:var(--sp-4);">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Nombre</label>
+                            <input class="form-control" type="text" placeholder="Ana" value="Ana">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Apellido</label>
+                            <input class="form-control" type="text" placeholder="García" value="García">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Correo electrónico</label>
+                        <input class="form-control" type="email" placeholder="ana@correo.com" value="ana.garcia@correo.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Teléfono</label>
+                        <input class="form-control" type="tel" placeholder="+52 55 0000 0000" value="+52 55 1234 5678">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Dirección</label>
+                        <input class="form-control" type="text" placeholder="Calle y número" value="Av. Presidente Masaryk 215">
+                    </div>
+
+                    <div class="form-row form-row--3">
+                        <div class="form-group">
+                            <label class="form-label">Ciudad</label>
+                            <input class="form-control" type="text" value="Ciudad de México">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Estado</label>
+                            <select class="form-control">
+                                <option>CDMX</option>
+                                <option>Jalisco</option>
+                                <option>Nuevo León</option>
+                                <option>Sinaloa</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Código Postal</label>
+                            <input class="form-control" type="text" placeholder="00000" value="11560">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Método de pago -->
+            <div class="checkout-section">
+                <h2 class="checkout-section__title">
+                    <span class="checkout-section__num">2</span>
+                    Método de Pago
+                </h2>
+
+                <div class="payment-methods">
+                    <div class="payment-method payment-method--active">
+                        <input type="radio" name="payment" checked id="card">
+                        <label for="card" class="payment-method__label">Tarjeta de crédito / débito</label>
+                        <div class="payment-method__cards">
+                            <span class="card-icon">VISA</span>
+                            <span class="card-icon">MC</span>
+                            <span class="card-icon">AMEX</span>
+                        </div>
+                    </div>
+                    <div class="payment-method" id="cardFields">
+                        <div style="width:100%; display:flex; flex-direction:column; gap:var(--sp-4);">
+                            <div class="form-group">
+                                <label class="form-label">Número de tarjeta</label>
+                                <input class="form-control" type="text" placeholder="0000 0000 0000 0000">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Vencimiento</label>
+                                    <input class="form-control" type="text" placeholder="MM/AA">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">CVV</label>
+                                    <input class="form-control" type="text" placeholder="000">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="payment-method">
+                        <input type="radio" name="payment" id="paypal">
+                        <label for="paypal" class="payment-method__label">PayPal</label>
+                        <div class="payment-method__cards"><span class="card-icon">PayPal</span></div>
+                    </div>
+                    <div class="payment-method">
+                        <input type="radio" name="payment" id="oxxo">
+                        <label for="oxxo" class="payment-method__label">Pago en OXXO</label>
+                        <div class="payment-method__cards"><span class="card-icon">OXXO</span></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Resumen lateral -->
+        <div class="order-summary">
+            <h2 class="order-summary__title">Resumen del Pedido</h2>
+
+            <!-- Mini items -->
+            <div style="display:flex; flex-direction:column; gap:var(--sp-4); margin-bottom:var(--sp-5); padding-bottom:var(--sp-5); border-bottom:1px solid var(--border-soft);">
+                <div style="display:flex; gap:var(--sp-3); align-items:center;">
+                    <div style="width:48px; height:60px; border-radius:var(--r-sm); background:linear-gradient(160deg,#E8E0D4,#C4B49A); flex-shrink:0;"></div>
+                    <div style="flex:1;">
+                        <p style="font-size:var(--fs-sm); font-weight:var(--fw-medium);">Vestido Satén Cruzado</p>
+                        <p style="font-size:var(--fs-xs); color:var(--text-muted);">M · Tostado · ×1</p>
+                    </div>
+                    <p style="font-size:var(--fs-sm); font-weight:var(--fw-semibold);">$2,890</p>
+                </div>
+                <div style="display:flex; gap:var(--sp-3); align-items:center;">
+                    <div style="width:48px; height:60px; border-radius:var(--r-sm); background:linear-gradient(160deg,#D4D8E0,#9AA4C4); flex-shrink:0;"></div>
+                    <div style="flex:1;">
+                        <p style="font-size:var(--fs-sm); font-weight:var(--fw-medium);">Blazer Estructurado Navy</p>
+                        <p style="font-size:var(--fs-xs); color:var(--text-muted);">S · Navy · ×1</p>
+                    </div>
+                    <p style="font-size:var(--fs-sm); font-weight:var(--fw-semibold);">$1,890</p>
+                </div>
+            </div>
+
+            <div class="summary-lines">
+                <div class="summary-line"><span>Subtotal</span><span>$4,780</span></div>
+                <div class="summary-line"><span>Envío</span><span class="summary-line--free">Gratis</span></div>
+                <div class="summary-line"><span>Descuento</span><span style="color:var(--color-success);">–$630</span></div>
+                <div class="summary-line summary-line--total"><span>Total</span><span>$4,150</span></div>
+            </div>
+
+            <a href="confirmacion.html" class="btn btn--gold btn--full btn--lg">Confirmar Compra</a>
+
+            <p style="text-align:center; font-size:var(--fs-xs); color:var(--text-muted); margin-top:var(--sp-3);">
+                Al confirmar aceptas nuestros <a href="#" style="color:var(--color-secondary);">Términos y Condiciones</a>
+            </p>
+        </div>
+    </div>
+</main>
+
+<footer class="site-footer">
+    <div class="footer-bottom"><p>© 2025 Velour. Todos los derechos reservados.</p></div>
+</footer>
+</body>
+</html>
