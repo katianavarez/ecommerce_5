@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos — Velour Admin</title>
+    <link rel="stylesheet" href="./css/variables.css">
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/layout.css">
+    <link rel="stylesheet" href="./css/paginas/admin.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="header-main">
+        <a href="index.html" class="site-logo">
+            <div class="site-logo__wordmark">Vel<span>our</span></div>
+            <div class="site-logo__sub">Moda de Autor</div>
+        </a>
+        <div style="flex:1; display:flex; justify-content:center;">
+            <span style="font-size:var(--fs-xs); letter-spacing:0.2em; text-transform:uppercase; color:var(--color-secondary-hover); background:var(--color-secondary-light); padding:var(--sp-1) var(--sp-4); border-radius:var(--r-full); font-weight:var(--fw-medium);">
+                Panel de Administración
+            </span>
+        </div>
+        <div class="header-actions">
+            <a href="index.html" class="header-icon" title="Ver tienda">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </a>
+            <a href="login.html" class="header-icon" title="Cerrar sesión">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            </a>
+        </div>
+    </div>
+</header>
+
+<div class="admin-layout">
+
+    <aside class="admin-sidebar">
+        <div class="admin-sidebar__header">
+            <p class="admin-sidebar__title">Administrador</p>
+            <p class="admin-sidebar__user">Carlos López</p>
+            <p class="admin-sidebar__role">Super Admin</p>
+        </div>
+        <nav class="admin-nav">
+            <p class="admin-nav__section">General</p>
+            <a href="admin-dashboard.html" class="admin-nav__link">
+                <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                Dashboard
+            </a>
+            <p class="admin-nav__section">Catálogo</p>
+            <a href="admin-productos.html" class="admin-nav__link">
+                <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                Productos
+                <span class="admin-nav__badge">89</span>
+            </a>
+            <p class="admin-nav__section">Ventas</p>
+            <a href="admin-pedidos.html" class="admin-nav__link admin-nav__link--active">
+                <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                Pedidos
+                <span class="admin-nav__badge admin-nav__badge--warn">4</span>
+            </a>
+            <p class="admin-nav__section">Comunidad</p>
+            <a href="admin-resenas.html" class="admin-nav__link">
+                <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Reseñas
+                <span class="admin-nav__badge">7</span>
+            </a>
+            <a href="admin-clientes.html" class="admin-nav__link">
+                <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Clientes
+            </a>
+        </nav>
+        <div class="admin-sidebar__footer">
+            <a href="index.html" class="admin-sidebar__logout">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Cerrar sesión
+            </a>
+        </div>
+    </aside>
+
+    <div class="admin-content">
+        <div class="admin-topbar">
+            <div>
+                <h1 class="admin-topbar__title">Gestión de Pedidos</h1>
+                <p class="admin-topbar__subtitle">84 pedidos este mes · 4 pendientes de atención</p>
+            </div>
+            <div class="admin-topbar__actions">
+                <select class="admin-select">
+                    <option>Marzo 2025</option>
+                    <option>Febrero 2025</option>
+                    <option>Enero 2025</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="admin-body">
+
+            <!-- Filtros por estado -->
+            <div class="admin-tabs">
+                <button class="admin-tab admin-tab--active">Todos (84)</button>
+                <button class="admin-tab">Pendientes (4)</button>
+                <button class="admin-tab">Enviados (31)</button>
+                <button class="admin-tab">Entregados (45)</button>
+                <button class="admin-tab">Cancelados (4)</button>
+            </div>
+
+            <div class="admin-table-wrap">
+                <div class="admin-table-head">
+                    <h2 class="admin-table-head__title">Todos los Pedidos</h2>
+                    <div class="admin-table-head__controls">
+                        <div class="admin-search">
+                            <input class="admin-search__input" type="search" placeholder="Buscar por # o cliente...">
+                            <button class="admin-search__btn">
+                                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+                            </button>
+                        </div>
+                        <select class="admin-select">
+                            <option>Más recientes</option>
+                            <option>Mayor monto</option>
+                            <option>Menor monto</option>
+                        </select>
+                    </div>
+                </div>
+
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th># Pedido</th>
+                            <th>Cliente</th>
+                            <th>Fecha</th>
+                            <th>Artículos</th>
+                            <th>Total</th>
+                            <th>Pago</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong style="color:var(--text-heading);">#VLR-2025-08741</strong></td>
+                            <td>
+                                <div>
+                                    <p style="font-weight:var(--fw-medium); color:var(--text-heading);">Ana García</p>
+                                    <p style="font-size:var(--fs-xs); color:var(--text-muted);">ana.garcia@correo.com</p>
+                                </div>
+                            </td>
+                            <td style="color:var(--text-muted);">15 mar 2025</td>
+                            <td style="color:var(--text-muted);">2 artículos</td>
+                            <td><strong>$4,150</strong></td>
+                            <td style="color:var(--text-muted); font-size:var(--fs-xs);">Visa ···· 4821</td>
+                            <td><span class="badge badge--enviado">Enviado</span></td>
+                            <td>
+                                <div class="admin-table__actions">
+                                    <button class="admin-action-btn" title="Ver detalle">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                    </button>
+                                    <select class="admin-select" style="padding:4px 8px; font-size:var(--fs-xs);">
+                                        <option>Enviado</option>
+                                        <option>Entregado</option>
+                                        <option>Cancelado</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:var(--text-heading);">#VLR-2025-08739</strong></td>
+                            <td>
+                                <div>
+                                    <p style="font-weight:var(--fw-medium); color:var(--text-heading);">Sofía Mendoza</p>
+                                    <p style="font-size:var(--fs-xs); color:var(--text-muted);">sofia.m@correo.com</p>
+                                </div>
+                            </td>
+                            <td style="color:var(--text-muted);">14 mar 2025</td>
+                            <td style="color:var(--text-muted);">1 artículo</td>
+                            <td><strong>$2,890</strong></td>
+                            <td style="color:var(--text-muted); font-size:var(--fs-xs);">PayPal</td>
+                            <td><span class="badge badge--pendiente">Pendiente</span></td>
+                            <td>
+                                <div class="admin-table__actions">
+                                    <button class="admin-action-btn" title="Ver detalle">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                    </button>
+                                    <select class="admin-select" style="padding:4px 8px; font-size:var(--fs-xs);">
+                                        <option>Pendiente</option>
+                                        <option>Enviado</option>
+                                        <option>Entregado</option>
+                                        <option>Cancelado</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:var(--text-heading);">#VLR-2025-08735</strong></td>
+                            <td>
+                                <div>
+                                    <p style="font-weight:var(--fw-medium); color:var(--text-heading);">Valentina Ruiz</p>
+                                    <p style="font-size:var(--fs-xs); color:var(--text-muted);">v.ruiz@correo.com</p>
+                                </div>
+                            </td>
+                            <td style="color:var(--text-muted);">13 mar 2025</td>
+                            <td style="color:var(--text-muted);">3 artículos</td>
+                            <td><strong>$5,340</strong></td>
+                            <td style="color:var(--text-muted); font-size:var(--fs-xs);">MC ···· 9102</td>
+                            <td><span class="badge badge--entregado">Entregado</span></td>
+                            <td>
+                                <div class="admin-table__actions">
+                                    <button class="admin-action-btn" title="Ver detalle">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                    </button>
+                                    <select class="admin-select" style="padding:4px 8px; font-size:var(--fs-xs);">
+                                        <option>Entregado</option>
+                                        <option>Cancelado</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:var(--text-heading);">#VLR-2025-08730</strong></td>
+                            <td>
+                                <div>
+                                    <p style="font-weight:var(--fw-medium); color:var(--text-heading);">Isabella Torres</p>
+                                    <p style="font-size:var(--fs-xs); color:var(--text-muted);">i.torres@correo.com</p>
+                                </div>
+                            </td>
+                            <td style="color:var(--text-muted);">12 mar 2025</td>
+                            <td style="color:var(--text-muted);">1 artículo</td>
+                            <td><strong>$1,650</strong></td>
+                            <td style="color:var(--text-muted); font-size:var(--fs-xs);">OXXO</td>
+                            <td><span class="badge badge--cancelado">Cancelado</span></td>
+                            <td>
+                                <div class="admin-table__actions">
+                                    <button class="admin-action-btn" title="Ver detalle">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:var(--text-heading);">#VLR-2025-08725</strong></td>
+                            <td>
+                                <div>
+                                    <p style="font-weight:var(--fw-medium); color:var(--text-heading);">Mariana López</p>
+                                    <p style="font-size:var(--fs-xs); color:var(--text-muted);">m.lopez@correo.com</p>
+                                </div>
+                            </td>
+                            <td style="color:var(--text-muted);">11 mar 2025</td>
+                            <td style="color:var(--text-muted);">2 artículos</td>
+                            <td><strong>$3,450</strong></td>
+                            <td style="color:var(--text-muted); font-size:var(--fs-xs);">Visa ···· 2234</td>
+                            <td><span class="badge badge--enviado">Enviado</span></td>
+                            <td>
+                                <div class="admin-table__actions">
+                                    <button class="admin-action-btn" title="Ver detalle">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                    </button>
+                                    <select class="admin-select" style="padding:4px 8px; font-size:var(--fs-xs);">
+                                        <option>Enviado</option>
+                                        <option>Entregado</option>
+                                        <option>Cancelado</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:var(--text-heading);">#VLR-2025-08720</strong></td>
+                            <td>
+                                <div>
+                                    <p style="font-weight:var(--fw-medium); color:var(--text-heading);">Camila Herrera</p>
+                                    <p style="font-size:var(--fs-xs); color:var(--text-muted);">c.herrera@correo.com</p>
+                                </div>
+                            </td>
+                            <td style="color:var(--text-muted);">10 mar 2025</td>
+                            <td style="color:var(--text-muted);">1 artículo</td>
+                            <td><strong>$890</strong></td>
+                            <td style="color:var(--text-muted); font-size:var(--fs-xs);">PayPal</td>
+                            <td><span class="badge badge--pendiente">Pendiente</span></td>
+                            <td>
+                                <div class="admin-table__actions">
+                                    <button class="admin-action-btn" title="Ver detalle">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                    </button>
+                                    <select class="admin-select" style="padding:4px 8px; font-size:var(--fs-xs);">
+                                        <option>Pendiente</option>
+                                        <option>Enviado</option>
+                                        <option>Cancelado</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="padding:var(--sp-5) var(--sp-6); border-top:1px solid var(--border-soft); display:flex; align-items:center; justify-content:space-between;">
+                    <p style="font-size:var(--fs-xs); color:var(--text-muted);">Mostrando 6 de 84 pedidos</p>
+                    <nav class="pagination" style="margin-top:0;">
+                        <a class="pagination__btn" href="#">‹</a>
+                        <a class="pagination__btn pagination__btn--active" href="#">1</a>
+                        <a class="pagination__btn" href="#">2</a>
+                        <a class="pagination__btn" href="#">3</a>
+                        <span class="pagination__btn" style="border:none;">…</span>
+                        <a class="pagination__btn" href="#">14</a>
+                        <a class="pagination__btn" href="#">›</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

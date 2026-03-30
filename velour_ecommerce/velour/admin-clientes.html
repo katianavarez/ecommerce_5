@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes — Velour Admin</title>
+    <link rel="stylesheet" href="./css/variables.css">
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/layout.css">
+    <link rel="stylesheet" href="./css/paginas/admin.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="header-main">
+        <a href="index.html" class="site-logo">
+            <div class="site-logo__wordmark">Vel<span>our</span></div>
+            <div class="site-logo__sub">Moda de Autor</div>
+        </a>
+        <div style="flex:1; display:flex; justify-content:center;">
+            <span style="font-size:var(--fs-xs); letter-spacing:0.2em; text-transform:uppercase; color:var(--color-secondary-hover); background:var(--color-secondary-light); padding:var(--sp-1) var(--sp-4); border-radius:var(--r-full); font-weight:var(--fw-medium);">
+                Panel de Administración
+            </span>
+        </div>
+        <div class="header-actions">
+            <a href="index.html" class="header-icon" title="Ver tienda">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </a>
+            <a href="login.html" class="header-icon" title="Cerrar sesión">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            </a>
+        </div>
+    </div>
+</header>
+
+<div class="admin-layout">
+
+    <aside class="admin-sidebar">
+        <div class="admin-sidebar__header">
+            <p class="admin-sidebar__title">Administrador</p>
+            <p class="admin-sidebar__user">Carlos López</p>
+            <p class="admin-sidebar__role">Super Admin</p>
+        </div>
+        <nav class="admin-nav">
+            <p class="admin-nav__section">General</p>
+            <a href="admin-dashboard.html" class="admin-nav__link">
+                <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                Dashboard
+            </a>
+            <p class="admin-nav__section">Catálogo</p>
+            <a href="admin-productos.html" class="admin-nav__link">
+                <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                Productos
+                <span class="admin-nav__badge">89</span>
+            </a>
+            <p class="admin-nav__section">Ventas</p>
+            <a href="admin-pedidos.html" class="admin-nav__link">
+                <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                Pedidos
+                <span class="admin-nav__badge admin-nav__badge--warn">4</span>
+            </a>
+            <p class="admin-nav__section">Comunidad</p>
+            <a href="admin-resenas.html" class="admin-nav__link">
+                <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Reseñas
+                <span class="admin-nav__badge">7</span>
+            </a>
+            <a href="admin-clientes.html" class="admin-nav__link admin-nav__link--active">
+                <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Clientes
+            </a>
+        </nav>
+        <div class="admin-sidebar__footer">
+            <a href="index.html" class="admin-sidebar__logout">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Cerrar sesión
+            </a>
+        </div>
+    </aside>
+
+    <div class="admin-content">
+        <div class="admin-topbar">
+            <div>
+                <h1 class="admin-topbar__title">Gestión de Clientes</h1>
+                <p class="admin-topbar__subtitle">1,248 clientes registrados</p>
+            </div>
+        </div>
+
+        <div class="admin-body">
+
+            <div class="admin-tabs">
+                <button class="admin-tab admin-tab--active">Todos (1,248)</button>
+                <button class="admin-tab">Activos (980)</button>
+                <button class="admin-tab">VIP (42)</button>
+                <button class="admin-tab">Sin compras (268)</button>
+            </div>
+
+            <div class="admin-table-wrap">
+                <div class="admin-table-head">
+                    <h2 class="admin-table-head__title">Clientes</h2>
+                    <div class="admin-table-head__controls">
+                        <div class="admin-search">
+                            <input class="admin-search__input" type="search" placeholder="Buscar cliente...">
+                            <button class="admin-search__btn">
+                                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+                            </button>
+                        </div>
+                        <select class="admin-select">
+                            <option>Más recientes</option>
+                            <option>Mayor gasto</option>
+                            <option>Más pedidos</option>
+                        </select>
+                    </div>
+                </div>
+
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Registro</th>
+                            <th>Pedidos</th>
+                            <th>Gasto total</th>
+                            <th>Último pedido</th>
+                            <th>Estado</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div style="display:flex; align-items:center; gap:var(--sp-3);">
+                                    <div style="width:36px;height:36px;border-radius:50%;background:var(--color-secondary-light);color:var(--color-secondary-hover);font-family:var(--font-display);font-size:var(--fs-md);font-weight:var(--fw-medium);display:flex;align-items:center;justify-content:center;flex-shrink:0;">A</div>
+                                    <div>
+                                        <p style="font-weight:var(--fw-medium); color:var(--text-heading);">Ana García</p>
+                                        <p style="font-size:var(--fs-xs); color:var(--text-muted);">ana.garcia@correo.com</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="color:var(--text-muted);">Ene 2024</td>
+                            <td><strong>8</strong></td>
+                            <td><strong>$24,500</strong></td>
+                            <td style="color:var(--text-muted);">15 mar 2025</td>
+                            <td><span class="badge badge--new">VIP</span></td>
+                            <td>
+                                <button class="admin-action-btn" title="Ver perfil">
+                                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="display:flex; align-items:center; gap:var(--sp-3);">
+                                    <div style="width:36px;height:36px;border-radius:50%;background:rgba(26,26,46,0.08);color:var(--color-primary);font-family:var(--font-display);font-size:var(--fs-md);font-weight:var(--fw-medium);display:flex;align-items:center;justify-content:center;flex-shrink:0;">S</div>
+                                    <div>
+                                        <p style="font-weight:var(--fw-medium); color:var(--text-heading);">Sofía Mendoza</p>
+                                        <p style="font-size:var(--fs-xs); color:var(--text-muted);">sofia.m@correo.com</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="color:var(--text-muted);">Mar 2024</td>
+                            <td><strong>3</strong></td>
+                            <td><strong>$8,730</strong></td>
+                            <td style="color:var(--text-muted);">14 mar 2025</td>
+                            <td><span class="badge badge--entregado">Activo</span></td>
+                            <td>
+                                <button class="admin-action-btn" title="Ver perfil">
+                                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="display:flex; align-items:center; gap:var(--sp-3);">
+                                    <div style="width:36px;height:36px;border-radius:50%;background:var(--color-secondary-light);color:var(--color-secondary-hover);font-family:var(--font-display);font-size:var(--fs-md);font-weight:var(--fw-medium);display:flex;align-items:center;justify-content:center;flex-shrink:0;">V</div>
+                                    <div>
+                                        <p style="font-weight:var(--fw-medium); color:var(--text-heading);">Valentina Ruiz</p>
+                                        <p style="font-size:var(--fs-xs); color:var(--text-muted);">v.ruiz@correo.com</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="color:var(--text-muted);">Jun 2023</td>
+                            <td><strong>15</strong></td>
+                            <td><strong>$51,200</strong></td>
+                            <td style="color:var(--text-muted);">13 mar 2025</td>
+                            <td><span class="badge badge--new">VIP</span></td>
+                            <td>
+                                <button class="admin-action-btn" title="Ver perfil">
+                                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="display:flex; align-items:center; gap:var(--sp-3);">
+                                    <div style="width:36px;height:36px;border-radius:50%;background:var(--color-error-bg);color:var(--color-error);font-family:var(--font-display);font-size:var(--fs-md);font-weight:var(--fw-medium);display:flex;align-items:center;justify-content:center;flex-shrink:0;">I</div>
+                                    <div>
+                                        <p style="font-weight:var(--fw-medium); color:var(--text-heading);">Isabella Torres</p>
+                                        <p style="font-size:var(--fs-xs); color:var(--text-muted);">i.torres@correo.com</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="color:var(--text-muted);">Feb 2025</td>
+                            <td><strong>1</strong></td>
+                            <td><strong>$1,650</strong></td>
+                            <td style="color:var(--text-muted);">12 mar 2025</td>
+                            <td><span class="badge badge--cancelado">Canceló pedido</span></td>
+                            <td>
+                                <button class="admin-action-btn" title="Ver perfil">
+                                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="display:flex; align-items:center; gap:var(--sp-3);">
+                                    <div style="width:36px;height:36px;border-radius:50%;background:rgba(26,26,46,0.08);color:var(--color-primary);font-family:var(--font-display);font-size:var(--fs-md);font-weight:var(--fw-medium);display:flex;align-items:center;justify-content:center;flex-shrink:0;">M</div>
+                                    <div>
+                                        <p style="font-weight:var(--fw-medium); color:var(--text-heading);">Mariana López</p>
+                                        <p style="font-size:var(--fs-xs); color:var(--text-muted);">m.lopez@correo.com</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="color:var(--text-muted);">Nov 2024</td>
+                            <td><strong>4</strong></td>
+                            <td><strong>$11,280</strong></td>
+                            <td style="color:var(--text-muted);">11 mar 2025</td>
+                            <td><span class="badge badge--entregado">Activo</span></td>
+                            <td>
+                                <button class="admin-action-btn" title="Ver perfil">
+                                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="display:flex; align-items:center; gap:var(--sp-3);">
+                                    <div style="width:36px;height:36px;border-radius:50%;background:rgba(26,26,46,0.08);color:var(--color-primary);font-family:var(--font-display);font-size:var(--fs-md);font-weight:var(--fw-medium);display:flex;align-items:center;justify-content:center;flex-shrink:0;">C</div>
+                                    <div>
+                                        <p style="font-weight:var(--fw-medium); color:var(--text-heading);">Camila Herrera</p>
+                                        <p style="font-size:var(--fs-xs); color:var(--text-muted);">c.herrera@correo.com</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="color:var(--text-muted);">Mar 2025</td>
+                            <td><strong>1</strong></td>
+                            <td><strong>$890</strong></td>
+                            <td style="color:var(--text-muted);">10 mar 2025</td>
+                            <td><span class="badge badge--enviado">Nuevo</span></td>
+                            <td>
+                                <button class="admin-action-btn" title="Ver perfil">
+                                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="padding:var(--sp-5) var(--sp-6); border-top:1px solid var(--border-soft); display:flex; align-items:center; justify-content:space-between;">
+                    <p style="font-size:var(--fs-xs); color:var(--text-muted);">Mostrando 6 de 1,248 clientes</p>
+                    <nav class="pagination" style="margin-top:0;">
+                        <a class="pagination__btn" href="#">‹</a>
+                        <a class="pagination__btn pagination__btn--active" href="#">1</a>
+                        <a class="pagination__btn" href="#">2</a>
+                        <a class="pagination__btn" href="#">3</a>
+                        <span class="pagination__btn" style="border:none;">…</span>
+                        <a class="pagination__btn" href="#">208</a>
+                        <a class="pagination__btn" href="#">›</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

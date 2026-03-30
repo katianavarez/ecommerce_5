@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Producto — Velour Admin</title>
+    <link rel="stylesheet" href="./css/variables.css">
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/layout.css">
+    <link rel="stylesheet" href="./css/paginas/admin.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="header-main">
+        <a href="index.html" class="site-logo">
+            <div class="site-logo__wordmark">Vel<span>our</span></div>
+            <div class="site-logo__sub">Moda de Autor</div>
+        </a>
+        <div style="flex:1; display:flex; justify-content:center;">
+            <span style="font-size:var(--fs-xs); letter-spacing:0.2em; text-transform:uppercase; color:var(--color-secondary-hover); background:var(--color-secondary-light); padding:var(--sp-1) var(--sp-4); border-radius:var(--r-full); font-weight:var(--fw-medium);">
+                Panel de Administración
+            </span>
+        </div>
+        <div class="header-actions">
+            <a href="index.html" class="header-icon" title="Ver tienda">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </a>
+            <a href="login.html" class="header-icon" title="Cerrar sesión">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            </a>
+        </div>
+    </div>
+</header>
+
+<div class="admin-layout">
+
+    <aside class="admin-sidebar">
+        <div class="admin-sidebar__header">
+            <p class="admin-sidebar__title">Administrador</p>
+            <p class="admin-sidebar__user">Carlos López</p>
+            <p class="admin-sidebar__role">Super Admin</p>
+        </div>
+        <nav class="admin-nav">
+            <p class="admin-nav__section">General</p>
+            <a href="admin-dashboard.html" class="admin-nav__link">
+                <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                Dashboard
+            </a>
+            <p class="admin-nav__section">Catálogo</p>
+            <a href="admin-productos.html" class="admin-nav__link admin-nav__link--active">
+                <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                Productos
+                <span class="admin-nav__badge">89</span>
+            </a>
+            <p class="admin-nav__section">Ventas</p>
+            <a href="admin-pedidos.html" class="admin-nav__link">
+                <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                Pedidos
+                <span class="admin-nav__badge admin-nav__badge--warn">4</span>
+            </a>
+            <p class="admin-nav__section">Comunidad</p>
+            <a href="admin-resenas.html" class="admin-nav__link">
+                <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Reseñas
+                <span class="admin-nav__badge">7</span>
+            </a>
+            <a href="admin-clientes.html" class="admin-nav__link">
+                <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Clientes
+            </a>
+        </nav>
+        <div class="admin-sidebar__footer">
+            <a href="index.html" class="admin-sidebar__logout">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Cerrar sesión
+            </a>
+        </div>
+    </aside>
+
+    <div class="admin-content">
+        <div class="admin-topbar">
+            <div>
+                <h1 class="admin-topbar__title">Editar Producto</h1>
+                <p class="admin-topbar__subtitle">
+                    <a href="admin-productos.html" style="color:var(--color-secondary);">← Volver a productos</a>
+                    &nbsp;·&nbsp; SKU: VLR-VST-001
+                </p>
+            </div>
+            <div class="admin-topbar__actions">
+                <button class="btn btn--ghost btn--sm">Guardar borrador</button>
+                <button class="btn btn--gold btn--sm">Publicar cambios</button>
+            </div>
+        </div>
+
+        <div class="admin-body">
+            <div class="admin-two-col">
+
+                <!-- Formulario principal -->
+                <div style="display:flex; flex-direction:column; gap:var(--sp-5);">
+
+                    <!-- Información básica -->
+                    <div class="admin-card">
+                        <div class="admin-card__header">
+                            <h3 class="admin-card__title">Información del Producto</h3>
+                        </div>
+                        <div class="admin-card__body">
+                            <div class="product-form">
+                                <div class="form-group">
+                                    <label class="form-label">Nombre del producto</label>
+                                    <input class="form-control" type="text" value="Vestido Azul Largo">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Descripción</label>
+                                    <textarea class="form-control" rows="4" style="resize:vertical;">Vestido largo en tonos azules con corte fluido y elegante. Diseñado para la mujer contemporánea que busca sofisticación en cada ocasión.</textarea>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label">Categoría</label>
+                                        <select class="form-control">
+                                            <option selected>Vestidos</option>
+                                            <option>Blusas</option>
+                                            <option>Blazers</option>
+                                            <option>Conjuntos</option>
+                                            <option>Faldas</option>
+                                            <option>Pantalones</option>
+                                            <option>Tops</option>
+                                            <option>Accesorios</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">SKU</label>
+                                        <input class="form-control" type="text" value="VLR-VST-001">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Precios -->
+                    <div class="admin-card">
+                        <div class="admin-card__header">
+                            <h3 class="admin-card__title">Precios</h3>
+                        </div>
+                        <div class="admin-card__body">
+                            <div class="product-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label">Precio regular (MXN)</label>
+                                        <input class="form-control" type="number" value="2890">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Precio de oferta (MXN)</label>
+                                        <input class="form-control" type="number" placeholder="Dejar vacío si no aplica">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Inventario -->
+                    <div class="admin-card">
+                        <div class="admin-card__header">
+                            <h3 class="admin-card__title">Inventario y Variantes</h3>
+                        </div>
+                        <div class="admin-card__body">
+                            <div class="product-form">
+                                <p style="font-size:var(--fs-xs); font-weight:var(--fw-medium); letter-spacing:0.08em; text-transform:uppercase; color:var(--text-muted); margin-bottom:var(--sp-3);">Stock por talla</p>
+                                <div class="form-row form-row--3" style="grid-template-columns:repeat(5,1fr);">
+                                    <div class="form-group">
+                                        <label class="form-label">XS</label>
+                                        <input class="form-control" type="number" value="3" style="text-align:center;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">S</label>
+                                        <input class="form-control" type="number" value="8" style="text-align:center;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">M</label>
+                                        <input class="form-control" type="number" value="7" style="text-align:center;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">L</label>
+                                        <input class="form-control" type="number" value="4" style="text-align:center;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">XL</label>
+                                        <input class="form-control" type="number" value="2" style="text-align:center;">
+                                    </div>
+                                </div>
+
+                                <p style="font-size:var(--fs-xs); font-weight:var(--fw-medium); letter-spacing:0.08em; text-transform:uppercase; color:var(--text-muted); margin:var(--sp-5) 0 var(--sp-3);">Colores disponibles</p>
+                                <div style="display:flex; gap:var(--sp-3); align-items:center; flex-wrap:wrap;">
+                                    <div style="display:flex; align-items:center; gap:var(--sp-2);">
+                                        <div style="width:20px;height:20px;border-radius:50%;background:#1A1A2E;border:2px solid var(--color-secondary);"></div>
+                                        <span style="font-size:var(--fs-xs);">Azul Noche</span>
+                                    </div>
+                                    <div style="display:flex; align-items:center; gap:var(--sp-2);">
+                                        <div style="width:20px;height:20px;border-radius:50%;background:#4A4A4A;"></div>
+                                        <span style="font-size:var(--fs-xs);">Grafito</span>
+                                    </div>
+                                    <button class="btn btn--ghost btn--sm">+ Color</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Imágenes -->
+                    <div class="admin-card">
+                        <div class="admin-card__header">
+                            <h3 class="admin-card__title">Imágenes del Producto</h3>
+                        </div>
+                        <div class="admin-card__body">
+                            <div class="img-upload-zone">
+                                <div class="img-upload-zone__icon">📁</div>
+                                <p class="img-upload-zone__text">Arrastra imágenes aquí o haz clic para seleccionar</p>
+                                <p class="img-upload-zone__sub">PNG, JPG hasta 5MB · Mínimo 800×1000px recomendado</p>
+                            </div>
+                            <div class="img-thumbs">
+                                <div class="img-thumb">
+                                    <img src="./imgs/vestidos/vestidoAzulLargo.png" alt="Vista 1">
+                                    <div class="img-thumb__remove">×</div>
+                                </div>
+                                <div class="img-thumb" style="border:1.5px dashed var(--color-secondary);">
+                                    <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--text-light);">+</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Panel lateral derecho -->
+                <div style="display:flex; flex-direction:column; gap:var(--sp-5);">
+
+                    <!-- Estado de publicación -->
+                    <div class="admin-card">
+                        <div class="admin-card__header">
+                            <h3 class="admin-card__title">Publicación</h3>
+                        </div>
+                        <div class="admin-card__body" style="display:flex; flex-direction:column; gap:var(--sp-4);">
+                            <div class="form-group">
+                                <label class="form-label">Estado</label>
+                                <select class="form-control">
+                                    <option selected>Activo</option>
+                                    <option>Borrador</option>
+                                    <option>Agotado</option>
+                                    <option>Archivado</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Visibilidad</label>
+                                <select class="form-control">
+                                    <option>Público</option>
+                                    <option>Privado</option>
+                                </select>
+                            </div>
+                            <hr class="divider">
+                            <div style="display:flex; flex-direction:column; gap:var(--sp-2);">
+                                <button class="btn btn--gold btn--full">Publicar cambios</button>
+                                <button class="btn btn--ghost btn--full">Guardar borrador</button>
+                                <button class="btn btn--full" style="color:var(--color-error); border:1.5px solid var(--border-soft);">Eliminar producto</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Etiquetas -->
+                    <div class="admin-card">
+                        <div class="admin-card__header">
+                            <h3 class="admin-card__title">Etiquetas</h3>
+                        </div>
+                        <div class="admin-card__body" style="display:flex; flex-direction:column; gap:var(--sp-3);">
+                            <div style="display:flex; flex-wrap:wrap; gap:var(--sp-2);">
+                                <span class="badge badge--new">Nuevo</span>
+                                <span class="badge badge--enviado">Primavera 2025</span>
+                                <span style="background:var(--color-secondary-light); color:var(--color-secondary-hover); font-size:var(--fs-xs); padding:var(--sp-1) var(--sp-3); border-radius:var(--r-full); font-weight:var(--fw-medium); letter-spacing:0.05em; text-transform:uppercase; display:inline-flex; align-items:center;">Premium ×</span>
+                            </div>
+                            <input class="form-control" type="text" placeholder="Añadir etiqueta...">
+                        </div>
+                    </div>
+
+                    <!-- Métricas del producto -->
+                    <div class="admin-card">
+                        <div class="admin-card__header">
+                            <h3 class="admin-card__title">Métricas</h3>
+                        </div>
+                        <div style="display:flex; flex-direction:column;">
+                            <div style="display:flex; justify-content:space-between; padding:var(--sp-3) var(--sp-5); border-bottom:1px solid var(--border-soft);">
+                                <span style="font-size:var(--fs-sm); color:var(--text-muted);">Vistas totales</span>
+                                <span style="font-size:var(--fs-sm); font-weight:var(--fw-medium);">1,248</span>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; padding:var(--sp-3) var(--sp-5); border-bottom:1px solid var(--border-soft);">
+                                <span style="font-size:var(--fs-sm); color:var(--text-muted);">Unidades vendidas</span>
+                                <span style="font-size:var(--fs-sm); font-weight:var(--fw-medium);">43</span>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; padding:var(--sp-3) var(--sp-5); border-bottom:1px solid var(--border-soft);">
+                                <span style="font-size:var(--fs-sm); color:var(--text-muted);">Reseñas</span>
+                                <span style="font-size:var(--fs-sm); font-weight:var(--fw-medium);">★ 4.6 (18)</span>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; padding:var(--sp-3) var(--sp-5);">
+                                <span style="font-size:var(--fs-sm); color:var(--text-muted);">En wishlists</span>
+                                <span style="font-size:var(--fs-sm); font-weight:var(--fw-medium);">87</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
