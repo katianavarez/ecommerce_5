@@ -233,7 +233,25 @@
 
 /* ─── RESPONSIVE ─────────────────────────────────── */
 
-@media (max-width: 1024px) {
+/* Tablet (769px – 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .hero { min-height: 70vh; }
+    .hero__title { font-size: clamp(2.2rem, 5vw, 3.5rem); }
+    .hero__subtitle { font-size: var(--fs-base); }
+
+    .categories-grid { grid-template-columns: repeat(3, 1fr); gap: var(--sp-3); }
+    .cat-card--wide { grid-column: span 3; aspect-ratio: 16/7; }
+
+    .products-grid { grid-template-columns: repeat(3, 1fr); gap: var(--sp-4); }
+    .products-grid--3 { grid-template-columns: repeat(3, 1fr); }
+
+    .promo-banner { padding: var(--sp-10) var(--sp-8); }
+    .promo-banner__img { width: 220px; height: 260px; }
+
+    .newsletter-form { max-width: 400px; }
+
+    .categories-section, .featured-section { padding: var(--sp-16) 0; }
+}
     .products-grid { grid-template-columns: repeat(3, 1fr); }
     .categories-grid { grid-template-columns: repeat(2, 1fr); }
     .cat-card--wide { aspect-ratio: unset; min-height: 200px; }

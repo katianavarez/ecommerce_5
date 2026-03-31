@@ -245,6 +245,28 @@
 
 /* ─── RESPONSIVE ─────────────────────────────────── */
 
+/* Tablet (769px – 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .cart-layout, .checkout-layout {
+        grid-template-columns: 1fr 280px;
+        gap: var(--sp-6);
+        padding: var(--sp-6) var(--sp-5);
+    }
+
+    .order-summary {
+        position: sticky;
+        top: calc(57px + var(--sp-4));
+    }
+
+    .cart-title { font-size: var(--fs-2xl); }
+
+    .cart-item { grid-template-columns: 90px 1fr auto; gap: var(--sp-4); }
+
+    .checkout-section__title { font-size: var(--fs-lg); }
+
+    .payment-method { padding: var(--sp-3); }
+}
+
 @media (max-width: 1024px) {
     .cart-layout, .checkout-layout { grid-template-columns: 1fr 300px; }
 }

@@ -18,20 +18,27 @@
             <div class="site-logo__sub">Moda de Autor</div>
         </a>
         <div style="flex:1; display:flex; justify-content:center;">
-            <span style="font-size:var(--fs-xs); letter-spacing:0.2em; text-transform:uppercase; color:var(--color-secondary-hover); background:var(--color-secondary-light); padding:var(--sp-1) var(--sp-4); border-radius:var(--r-full); font-weight:var(--fw-medium);">
+            <span class="admin-header-badge">
                 Panel de Administración
             </span>
         </div>
-        <div class="header-actions">
+        <div class="header-actions" style="display:flex; align-items:center; gap:var(--sp-3);">
             <a href="index.html" class="header-icon" title="Ver tienda">
                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
             </a>
             <a href="login.html" class="header-icon" title="Cerrar sesión">
                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
             </a>
+            <button class="admin-menu-toggle" id="adminMenuToggle" aria-label="Abrir menú">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
         </div>
     </div>
 </header>
+
+<div class="admin-overlay" id="adminOverlay"></div>
 
 <div class="admin-layout">
 
@@ -272,5 +279,33 @@
     </div>
 </div>
 
+<script>
+    // Toggle sidebar admin (mobile)
+    const adminToggle = document.getElementById('adminMenuToggle');
+    const adminSidebar = document.querySelector('.admin-sidebar');
+    const adminOverlay = document.getElementById('adminOverlay');
+
+    function openAdminSidebar() {
+        adminSidebar.classList.add('is-open');
+        adminOverlay.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeAdminSidebar() {
+        adminSidebar.classList.remove('is-open');
+        adminOverlay.classList.remove('is-open');
+        document.body.style.overflow = '';
+    }
+
+    if (adminToggle) {
+        adminToggle.addEventListener('click', () => {
+            adminSidebar.classList.contains('is-open') ? closeAdminSidebar() : openAdminSidebar();
+        });
+    }
+
+    if (adminOverlay) {
+        adminOverlay.addEventListener('click', closeAdminSidebar);
+    }
+</script>
 </body>
 </html>

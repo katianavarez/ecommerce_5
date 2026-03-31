@@ -298,26 +298,42 @@
 
 /* ─── RESPONSIVE ─────────────────────────────────── */
 
-/* Tablet: ≤ 1024px */
-@media (max-width: 1024px) {
+/* ─── TABLET (769px – 1024px) ────────────────────── */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+    /* Header */
+    .header-main {
+        padding: var(--sp-3) var(--sp-5);
+        gap: var(--sp-4);
+    }
+
+    /* Oculta buscador pero mantiene nav visible */
+    .search-form { display: none; }
+
+    /* Nav con menos espacio */
+    .main-nav { gap: var(--sp-5); }
+
+    .main-nav__link { font-size: 11px; letter-spacing: 0.08em; }
+
+    /* Footer: 2 columnas en tablet */
     .footer-top {
         grid-template-columns: 1fr 1fr;
+        gap: var(--sp-8);
+        padding: var(--sp-12) var(--sp-6);
     }
-    .search-form { display: none; }
-    
 
-
+    /* Mobile nav sigue oculto en tablet */
+    .mobile-nav { display: none !important; }
+    .header-burger { display: none; }
 }
 
-/* Mobile: ≤ 768px */
+/* ─── MOBILE (≤ 768px) ───────────────────────────── */
 @media (max-width: 768px) {
 
-    .main-nav  { display: none; }
+    .main-nav    { display: none; }
     .search-form { display: none; }
     .header-burger { display: flex; }
     .header-main { padding: var(--sp-4); }
-
-    
 
     .footer-top {
         grid-template-columns: 1fr;
@@ -329,8 +345,4 @@
         text-align: center;
         padding: var(--sp-5) var(--sp-4);
     }
-
-   
-
-
 }

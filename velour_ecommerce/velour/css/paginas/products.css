@@ -182,6 +182,25 @@
 
 /* ─── RESPONSIVE ─────────────────────────────────── */
 
+/* Tablet (769px – 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .shop-layout {
+        grid-template-columns: 200px 1fr;
+        gap: var(--sp-5);
+        padding: var(--sp-6) var(--sp-5);
+    }
+
+    .filters-sidebar {
+        top: calc(57px + var(--sp-4));
+    }
+
+    .shop-title { font-size: var(--fs-2xl); }
+
+    .shop-controls { flex-wrap: wrap; gap: var(--sp-2); }
+
+    .products-grid--3 { grid-template-columns: repeat(2, 1fr); gap: var(--sp-4); }
+}
+
 @media (max-width: 1024px) {
     .shop-layout { grid-template-columns: 220px 1fr; gap: var(--sp-6); }
 }

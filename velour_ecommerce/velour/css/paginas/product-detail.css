@@ -293,6 +293,24 @@
 
 /* ─── RESPONSIVE ─────────────────────────────────── */
 
+/* Tablet (769px – 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .detail-layout {
+        gap: var(--sp-6);
+        padding: var(--sp-6) var(--sp-5);
+    }
+
+    .product-gallery { grid-template-columns: 60px 1fr; gap: var(--sp-2); }
+
+    .product-info__name { font-size: var(--fs-2xl); }
+
+    .price-current { font-size: var(--fs-2xl); }
+
+    .product-tabs { padding: 0 var(--sp-5); }
+
+    .tab-btn { padding: var(--sp-3) var(--sp-4); font-size: var(--fs-xs); }
+}
+
 @media (max-width: 1024px) {
     .detail-layout { gap: var(--sp-8); }
     .product-gallery { grid-template-columns: 64px 1fr; }
