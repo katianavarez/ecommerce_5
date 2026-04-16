@@ -1,5 +1,6 @@
 package com.velour.velourappweb.dao;
 
+import com.velour.velourappweb.enums.Rol;
 import com.velour.velourappweb.models.Usuario;
 import com.velour.velourappweb.util.JPAUtil;
 import jakarta.persistence.EntityManager;
@@ -56,6 +57,23 @@ public class UsuarioDAO implements IUsuarioDAO {
     public List<Usuario> listarTodos() {
         return em.createQuery("SELECT u FROM Usuario u ORDER BY u.id", Usuario.class)
                 .getResultList();
+    }
+
+    @Override
+    public List<Usuario> listarClientes(int pagina, int tamano) {
+        int offset = (pagina - 1) * tamano;
+        return em.createQuery("SELECT u FROM Usuario u WHERE u.rol = :rol ORDER BY u.id DESC", Usuario.class)
+                .setParameter("rol", Rol.CLIENTE)
+                .setFirstResult(offset)
+                .setMaxResults(tamano)
+                .getResultList();
+    }
+
+    @Override
+    public long contarClientes() {
+        return em.createQuery("SELECT COUNT(u) FROM Usuario u WHERE u.rol = :rol", Long.class)
+                .setParameter("rol", Rol.CLIENTE)
+                .getSingleResult();
     }
 
     @Override
