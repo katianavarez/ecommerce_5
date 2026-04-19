@@ -1,0 +1,49 @@
+package itson.ecommercewebaplication.filters;
+
+import itson.ecommercewebaplication.util.JWTUtil;
+import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+/**
+ *
+ * @author PC
+ */
+@WebFilter(filterName = "ApiAuthFilter", urlPatterns = {"/api/*"})
+public class ApiAuthFilter implements Filter {
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse res = (HttpServletResponse) response;
+
+        if ("OPTIONS".equalsIgnoreCase(req.getMethod())) {
+            res.setStatus(HttpServletResponse.SC_OK);
+            chain.doFilter(request, response);
+            return;
+        }
+
+        String authHeader = req.getHeader("Authorization");
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            res.setContentType("application/json");
+            res.getWriter().write("{\"success\":false,\"message\":\"Token requerido\"}");
+            return;
+        }
+
+        try {
+            String token = authHeader.substring(7);
+            String correo = JWTUtil.validarToken(token);
+            req.setAttribute("correoUsuario", correo);
+            req.setAttribute("rolUsuario", JWTUtil.getRolFromToken(token));
+            chain.doFilter(request, response);
+        } catch (Exception e) {
+            res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            res.setContentType("application/json");
+            res.getWriter().write("{\"success\":false,\"message\":\"Token inválido o expirado\"}");
+        }
+    }
+}
