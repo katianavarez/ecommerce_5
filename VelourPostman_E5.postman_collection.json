@@ -1,0 +1,815 @@
+{
+  "info": {
+    "_postman_id": "21247cf7-211d-4d18-8252-bd00b9c298c9",
+    "name": "VelourPostman_E5",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52079975",
+    "_collection_link": "https://go.postman.co/collection/52079975-21247cf7-211d-4d18-8252-bd00b9c298c9?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Token",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "Token",
+          "host": [
+            "Token"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Token",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"correo\": \"darkcrowvs@gmail.com\",\r\n    \"contrasena\": \"123123123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/ECommerceWebAplication/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "ECommerceWebAplication",
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json;charset=UTF-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "266"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 19 Apr 2026 15:10:03 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=20"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": true,\n    \"message\": \"Login exitoso\",\n    \"data\": {\n        \"token\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXJrY3Jvd3ZzQGdtYWlsLmNvbSIsInJvbCI6IkNMSUVOVEUiLCJpYXQiOjE3NzY2MTE0MDMsImV4cCI6MTc3NjY5NzgwM30.9FxkSuyQi-SqB-OlHRbF4bbTcGsAMxV3kPjeQkl5kfA\",\n        \"rol\": \"CLIENTE\",\n        \"nombre\": \"Casi\"\n    }\n}"
+        }
+      ]
+    },
+    {
+      "name": "ListarProductos",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": [
+        {
+          "name": "ListarProductos",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/ECommerceWebAplication/api/productos",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "ECommerceWebAplication",
+                "api",
+                "productos"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json;charset=UTF-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "237"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 19 Apr 2026 15:10:49 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=20"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "[{\"id\":18,\"nombre\":\"top\",\"descripcion\":\"aaaaaa\",\"precio\":33.0,\"imagenURL\":\"assets/img/categoria/blazers.png\",\"stock\":0,\"tallasDisponibles\":[],\"stockPorTalla\":[],\"color\":\"GRIS\",\"activo\":true,\"categoria\":{\"id\":7,\"nombre\":\"Tops\",\"productos\""
+        }
+      ]
+    },
+    {
+      "name": "DetalleProducto",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXJrY3Jvd3ZzQGdtYWlsLmNvbSIsInJvbCI6IkNMSUVOVEUiLCJpYXQiOjE3NzY2MTE0MDMsImV4cCI6MTc3NjY5NzgwM30.9FxkSuyQi-SqB-OlHRbF4bbTcGsAMxV3kPjeQkl5kfA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/ECommerceWebAplication/api/productos/3",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "ECommerceWebAplication",
+            "api",
+            "productos",
+            "3"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "DetalleProducto",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/ECommerceWebAplication/api/productos/3",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "ECommerceWebAplication",
+                "api",
+                "productos",
+                "3"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json;charset=UTF-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "313"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 19 Apr 2026 15:11:56 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=20"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\"id\":3,\"nombre\":\"Bueno \",\"descripcion\":\"asdasdasdsadasd\",\"precio\":12.0,\"imagenURL\":\"assets/img/categoria/blazers.png\",\"stock\":0,\"tallasDisponibles\":[\"XS\",\"S\"],\"stockPorTalla\":[{\"talla\":\"XS\",\"cantidad\":2},{\"talla\":\"S\",\"cantidad\":2}],\"color\":\"NEGRO\",\"activo\":true,\"categoria\":{\"id\":4,\"nombre\":\"Blazers\",\"productos\""
+        }
+      ]
+    },
+    {
+      "name": "AgregarProductoCarrito",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXJrY3Jvd3ZzQGdtYWlsLmNvbSIsInJvbCI6IkNMSUVOVEUiLCJpYXQiOjE3NzY2MTE0MDMsImV4cCI6MTc3NjY5NzgwM30.9FxkSuyQi-SqB-OlHRbF4bbTcGsAMxV3kPjeQkl5kfA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"usuarioId\": 5,\r\n    \"productoId\": 5,\r\n    \"cantidad\": 1,\r\n    \"talla\": \"M\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/ECommerceWebAplication/api/carrito",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "ECommerceWebAplication",
+            "api",
+            "carrito"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "AgregarProductoCarrito",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"usuarioId\": 5,\r\n    \"productoId\": 5,\r\n    \"cantidad\": 1,\r\n    \"talla\": \"M\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/ECommerceWebAplication/api/carrito",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "ECommerceWebAplication",
+                "api",
+                "carrito"
+              ]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json;charset=UTF-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "226"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 19 Apr 2026 15:19:00 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=20"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\"success\":true,\"message\":\"Producto agregado al carrito\",\"data\":{\"id\":1,\"usuario\":{\"id\":5,\"nombre\":\"Casi\",\"correo\":\"darkcrowvs@gmail.com\",\"contraseña\":\"123123123\",\"telefono\":\"+5255000000322\",\"rol\":\"CLIENTE\",\"historialPedidos\""
+        }
+      ]
+    },
+    {
+      "name": "VerCarrito",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": [
+        {
+          "name": "VerCarrito",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/ECommerceWebAplication/api/carrito/5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "ECommerceWebAplication",
+                "api",
+                "carrito",
+                "5"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json;charset=UTF-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "162"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 19 Apr 2026 15:23:05 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=20"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\"id\":1,\"usuario\":{\"id\":5,\"nombre\":\"Casi\",\"correo\":\"darkcrowvs@gmail.com\",\"contraseña\":\"123123123\",\"telefono\":\"+5255000000322\",\"rol\":\"CLIENTE\",\"historialPedidos\""
+        }
+      ]
+    },
+    {
+      "name": "CrearPedido",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXJrY3Jvd3ZzQGdtYWlsLmNvbSIsInJvbCI6IkNMSUVOVEUiLCJpYXQiOjE3NzY2MTE0MDMsImV4cCI6MTc3NjY5NzgwM30.9FxkSuyQi-SqB-OlHRbF4bbTcGsAMxV3kPjeQkl5kfA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"usuarioId\": 5,\r\n  \"calle\": \"Villa ITSON\",\r\n  \"ciudad\": \"Cd. Obregon\",\r\n  \"estado\": \"Sonora\",\r\n  \"codigoPostal\": \"83000\",\r\n  \"metodoPago\": \"TRANSFERENCIA\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/ECommerceWebAplication/api/pedidos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "ECommerceWebAplication",
+            "api",
+            "pedidos"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "CrearPedido",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"usuarioId\": 5,\r\n  \"calle\": \"Villa ITSON\",\r\n  \"ciudad\": \"Cd. Obregon\",\r\n  \"estado\": \"Sonora\",\r\n  \"codigoPostal\": \"83000\",\r\n  \"metodoPago\": \"TRANSFERENCIA\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/ECommerceWebAplication/api/pedidos",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "ECommerceWebAplication",
+                "api",
+                "pedidos"
+              ]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json;charset=UTF-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "324"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 19 Apr 2026 15:23:20 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=20"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\"success\":true,\"message\":\"Pedido creado exitosamente\",\"data\":{\"id\":50,\"numPedido\":\"PED-1776612200532-292D53AA\",\"fecha\":\"2026-04-19\",\"total\":10999.0,\"estado\":\"PENDIENTE\",\"usuario\":{\"id\":5,\"nombre\":\"Casi\",\"correo\":\"darkcrowvs@gmail.com\",\"contraseña\":\"123123123\",\"telefono\":\"+5255000000322\",\"rol\":\"CLIENTE\",\"historialPedidos\""
+        }
+      ]
+    },
+    {
+      "name": "VerCarrito",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXJrY3Jvd3ZzQGdtYWlsLmNvbSIsInJvbCI6IkNMSUVOVEUiLCJpYXQiOjE3NzY2MTE0MDMsImV4cCI6MTc3NjY5NzgwM30.9FxkSuyQi-SqB-OlHRbF4bbTcGsAMxV3kPjeQkl5kfA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/ECommerceWebAplication/api/pedidos/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "ECommerceWebAplication",
+            "api",
+            "pedidos",
+            "1"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "VerCarrito",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/ECommerceWebAplication/api/pedidos/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "ECommerceWebAplication",
+                "api",
+                "pedidos",
+                "1"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json;charset=UTF-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "258"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 19 Apr 2026 15:24:52 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=20"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\"id\":1,\"numPedido\":\"PED-1776265845822-FBCF689F\",\"fecha\":\"2026-04-15\",\"total\":12.0,\"estado\":\"ENTREGADO\",\"usuario\":{\"id\":5,\"nombre\":\"Casi\",\"correo\":\"darkcrowvs@gmail.com\",\"contraseña\":\"123123123\",\"telefono\":\"+5255000000322\",\"rol\":\"CLIENTE\",\"historialPedidos\""
+        }
+      ]
+    },
+    {
+      "name": "HistorialPedidos",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXJrY3Jvd3ZzQGdtYWlsLmNvbSIsInJvbCI6IkNMSUVOVEUiLCJpYXQiOjE3NzY2MTE0MDMsImV4cCI6MTc3NjY5NzgwM30.9FxkSuyQi-SqB-OlHRbF4bbTcGsAMxV3kPjeQkl5kfA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/ECommerceWebAplication/api/pedidos/usuario/5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "ECommerceWebAplication",
+            "api",
+            "pedidos",
+            "usuario",
+            "5"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "HistorialPedidos",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/ECommerceWebAplication/api/pedidos/usuario/5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "ECommerceWebAplication",
+                "api",
+                "pedidos",
+                "usuario",
+                "5"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json;charset=UTF-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "258"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 19 Apr 2026 15:25:38 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=20"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "[{\"id\":48,\"numPedido\":\"PED-1776603993212-BDDF1105\",\"fecha\":\"2026-04-19\",\"total\":15.0,\"estado\":\"ENVIADO\",\"usuario\":{\"id\":5,\"nombre\":\"Casi\",\"correo\":\"darkcrowvs@gmail.com\",\"contraseña\":\"123123123\",\"telefono\":\"+5255000000322\",\"rol\":\"CLIENTE\",\"historialPedidos\""
+        }
+      ]
+    },
+    {
+      "name": "CrearReseña",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXJrY3Jvd3ZzQGdtYWlsLmNvbSIsInJvbCI6IkNMSUVOVEUiLCJpYXQiOjE3NzY2MTE0MDMsImV4cCI6MTc3NjY5NzgwM30.9FxkSuyQi-SqB-OlHRbF4bbTcGsAMxV3kPjeQkl5kfA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"usuarioId\": 5,\r\n    \"productoId\": 3,\r\n    \"calificacion\": 5,\r\n    \"comentario\": \"Excelente calidad\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/ECommerceWebAplication/api/resenas",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "ECommerceWebAplication",
+            "api",
+            "resenas"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "CrearReseña",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"usuarioId\": 5,\r\n    \"productoId\": 3,\r\n    \"calificacion\": 5,\r\n    \"comentario\": \"Excelente calidad\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/ECommerceWebAplication/api/resenas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "ECommerceWebAplication",
+                "api",
+                "resenas"
+              ]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json;charset=UTF-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "454"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 19 Apr 2026 15:26:58 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=20"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\"success\":true,\"message\":\"Resenia creada\",\"data\":{\"id\":24,\"calificacion\":5,\"comentario\":\"Excelente calidad\",\"fecha\":\"2026-04-19\",\"producto\":{\"id\":3,\"nombre\":\"Bueno \",\"descripcion\":\"asdasdasdsadasd\",\"precio\":12.0,\"imagenURL\":\"assets/img/categoria/blazers.png\",\"stock\":0,\"tallasDisponibles\":[\"XS\",\"S\"],\"stockPorTalla\":[{\"talla\":\"XS\",\"cantidad\":2},{\"talla\":\"S\",\"cantidad\":2}],\"color\":\"NEGRO\",\"activo\":true,\"categoria\":{\"id\":4,\"nombre\":\"Blazers\",\"productos\""
+        }
+      ]
+    },
+    {
+      "name": "VerReseñas",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXJrY3Jvd3ZzQGdtYWlsLmNvbSIsInJvbCI6IkNMSUVOVEUiLCJpYXQiOjE3NzY2MTE0MDMsImV4cCI6MTc3NjY5NzgwM30.9FxkSuyQi-SqB-OlHRbF4bbTcGsAMxV3kPjeQkl5kfA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/ECommerceWebAplication/api/resenas/producto/3",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "ECommerceWebAplication",
+            "api",
+            "resenas",
+            "producto",
+            "3"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "VerReseñas",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/ECommerceWebAplication/api/resenas/producto/3",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "ECommerceWebAplication",
+                "api",
+                "resenas",
+                "producto",
+                "3"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json;charset=UTF-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "240"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 19 Apr 2026 15:27:48 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=20"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "[{\"id\":24,\"calificacion\":5,\"comentario\":\"Excelente calidad\",\"fecha\":\"2026-04-19\",\"producto\":{\"id\":3,\"nombre\":\"Bueno \",\"descripcion\":\"asdasdasdsadasd\",\"precio\":12.0,\"imagenURL\":\"assets/img/categoria/blazers.png\",\"stock\":0,\"tallasDisponibles\""
+        }
+      ]
+    }
+  ]
+}
