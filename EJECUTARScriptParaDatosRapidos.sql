@@ -1,5 +1,6 @@
 -- Instrucciones:
---   1. crear la base de datos ecommerce_db primero que nada;
+--   1. crear la base de datos ecommerce_db primero que nada y
+-- 		no olvidar cambiar la contraseña en persistence en el proyecto.
 --   2. ejecutar el script despues de correr la app al menos
 --      una vez (para que hibernate genere las tablas).
 --   3. la contraseña del admin es: Admin1234
