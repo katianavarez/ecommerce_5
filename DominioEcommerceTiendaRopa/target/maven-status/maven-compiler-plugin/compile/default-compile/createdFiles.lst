@@ -1,0 +1,5 @@
+enums\EstadoPedido.class
+enums\Rol.class
+enums\EstadoPago.class
+enums\Tallas.class
+enums\FormaPago.class

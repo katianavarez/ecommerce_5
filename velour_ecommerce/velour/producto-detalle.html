@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vestido Satén Cruzado — Velour</title>
+    <link rel="stylesheet" href="./css/variables.css">
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/layout.css">
+    <link rel="stylesheet" href="./css/paginas/product-detail.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="header-top">Envío gratis en compras mayores a $1,500 MXN &nbsp;·&nbsp;<a href="#">Ver beneficios →</a></div>
+    <div class="header-main">
+        <a href="index.html" class="site-logo">
+            <div class="site-logo__wordmark">Vel<span>our</span></div>
+            <div class="site-logo__sub">Moda de Autor</div>
+        </a>
+        <nav class="main-nav">
+            <a href="index.html" class="main-nav__link">Inicio</a>
+            <a href="productos.html" class="main-nav__link main-nav__link--active">Colección</a>
+            <!--<a href="productos.html" class="main-nav__link">Novedades</a>
+            <a href="productos.html" class="main-nav__link">Sale</a>-->
+        </nav>
+        <form class="search-form"><input class="search-form__input" type="search" placeholder="Buscar...">
+            <button class="search-form__btn" type="submit"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg></button>
+        </form>
+        <div class="header-right">
+            <div class="header-actions">
+                <a href="login.html" class="header-icon" aria-label="Mi cuenta">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </a>
+                <a href="carrito.html" class="header-icon" aria-label="Carrito">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+                    </svg>
+
+                    <span class="cart-badge">2</span>
+                </a>
+            </div>
+
+            <button class="header-burger" aria-label="Menú" id="burgerBtn">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="index.html" class="mobile-nav__link">Inicio</a>
+        <a href="productos.html" class="mobile-nav__link">Colección</a>
+        <a href="carrito.html" class="mobile-nav__link">Carrito</a>
+    </nav>
+</header>
+
+<main>
+    <!-- Breadcrumb -->
+    <div class="container" style="padding-top:var(--sp-5);">
+        <nav class="shop-breadcrumb">
+            <a href="index.html">Inicio</a>
+            <span class="shop-breadcrumb__sep">›</span>
+            <a href="productos.html">Vestidos</a>
+            <span class="shop-breadcrumb__sep">›</span>
+            <span>Vestido Satén Cruzado</span>
+        </nav>
+    </div>
+
+    <!-- Detalle principal -->
+    <div class="detail-layout">
+
+        <!-- Galería -->
+        <div class="product-gallery">
+            <div class="gallery-thumbs">
+                <!--<div class="gallery-thumb gallery-thumb--active">
+                    <img src="./imgs/productos/vestido-saten-cruzado-1.jpg" alt="Vista frontal">
+                </div>
+                <div class="gallery-thumb">
+                    <img src="./imgs/productos/vestido-saten-cruzado-2.jpg" alt="Vista lateral">
+                </div>
+                <div class="gallery-thumb">
+                    <img src="./imgs/productos/vestido-saten-cruzado-3.jpg" alt="Vista trasera">
+                </div>
+                <div class="gallery-thumb">
+                    <img src="./imgs/productos/vestido-saten-cruzado-4.jpg" alt="Detalle tela">
+                </div>-->
+            </div>
+
+            <div class="gallery-main">
+                <img src="./imgs/vestidos/vestidoAzulLargo.png" alt="Vestido Azul Largo" id="mainImage">
+                <div class="gallery-main__badge">
+                    <span class="badge badge--new">Nuevo</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info -->
+        <div class="product-info">
+            <p class="product-info__category">Vestidos · Colección SS 2025</p>
+
+            <h1 class="product-info__name">Vestido Azul<br>Cruzado Fluido</h1>
+
+            <div class="product-info__rating">
+                <div class="stars">★★★★★</div>
+                <span class="rating-count">4.8 · 36 reseñas</span>
+            </div>
+
+            <div class="product-info__price">
+                <span class="price-current">$2,890</span>
+            </div>
+
+            <p class="product-info__shipping">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                Envío gratis — llega en 3–5 días hábiles
+            </p>
+
+            <hr class="product-info__divider">
+
+            <!-- Color -->
+            <div class="color-selector">
+                <p class="color-selector__title">Color: <strong>Azul</strong></p>
+                <div class="color-options">
+                    <div class="color-btn color-btn--active" style="background:#C4B49A;" title="Tostado"></div>
+                    <div class="color-btn" style="background:#1A1A2E;" title="Azul Noche"></div>
+                    <!--<div class="color-btn" style="background:#2C1810;" title="Vino"></div>
+                    <div class="color-btn" style="background:#F0EBE0;" box-shadow="inset 0 0 0 1px #ccc" title="Crema"></div>-->
+                </div>
+            </div>
+
+            <!-- Talla -->
+            <div class="size-selector">
+                <p class="size-selector__title">
+                    Talla
+                    <a href="#">Guía de tallas</a>
+                </p>
+                <div class="size-options">
+                    <button class="size-btn size-btn--disabled">XS</button>
+                    <button class="size-btn">S</button>
+                    <button class="size-btn size-btn--active">M</button>
+                    <button class="size-btn">L</button>
+                    <button class="size-btn">XL</button>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="product-actions">
+                <div class="qty-control">
+                    <button class="qty-btn">−</button>
+                    <input class="qty-input" type="number" value="1" min="1" max="10" readonly>
+                    <button class="qty-btn">+</button>
+                </div>
+                <a href="carrito.html" class="btn btn--gold btn--lg" style="flex:1;">Agregar al Carrito</a>
+            </div>
+
+            <hr class="product-info__divider">
+
+            <!-- Beneficios -->
+            <div style="display:flex; flex-direction:column; gap:var(--sp-3);">
+                <div style="display:flex; align-items:center; gap:var(--sp-3); font-size:var(--fs-sm); color:var(--text-muted);">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                    Devoluciones gratuitas en 30 días
+                </div>
+                <div style="display:flex; align-items:center; gap:var(--sp-3); font-size:var(--fs-sm); color:var(--text-muted);">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                    Empaque premium · regalo disponible
+                </div>
+                <div style="display:flex; align-items:center; gap:var(--sp-3); font-size:var(--fs-sm); color:var(--text-muted);">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    Pago seguro con cifrado SSL
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabs: Descripción, Materiales, Reseñas -->
+    <div class="product-tabs">
+        <div class="tabs-nav">
+            <button class="tab-btn tab-btn--active" data-tab="descripcion">Descripción</button>
+            <button class="tab-btn" data-tab="materiales">Materiales & Cuidados</button>
+            <button class="tab-btn" data-tab="resenas">Reseñas (36)</button>
+        </div>
+
+        <div class="tab-content tab-content--active" id="tab-descripcion">
+            <p style="max-width:65ch; color:var(--text-body); line-height:1.8; font-size:var(--fs-md);">
+                El Vestido Satén Cruzado Fluido es la pieza central de nuestra colección SS 2025. Diseñado con líneas puras y un corte que abraza la silueta sin sacrificar movimiento, combina la sofisticación de las fibras premium con la versatilidad del diseño contemporáneo.
+            </p>
+            <ul style="margin-top:var(--sp-6); display:flex; flex-direction:column; gap:var(--sp-3); max-width:50ch;">
+                <li style="font-size:var(--fs-sm); color:var(--text-muted); display:flex; gap:var(--sp-3);">
+                    <span style="color:var(--color-secondary);">—</span> Escote cruzado ajustable con lazada interna
+                </li>
+                <li style="font-size:var(--fs-sm); color:var(--text-muted); display:flex; gap:var(--sp-3);">
+                    <span style="color:var(--color-secondary);">—</span> Corte midi, largo aprox. 115 cm en talla M
+                </li>
+                <li style="font-size:var(--fs-sm); color:var(--text-muted); display:flex; gap:var(--sp-3);">
+                    <span style="color:var(--color-secondary);">—</span> Disponible en 4 colores exclusivos
+                </li>
+                <li style="font-size:var(--fs-sm); color:var(--text-muted); display:flex; gap:var(--sp-3);">
+                    <span style="color:var(--color-secondary);">—</span> Ideal para ocasiones formales y semi-formales
+                </li>
+            </ul>
+        </div>
+
+        <div class="tab-content" id="tab-materiales">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-8); max-width:680px;">
+                <div>
+                    <h4 style="font-size:var(--fs-sm); font-weight:var(--fw-medium); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:var(--sp-4);">Composición</h4>
+                    <p style="font-size:var(--fs-sm); color:var(--text-muted); line-height:1.8;">70% Seda natural<br>20% Viscosa<br>10% Elastano</p>
+                </div>
+                <div>
+                    <h4 style="font-size:var(--fs-sm); font-weight:var(--fw-medium); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:var(--sp-4);">Cuidados</h4>
+                    <p style="font-size:var(--fs-sm); color:var(--text-muted); line-height:1.8;">Lavado a mano en frío<br>No usar secadora<br>Planchar a temperatura baja<br>Lavado en seco permitido</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="tab-resenas">
+            <div style="margin-bottom:var(--sp-8); display:flex; align-items:center; gap:var(--sp-6);">
+                <div style="text-align:center;">
+                    <p style="font-family:var(--font-display); font-size:4rem; font-weight:var(--fw-light); line-height:1;">4.8</p>
+                    <div class="stars" style="font-size:var(--fs-lg);">★★★★★</div>
+                    <p style="font-size:var(--fs-xs); color:var(--text-muted); margin-top:var(--sp-2);">36 reseñas</p>
+                </div>
+            </div>
+
+            <div class="reviews-list">
+                <div class="review-card">
+                    <div class="review-card__header">
+                        <div>
+                            <p class="review-author">Valentina R.</p>
+                            <div class="stars">★★★★★</div>
+                        </div>
+                        <p class="review-date">12 mar 2025</p>
+                    </div>
+                    <p class="review-text">Absolutamente hermoso. La tela cae perfectamente y los colores son exactamente los de las fotos. Me lo puse en una boda y recibí muchos cumplidos.</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-card__header">
+                        <div>
+                            <p class="review-author">Mariana T.</p>
+                            <div class="stars">★★★★☆</div>
+                        </div>
+                        <p class="review-date">8 mar 2025</p>
+                    </div>
+                    <p class="review-text">La calidad es increíble, se nota que es una prenda premium. Recomiendo tomar la talla de arriba si tienes caderas más pronunciadas.</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-card__header">
+                        <div>
+                            <p class="review-author">Sofía M.</p>
+                            <div class="stars">★★★★★</div>
+                        </div>
+                        <p class="review-date">1 mar 2025</p>
+                    </div>
+                    <p class="review-text">Ya es mi tercera compra en Velour y esta pieza superó mis expectativas. El empaque es un regalo en sí mismo.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="site-footer">
+    <div class="footer-top">
+        <div class="footer-brand">
+            <div class="footer-brand__logo">Vel<span>our</span></div>
+            <p class="footer-brand__text">Moda premium diseñada para la mujer contemporánea.</p>
+        </div>
+        <div class="footer-col"><p class="footer-col__title">Tienda</p><div class="footer-col__links"><a href="#">Colección</a><a href="#">Novedades</a><a href="#">Sale</a></div></div>
+        <div class="footer-col"><p class="footer-col__title">Ayuda</p><div class="footer-col__links"><a href="#">Envíos</a><a href="#">Devoluciones</a></div></div>
+        <div class="footer-col"><p class="footer-col__title">Empresa</p><div class="footer-col__links"><a href="#">Sobre Velour</a></div></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 Velour. Todos los derechos reservados.</p></div>
+</footer>
+
+<!--<script>
+    document.getElementById('burgerBtn').addEventListener('click', () =>
+        document.getElementById('mobileNav').classList.toggle('is-open'));
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('tab-btn--active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('tab-content--active'));
+            btn.classList.add('tab-btn--active');
+            document.getElementById('tab-' + btn.dataset.tab).classList.add('tab-content--active');
+        });
+    });
+
+    document.querySelectorAll('.gallery-thumb').forEach((thumb, i) => {
+        thumb.addEventListener('click', () => {
+            document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('gallery-thumb--active'));
+            thumb.classList.add('gallery-thumb--active');
+        });
+    });
+
+    document.querySelectorAll('.size-btn:not(.size-btn--disabled)').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('size-btn--active'));
+            btn.classList.add('size-btn--active');
+        });
+    });
+
+    const qtyInput = document.querySelector('.qty-input');
+    document.querySelectorAll('.qty-btn').forEach((btn, i) => {
+        btn.addEventListener('click', () => {
+            let v = parseInt(qtyInput.value);
+            if (i === 0 && v > 1) qtyInput.value = v - 1;
+            if (i === 1 && v < 10) qtyInput.value = v + 1;
+        });
+    });
+</script>-->
+</body>
+</html>

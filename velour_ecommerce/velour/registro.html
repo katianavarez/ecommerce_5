@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Cuenta — Velour</title>
+    <link rel="stylesheet" href="./css/variables.css">
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/layout.css">
+    <link rel="stylesheet" href="./css/paginas/auth.css">
+</head>
+<body>
+<main>
+    <div class="auth-page">
+        <div class="auth-visual">
+            <div class="auth-visual__img" style="background:linear-gradient(160deg,#2D5A2D 0%,#1A1A2E 100%);"></div>
+            <div class="auth-visual__content">
+                <div class="auth-visual__logo">Vel<span>our</span></div>
+                <p class="auth-visual__quote">"Únete al círculo de mujeres que visten con intención y elegancia."</p>
+                <p class="auth-visual__sub">— Velour Premium Members</p>
+            </div>
+        </div>
+
+        <div class="auth-form-side">
+            <div class="auth-form-box">
+                <a href="index.html" style="display:block; margin-bottom:var(--sp-8); font-family:var(--font-display); font-size:var(--fs-2xl); font-weight:var(--fw-semibold); letter-spacing:0.14em; text-transform:uppercase; color:var(--color-primary);">
+                    Vel<span style="color:var(--color-secondary);">our</span>
+                </a>
+                <h1 class="auth-form-box__title">Crear cuenta</h1>
+                <p class="auth-form-box__sub">Únete y disfruta de envíos exclusivos, acceso anticipado y más.</p>
+
+                <form class="auth-form" action="cuenta.html">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Nombre</label>
+                            <input class="form-control" type="text" placeholder="Ana">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Apellido</label>
+                            <input class="form-control" type="text" placeholder="García">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Correo electrónico</label>
+                        <input class="form-control" type="email" placeholder="ana@correo.com">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Contraseña</label>
+                        <input class="form-control" type="password" placeholder="Mínimo 8 caracteres">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Confirmar contraseña</label>
+                        <input class="form-control" type="password" placeholder="Repite tu contraseña">
+                    </div>
+
+                    <label style="display:flex; align-items:flex-start; gap:var(--sp-3); cursor:pointer; font-size:var(--fs-sm); color:var(--text-muted);">
+                        <input type="checkbox" style="margin-top:2px; accent-color:var(--color-secondary); flex-shrink:0;">
+                        Acepto los <a href="#" style="color:var(--color-secondary); margin:0 2px;">Términos de Servicio</a> y la <a href="#" style="color:var(--color-secondary); margin:0 2px;">Política de Privacidad</a>
+                    </label>
+
+                    <button type="submit" class="btn btn--primary btn--full btn--lg">Crear mi cuenta</button>
+                </form>
+
+                <p class="auth-link">
+                    ¿Ya tienes cuenta? <a href="login.html">Iniciar sesión</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colección — Velour</title>
+    <link rel="stylesheet" href="./css/variables.css">
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/layout.css">
+    <link rel="stylesheet" href="./css/paginas/products.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="header-top">
+        Envío gratis en compras mayores a $1,500 MXN &nbsp;·&nbsp;
+        <a href="#">Ver beneficios →</a>
+    </div>
+    <div class="header-main">
+        <a href="index.html" class="site-logo">
+            <div class="site-logo__wordmark">Vel<span>our</span></div>
+            <div class="site-logo__sub">Moda de Autor</div>
+        </a>
+        <nav class="main-nav">
+            <a href="index.html" class="main-nav__link">Inicio</a>
+            <a href="productos.html" class="main-nav__link main-nav__link--active">Colección</a>
+            <!--<a href="productos.html" class="main-nav__link">Novedades</a>-->
+           <!-- <a href="productos.html" class="main-nav__link">Sale</a>-->
+        </nav>
+        <form class="search-form" role="search">
+            <input class="search-form__input" type="search" placeholder="Buscar prendas...">
+            <button class="search-form__btn" type="submit" aria-label="Buscar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/>
+                </svg>
+            </button>
+        </form>
+        <div class="header-right">
+            <div class="header-actions">
+                <a href="login.html" class="header-icon" aria-label="Mi cuenta">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </a>
+                <a href="carrito.html" class="header-icon" aria-label="Carrito">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+                    </svg>
+
+                    <span class="cart-badge">2</span>
+                </a>
+            </div>
+
+            <button class="header-burger" aria-label="Menú" id="burgerBtn">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>    
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="index.html" class="mobile-nav__link">Inicio</a>
+        <a href="productos.html" class="mobile-nav__link">Colección</a>
+        <a href="login.html" class="mobile-nav__link">Mi cuenta</a>
+        <a href="carrito.html" class="mobile-nav__link">Carrito (2)</a>
+    </nav>
+</header>
+
+<main>
+    <div class="shop-layout">
+
+        <!-- ─── SIDEBAR ─── -->
+        <aside class="filters-sidebar">
+            <p class="filters-sidebar__title">Filtros</p>
+
+            <div class="filter-group">
+                <p class="filter-group__label">Categoría <span>▾</span></p>
+                <div class="filter-options">
+                    <label class="filter-option"><input type="checkbox" checked> Todos</label>
+                    <label class="filter-option"><input type="checkbox"> Vestidos (24)</label>
+                    <label class="filter-option"><input type="checkbox"> Blusas (18)</label>
+                    <label class="filter-option"><input type="checkbox"> Blazers (9)</label>
+                    <label class="filter-option"><input type="checkbox"> Conjuntos (12)</label>
+                    <label class="filter-option"><input type="checkbox"> Faldas (15)</label>
+                    <label class="filter-option"><input type="checkbox"> Pantalones (11)</label>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <div class="filter-group">
+                <p class="filter-group__label">Talla <span>▾</span></p>
+                <div class="filter-options" style="flex-direction:row; flex-wrap:wrap; gap:var(--sp-2);">
+                    <label class="filter-option" style="border:1.5px solid var(--border-soft); padding:4px 10px; border-radius:var(--r-sm); font-size:var(--fs-xs); cursor:pointer;">
+                        <input type="checkbox" style="display:none"> XS
+                    </label>
+                    <label class="filter-option" style="border:1.5px solid var(--border-soft); padding:4px 10px; border-radius:var(--r-sm); font-size:var(--fs-xs); cursor:pointer;">
+                        <input type="checkbox" style="display:none"> S
+                    </label>
+                    <label class="filter-option" style="border:1.5px solid var(--border-soft); padding:4px 10px; border-radius:var(--r-sm); font-size:var(--fs-xs); cursor:pointer;">
+                        <input type="checkbox" style="display:none"> M
+                    </label>
+                    <label class="filter-option" style="border:1.5px solid var(--border-soft); padding:4px 10px; border-radius:var(--r-sm); font-size:var(--fs-xs); cursor:pointer;">
+                        <input type="checkbox" style="display:none"> L
+                    </label>
+                    <label class="filter-option" style="border:1.5px solid var(--border-soft); padding:4px 10px; border-radius:var(--r-sm); font-size:var(--fs-xs); cursor:pointer;">
+                        <input type="checkbox" style="display:none"> XL
+                    </label>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <div class="filter-group">
+                <p class="filter-group__label">Color <span>▾</span></p>
+                <div class="filter-colors">
+                    <div class="color-swatch color-swatch--active" style="background:#1A1A2E;" title="Azul Noche"></div>
+                    <div class="color-swatch" style="background:#FFFFFF; box-shadow: inset 0 0 0 1px #ccc;" title="Blanco"></div>
+                    <div class="color-swatch" style="background:#2C1810;" title="Vino"></div>
+                    <div class="color-swatch" style="background:#C9A96E;" title="Dorado"></div>
+                    <div class="color-swatch" style="background:#4A4A4A;" title="Gris"></div>
+                    <div class="color-swatch" style="background:#E8C4C4;" title="Rosa"></div>
+                    <div class="color-swatch" style="background:#D4C5A8;" title="Beige"></div>
+                    <div class="color-swatch" style="background:#2D5A2D;" title="Verde"></div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <div class="filter-group">
+                <p class="filter-group__label">Precio <span>▾</span></p>
+                <div class="price-range">
+                    <input type="range" min="0" max="10000" value="5000">
+                    <div class="price-range__labels">
+                        <span>$0</span>
+                        <span>hasta $5,000</span>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <div class="filter-group">
+                <p class="filter-group__label">Disponibilidad <span>▾</span></p>
+                <div class="filter-options">
+                    <label class="filter-option"><input type="checkbox" checked> En existencia</label>
+                    <label class="filter-option"><input type="checkbox"> Agotado</label>
+                </div>
+            </div>
+
+            <button class="btn btn--outline btn--sm btn--full" style="margin-top:var(--sp-2);">Limpiar filtros</button>
+        </aside>
+
+        <!-- ─── MAIN ─── -->
+        <div class="shop-main">
+            <div class="shop-header">
+                <div>
+                    <nav class="shop-breadcrumb">
+                        <a href="index.html">Inicio</a>
+                        <span class="shop-breadcrumb__sep">›</span>
+                        <span>Colección</span>
+                    </nav>
+                    <h1 class="shop-title">Toda la Colección</h1>
+                </div>
+                <div class="shop-controls">
+                    <span class="shop-count">89 productos</span>
+                    <select class="shop-sort">
+                        <option>Más relevantes</option>
+                        <option>Precio: menor a mayor</option>
+                        <option>Precio: mayor a menor</option>
+                        <option>Más recientes</option>
+                        <option>Más vendidos</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Filtros activos -->
+            <div class="active-filters">
+                <span class="filter-tag">Azul Noche <span class="filter-tag__remove">×</span></span>
+                <span class="filter-tag">En existencia <span class="filter-tag__remove">×</span></span>
+            </div>
+
+            <!-- Grid de productos -->
+            <div class="products-grid products-grid--3">
+
+                <a href="producto-detalle.html" class="product-card" style="text-decoration:none;">
+                    <div class="product-card__img-wrap">
+                        <img src="./imgs/vestidos/vestidoAzulLargo.png" alt="Vestido Azul Largo">
+                         <div class="product-card__badge"><span class="badge badge--new">Nuevo</span></div>
+                    </div>
+                    <div class="product-card__body">
+                        <p class="product-card__cat">Vestidos</p>
+                        <h3 class="product-card__name">Vestido Azul Largo</h3>
+                        <div class="stars">★★★★★</div>
+                        <div class="product-card__price" style="margin-top:var(--sp-2);">
+                            <span class="product-card__price-current">$2,890</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="producto-detalle.html" class="product-card" style="text-decoration:none;">
+                    <div class="product-card__img-wrap">
+                        <img src="./imgs/blazers/blazerAzulRayas.png" alt="Blazer Estructurado Rayas">
+                        <div class="product-card__badge"><span class="badge badge--sale">–25%</span></div>
+                    </div>
+                    <div class="product-card__body">
+                        <p class="product-card__cat">Blazers</p>
+                        <h3 class="product-card__name">Blazer Estructurado Rayas</h3>
+                        <div class="stars">★★★★☆</div>
+                        <div class="product-card__price" style="margin-top:var(--sp-2);">
+                            <span class="product-card__price-current">$1,890</span>
+                            <span class="product-card__price-original">$2,520</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="producto-detalle.html" class="product-card" style="text-decoration:none;">
+                    <div class="product-card__img-wrap">
+                        <img src="./imgs/conjuntos/conjuntoNegroCasual.png" alt="Conjunto Negro Casual">
+                    </div>
+                    <div class="product-card__body">
+                        <p class="product-card__cat">Conjuntos</p>
+                        <h3 class="product-card__name">Conjunto Negro Casual</h3>
+                        <div class="stars">★★★★★</div>
+                        <div class="product-card__price" style="margin-top:var(--sp-2);">
+                            <span class="product-card__price-current">$3,450</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="producto-detalle.html" class="product-card" style="text-decoration:none;">
+                    <div class="product-card__img-wrap">
+                        <img src="./imgs/blusas/blusaCruzadaEstampadoGris.png" alt="Blusa Estampado Gris">
+                        <div class="product-card__badge"><span class="badge badge--new">Nuevo</span></div>
+                    </div>
+                    <div class="product-card__body">
+                        <p class="product-card__cat">Blusas</p>
+                        <h3 class="product-card__name">Blusa Estampado Gris</h3>
+                        <div class="stars">★★★★☆</div>
+                        <div class="product-card__price" style="margin-top:var(--sp-2);">
+                            <span class="product-card__price-current">$1,290</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="producto-detalle.html" class="product-card" style="text-decoration:none;">
+                    <div class="product-card__img-wrap">
+                        <img src="./imgs/faldas/faldaNegraCorta.png" alt="Falda Negra Mini">
+                    </div>
+                    <div class="product-card__body">
+                        <p class="product-card__cat">Faldas</p>
+                        <h3 class="product-card__name">Falda Negra Mini</h3>
+                        <div class="stars">★★★★★</div>
+                        <div class="product-card__price" style="margin-top:var(--sp-2);">
+                            <span class="product-card__price-current">$1,650</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="producto-detalle.html" class="product-card" style="text-decoration:none;">
+                    <div class="product-card__img-wrap">
+                        <img src="./imgs/pantalones/pantalonNegroSastreAncho.png" alt="Pantalón Sastre Ancho">
+                        <div class="product-card__badge"><span class="badge badge--sale">–15%</span></div>
+                    </div>
+                    <div class="product-card__body">
+                        <p class="product-card__cat">Pantalones</p>
+                        <h3 class="product-card__name">Pantalón Sastre Ancho</h3>
+                        <div class="stars">★★★★☆</div>
+                        <div class="product-card__price" style="margin-top:var(--sp-2);">
+                            <span class="product-card__price-current">$1,360</span>
+                            <span class="product-card__price-original">$1,600</span>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+
+            <!-- Paginación -->
+            <nav class="pagination" aria-label="Paginación">
+                <a class="pagination__btn" href="#">‹</a>
+                <a class="pagination__btn pagination__btn--active" href="#">1</a>
+                <a class="pagination__btn" href="#">2</a>
+                <a class="pagination__btn" href="#">3</a>
+                <span class="pagination__btn" style="border:none;">…</span>
+                <a class="pagination__btn" href="#">8</a>
+                <a class="pagination__btn" href="#">›</a>
+            </nav>
+
+        </div>
+    </div>
+</main>
+
+<footer class="site-footer">
+    <div class="footer-top">
+        <div class="footer-brand">
+            <div class="footer-brand__logo">Vel<span>our</span></div>
+            <p class="footer-brand__text">Moda premium diseñada para la mujer contemporánea.</p>
+        </div>
+        <div class="footer-col">
+            <p class="footer-col__title">Tienda</p>
+            <div class="footer-col__links">
+                <a href="#">Nueva Colección</a>
+                <a href="#">Vestidos</a>
+                <a href="#">Sale</a>
+            </div>
+        </div>
+        <div class="footer-col">
+            <p class="footer-col__title">Ayuda</p>
+            <div class="footer-col__links">
+                <a href="#">Envíos</a>
+                <a href="#">Devoluciones</a>
+                <a href="#">Contacto</a>
+            </div>
+        </div>
+        <div class="footer-col">
+            <p class="footer-col__title">Empresa</p>
+            <div class="footer-col__links">
+                <a href="#">Sobre Velour</a>
+                <a href="#">Prensa</a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2025 Velour. Todos los derechos reservados.</p>
+        <div class="footer-payments"><span>VISA</span><span>MC</span><span>PayPal</span></div>
+    </div>
+</footer>
+
+<!--<script>
+    const burger = document.getElementById('burgerBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    burger.addEventListener('click', () => mobileNav.classList.toggle('is-open'));
+</script>-->
+</body>
+</html>

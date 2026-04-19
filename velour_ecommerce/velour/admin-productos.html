@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos — Velour Admin</title>
+    <link rel="stylesheet" href="./css/variables.css">
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/layout.css">
+    <link rel="stylesheet" href="./css/paginas/admin.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="header-main">
+        <a href="index.html" class="site-logo">
+            <div class="site-logo__wordmark">Vel<span>our</span></div>
+            <div class="site-logo__sub">Moda de Autor</div>
+        </a>
+        <div style="flex:1; display:flex; justify-content:center;">
+            <span class="admin-header-badge">
+                Panel de Administración
+            </span>
+        </div>
+        <div class="header-actions" style="display:flex; align-items:center; gap:var(--sp-3);">
+            <a href="index.html" class="header-icon" title="Ver tienda">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </a>
+            <a href="login.html" class="header-icon" title="Cerrar sesión">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            </a>
+            <button class="admin-menu-toggle" id="adminMenuToggle" aria-label="Abrir menú">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</header>
+
+<div class="admin-overlay" id="adminOverlay"></div>
+
+<div class="admin-layout">
+
+    <aside class="admin-sidebar">
+        <div class="admin-sidebar__header">
+            <p class="admin-sidebar__title">Administrador</p>
+            <p class="admin-sidebar__user">Carlos López</p>
+            <p class="admin-sidebar__role">Super Admin</p>
+        </div>
+        <nav class="admin-nav">
+            <p class="admin-nav__section">General</p>
+            <a href="admin-dashboard.html" class="admin-nav__link">
+                <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                Dashboard
+            </a>
+            <p class="admin-nav__section">Catálogo</p>
+            <a href="admin-productos.html" class="admin-nav__link admin-nav__link--active">
+                <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                Productos
+                <span class="admin-nav__badge">89</span>
+            </a>
+            <p class="admin-nav__section">Ventas</p>
+            <a href="admin-pedidos.html" class="admin-nav__link">
+                <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                Pedidos
+                <span class="admin-nav__badge admin-nav__badge--warn">4</span>
+            </a>
+            <p class="admin-nav__section">Comunidad</p>
+            <a href="admin-resenas.html" class="admin-nav__link">
+                <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Reseñas
+                <span class="admin-nav__badge">7</span>
+            </a>
+            <a href="admin-clientes.html" class="admin-nav__link">
+                <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Clientes
+            </a>
+        </nav>
+        <div class="admin-sidebar__footer">
+            <a href="index.html" class="admin-sidebar__logout">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Cerrar sesión
+            </a>
+        </div>
+    </aside>
+
+    <div class="admin-content">
+        <div class="admin-topbar">
+            <div>
+                <h1 class="admin-topbar__title">Gestión de Productos</h1>
+                <p class="admin-topbar__subtitle">89 productos en catálogo</p>
+            </div>
+            <div class="admin-topbar__actions">
+                <a href="admin-producto-form.html" class="btn btn--gold btn--sm">+ Agregar producto</a>
+            </div>
+        </div>
+
+        <div class="admin-body">
+
+            <!-- Filtros rápidos por categoría -->
+            <div class="admin-tabs">
+                <button class="admin-tab admin-tab--active">Todos (89)</button>
+                <button class="admin-tab">Vestidos (18)</button>
+                <button class="admin-tab">Blusas (14)</button>
+                <button class="admin-tab">Conjuntos (12)</button>
+                <button class="admin-tab">Blazers (9)</button>
+                <button class="admin-tab">Faldas (11)</button>
+                <button class="admin-tab">Pantalones (10)</button>
+                <button class="admin-tab">Tops (8)</button>
+                <button class="admin-tab">Accesorios (7)</button>
+            </div>
+
+            <div class="admin-table-wrap">
+                <div class="admin-table-head">
+                    <h2 class="admin-table-head__title">Catálogo</h2>
+                    <div class="admin-table-head__controls">
+                        <div class="admin-search">
+                            <input class="admin-search__input" type="search" placeholder="Buscar producto...">
+                            <button class="admin-search__btn">
+                                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+                            </button>
+                        </div>
+                        <select class="admin-select">
+                            <option>Todos los estados</option>
+                            <option>Activo</option>
+                            <option>Agotado</option>
+                            <option>Borrador</option>
+                        </select>
+                        <select class="admin-select">
+                            <option>Más recientes</option>
+                            <option>Precio: mayor a menor</option>
+                            <option>Precio: menor a mayor</option>
+                            <option>Menor stock</option>
+                        </select>
+                    </div>
+                </div>
+
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Categoría</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>
+                                <div class="admin-table__product">
+                                    <img class="admin-table__img" src="./imgs/vestidos/vestidoAzulLargo.png" alt="Vestido Azul Largo">
+                                    <div>
+                                        <p class="admin-table__name">Vestido Azul Largo</p>
+                                        <p class="admin-table__sub">SKU: VLR-VST-001</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="color:var(--text-muted);">Vestidos</td>
+                            <td><strong>$2,890</strong></td>
+                            <td>24 uds.</td>
+                            <td><span class="badge badge--entregado">Activo</span></td>
+                            <td>
+                                <div class="admin-table__actions">
+                                    <a href="admin-producto-form.html" class="admin-action-btn" title="Editar">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                    </a>
+                                    <button class="admin-action-btn admin-action-btn--danger" title="Eliminar">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="admin-table__product">
+                                    <img class="admin-table__img" src="./imgs/vestidos/vestidoNegroCorto.png" alt="Vestido Negro Corto">
+                                    <div>
+                                        <p class="admin-table__name">Vestido Negro Corto</p>
+                                        <p class="admin-table__sub">SKU: VLR-VST-002</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="color:var(--text-muted);">Vestidos</td>
+                            <td><strong>$1,990</strong></td>
+                            <td style="color:var(--color-warning); font-weight:var(--fw-medium);">3 uds.</td>
+                            <td><span class="badge badge--pendiente">Stock bajo</span></td>
+                            <td>
+                                <div class="admin-table__actions">
+                                    <a href="admin-producto-form.html" class="admin-action-btn" title="Editar">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                    </a>
+                                    <button class="admin-action-btn admin-action-btn--danger" title="Eliminar">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="admin-table__product">
+                                    <img class="admin-table__img" src="./imgs/blazers/blazerAzulRayas.png" alt="Blazer Azul Rayas">
+                                    <div>
+                                        <p class="admin-table__name">Blazer Azul Rayas</p>
+                                        <p class="admin-table__sub">SKU: VLR-BLZ-001</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="color:var(--text-muted);">Blazers</td>
+                            <td><strong>$3,200</strong></td>
+                            <td>11 uds.</td>
+                            <td><span class="badge badge--entregado">Activo</span></td>
+                            <td>
+                                <div class="admin-table__actions">
+                                    <a href="admin-producto-form.html" class="admin-action-btn" title="Editar">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                    </a>
+                                    <button class="admin-action-btn admin-action-btn--danger" title="Eliminar">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="admin-table__product">
+                                    <img class="admin-table__img" src="./imgs/blazers/blazerNegroCasual.png" alt="Blazer Negro Casual">
+                                    <div>
+                                        <p class="admin-table__name">Blazer Negro Casual</p>
+                                        <p class="admin-table__sub">SKU: VLR-BLZ-002</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="color:var(--text-muted);">Blazers</td>
+                            <td><strong>$2,750</strong></td>
+                            <td style="color:var(--color-error); font-weight:var(--fw-medium);">2 uds.</td>
+                            <td><span class="badge badge--cancelado">Agotado</span></td>
+                            <td>
+                                <div class="admin-table__actions">
+                                    <a href="admin-producto-form.html" class="admin-action-btn" title="Editar">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                    </a>
+                                    <button class="admin-action-btn admin-action-btn--danger" title="Eliminar">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="admin-table__product">
+                                    <img class="admin-table__img" src="./imgs/conjuntos/conjuntoAzulVolantes.png" alt="Conjunto Azul Volantes">
+                                    <div>
+                                        <p class="admin-table__name">Conjunto Azul Volantes</p>
+                                        <p class="admin-table__sub">SKU: VLR-CNJ-001</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="color:var(--text-muted);">Conjuntos</td>
+                            <td><strong>$4,100</strong></td>
+                            <td>8 uds.</td>
+                            <td><span class="badge badge--entregado">Activo</span></td>
+                            <td>
+                                <div class="admin-table__actions">
+                                    <a href="admin-producto-form.html" class="admin-action-btn" title="Editar">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                    </a>
+                                    <button class="admin-action-btn admin-action-btn--danger" title="Eliminar">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="admin-table__product">
+                                    <img class="admin-table__img" src="./imgs/blusas/blusaDoradaMetalica.png" alt="Blusa Dorada Metálica">
+                                    <div>
+                                        <p class="admin-table__name">Blusa Dorada Metálica</p>
+                                        <p class="admin-table__sub">SKU: VLR-BLS-001</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="color:var(--text-muted);">Blusas</td>
+                            <td><strong>$1,590</strong></td>
+                            <td>15 uds.</td>
+                            <td><span class="badge badge--entregado">Activo</span></td>
+                            <td>
+                                <div class="admin-table__actions">
+                                    <a href="admin-producto-form.html" class="admin-action-btn" title="Editar">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                    </a>
+                                    <button class="admin-action-btn admin-action-btn--danger" title="Eliminar">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="admin-table__product">
+                                    <img class="admin-table__img" src="./imgs/faldas/faldaBeigeMidiAbertura.png" alt="Falda Beige Midi">
+                                    <div>
+                                        <p class="admin-table__name">Falda Beige Midi Abertura</p>
+                                        <p class="admin-table__sub">SKU: VLR-FLD-001</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="color:var(--text-muted);">Faldas</td>
+                            <td><strong>$1,250</strong></td>
+                            <td>19 uds.</td>
+                            <td><span class="badge badge--entregado">Activo</span></td>
+                            <td>
+                                <div class="admin-table__actions">
+                                    <a href="admin-producto-form.html" class="admin-action-btn" title="Editar">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                    </a>
+                                    <button class="admin-action-btn admin-action-btn--danger" title="Eliminar">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="admin-table__product">
+                                    <img class="admin-table__img" src="./imgs/accesorios/bolsaBeigeAsaTrenzada.png" alt="Bolsa Beige">
+                                    <div>
+                                        <p class="admin-table__name">Bolsa Beige Asa Trenzada</p>
+                                        <p class="admin-table__sub">SKU: VLR-ACC-001</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="color:var(--text-muted);">Accesorios</td>
+                            <td><strong>$890</strong></td>
+                            <td>7 uds.</td>
+                            <td><span class="badge badge--enviado">Borrador</span></td>
+                            <td>
+                                <div class="admin-table__actions">
+                                    <a href="admin-producto-form.html" class="admin-action-btn" title="Editar">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                    </a>
+                                    <button class="admin-action-btn admin-action-btn--danger" title="Eliminar">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+                <!-- Paginación -->
+                <div style="padding:var(--sp-5) var(--sp-6); border-top:1px solid var(--border-soft); display:flex; align-items:center; justify-content:space-between;">
+                    <p style="font-size:var(--fs-xs); color:var(--text-muted);">Mostrando 8 de 89 productos</p>
+                    <nav class="pagination" style="margin-top:0;">
+                        <a class="pagination__btn" href="#">‹</a>
+                        <a class="pagination__btn pagination__btn--active" href="#">1</a>
+                        <a class="pagination__btn" href="#">2</a>
+                        <a class="pagination__btn" href="#">3</a>
+                        <span class="pagination__btn" style="border:none;">…</span>
+                        <a class="pagination__btn" href="#">12</a>
+                        <a class="pagination__btn" href="#">›</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Toggle sidebar admin (mobile)
+    const adminToggle = document.getElementById('adminMenuToggle');
+    const adminSidebar = document.querySelector('.admin-sidebar');
+    const adminOverlay = document.getElementById('adminOverlay');
+
+    function openAdminSidebar() {
+        adminSidebar.classList.add('is-open');
+        adminOverlay.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeAdminSidebar() {
+        adminSidebar.classList.remove('is-open');
+        adminOverlay.classList.remove('is-open');
+        document.body.style.overflow = '';
+    }
+
+    if (adminToggle) {
+        adminToggle.addEventListener('click', () => {
+            adminSidebar.classList.contains('is-open') ? closeAdminSidebar() : openAdminSidebar();
+        });
+    }
+
+    if (adminOverlay) {
+        adminOverlay.addEventListener('click', closeAdminSidebar);
+    }
+</script>
+</body>
+</html>

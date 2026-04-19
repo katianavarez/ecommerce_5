@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Cuenta — Velour</title>
+    <link rel="stylesheet" href="./css/variables.css">
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/layout.css">
+    <link rel="stylesheet" href="./css/paginas/auth.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="header-top">Envío gratis en compras mayores a $1,500 MXN &nbsp;·&nbsp;<a href="#">Ver beneficios →</a></div>
+    <div class="header-main">
+        <a href="index.html" class="site-logo">
+            <div class="site-logo__wordmark">Vel<span>our</span></div>
+            <div class="site-logo__sub">Moda de Autor</div>
+        </a>
+        <nav class="main-nav">
+            <a href="index.html" class="main-nav__link">Inicio</a>
+            <a href="productos.html" class="main-nav__link">Colección</a>
+           <!--<a href="productos.html" class="main-nav__link">Novedades</a>-->
+           <!-- <a href="productos.html" class="main-nav__link">Sale</a>-->
+        </nav>
+        <div class="header-right">
+            <div class="header-actions">
+                <a href="login.html" class="header-icon" aria-label="Mi cuenta">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </a>
+                <a href="carrito.html" class="header-icon" aria-label="Carrito">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+                    </svg>
+
+                    <span class="cart-badge">2</span>
+                </a>
+            </div>
+
+            <button class="header-burger" aria-label="Menú" id="burgerBtn">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+
+    </div> 
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="index.html" class="mobile-nav__link">Inicio</a>
+        <a href="productos.html" class="mobile-nav__link">Colección</a>
+        <a href="carrito.html" class="mobile-nav__link">Carrito</a>
+        <a href="login.html" class="mobile-nav__link">Cerrar sesión</a>
+    </nav>
+</header>
+
+<main>
+    <div class="account-layout">
+
+        <!-- Sidebar -->
+        <aside class="account-sidebar">
+            <div class="account-sidebar__profile">
+                <div class="account-sidebar__avatar">A</div>
+                <p class="account-sidebar__name">Ana García</p>
+                <p class="account-sidebar__email">ana.garcia@correo.com</p>
+            </div>
+            <nav class="account-nav">
+                <a href="#pedidos" class="account-nav__link account-nav__link--active" data-section="pedidos">
+                    <svg class="account-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                    Mis Pedidos
+                </a>
+                <a href="#perfil" class="account-nav__link" data-section="perfil">
+                    <svg class="account-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    Editar Perfil
+                </a>
+                <a href="#direcciones" class="account-nav__link" data-section="direcciones">
+                    <svg class="account-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    Direcciones
+                </a>
+                <a href="#wishlist" class="account-nav__link" data-section="wishlist">
+                    <svg class="account-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    Lista de Deseos
+                </a>
+                <a href="login.html" class="account-nav__link" style="color:var(--color-error); border-top:1px solid var(--border-soft); margin-top:var(--sp-2); padding-top:var(--sp-5);">
+                    <svg class="account-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    Cerrar sesión
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Contenido -->
+        <div class="account-content">
+
+            <!-- PEDIDOS -->
+            <div id="section-pedidos">
+                <h2 class="account-section-title">Mis Pedidos</h2>
+
+                <div class="orders-list">
+
+                    <div class="order-card">
+                        <div class="order-card__header">
+                            <div>
+                                <p class="order-card__id">#VLR-2025-08741</p>
+                                <p class="order-card__date">15 marzo 2025</p>
+                            </div>
+                            <span class="badge badge--enviado">Enviado</span>
+                        </div>
+                        <div class="order-card__items">
+                            <div class="order-thumb">
+                                <div style="width:100%;height:100%;background:linear-gradient(160deg,#E8E0D4,#C4B49A);"></div>
+                            </div>
+                            <div class="order-thumb">
+                                <div style="width:100%;height:100%;background:linear-gradient(160deg,#D4D8E0,#9AA4C4);"></div>
+                            </div>
+                        </div>
+                        <div class="order-card__footer">
+                            <div>
+                                <p style="font-size:var(--fs-xs); color:var(--text-muted);">2 artículos</p>
+                                <p class="order-total">$4,150</p>
+                            </div>
+                            <div style="display:flex; gap:var(--sp-3);">
+                                <a href="confirmacion.html" class="btn btn--ghost btn--sm">Ver detalle</a>
+                                <button class="btn btn--outline btn--sm">Rastrear</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-card">
+                        <div class="order-card__header">
+                            <div>
+                                <p class="order-card__id">#VLR-2025-07203</p>
+                                <p class="order-card__date">28 febrero 2025</p>
+                            </div>
+                            <span class="badge badge--entregado">Entregado</span>
+                        </div>
+                        <div class="order-card__items">
+                            <div class="order-thumb">
+                                <div style="width:100%;height:100%;background:linear-gradient(160deg,#E0D4D4,#C49A9A);"></div>
+                            </div>
+                        </div>
+                        <div class="order-card__footer">
+                            <div>
+                                <p style="font-size:var(--fs-xs); color:var(--text-muted);">1 artículo</p>
+                                <p class="order-total">$3,450</p>
+                            </div>
+                            <div style="display:flex; gap:var(--sp-3);">
+                                <a href="confirmacion.html" class="btn btn--ghost btn--sm">Ver detalle</a>
+                                <button class="btn btn--outline-gold btn--sm">Reseñar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-card">
+                        <div class="order-card__header">
+                            <div>
+                                <p class="order-card__id">#VLR-2025-05812</p>
+                                <p class="order-card__date">10 enero 2025</p>
+                            </div>
+                            <span class="badge badge--entregado">Entregado</span>
+                        </div>
+                        <div class="order-card__items">
+                            <div class="order-thumb">
+                                <div style="width:100%;height:100%;background:linear-gradient(160deg,#D4E0D8,#9AC4A8);"></div>
+                            </div>
+                            <div class="order-thumb">
+                                <div style="width:100%;height:100%;background:linear-gradient(160deg,#E0D8D4,#C4AE9A);"></div>
+                            </div>
+                            <div class="order-thumb">
+                                <div style="width:100%;height:100%;background:linear-gradient(160deg,#D4DAE0,#9AAEC4);"></div>
+                            </div>
+                        </div>
+                        <div class="order-card__footer">
+                            <div>
+                                <p style="font-size:var(--fs-xs); color:var(--text-muted);">3 artículos</p>
+                                <p class="order-total">$5,830</p>
+                            </div>
+                            <div style="display:flex; gap:var(--sp-3);">
+                                <a href="confirmacion.html" class="btn btn--ghost btn--sm">Ver detalle</a>
+                                <button class="btn btn--outline-gold btn--sm">Reseñar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- PERFIL (oculto por defecto, visible via JS) -->
+            <div id="section-perfil" style="display:none;">
+                <h2 class="account-section-title">Editar Perfil</h2>
+                <div style="max-width:520px; background:var(--bg-surface); border:1px solid var(--border-soft); border-radius:var(--r-lg); padding:var(--sp-6);">
+                    <div style="display:flex; flex-direction:column; gap:var(--sp-5);">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Nombre</label>
+                                <input class="form-control" type="text" value="Ana">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Apellido</label>
+                                <input class="form-control" type="text" value="García">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Correo electrónico</label>
+                            <input class="form-control" type="email" value="ana.garcia@correo.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Teléfono</label>
+                            <input class="form-control" type="tel" value="+52 55 1234 5678">
+                        </div>
+                        <hr class="divider">
+                        <p style="font-size:var(--fs-sm); font-weight:var(--fw-medium); color:var(--text-heading);">Cambiar contraseña</p>
+                        <div class="form-group">
+                            <label class="form-label">Contraseña actual</label>
+                            <input class="form-control" type="password" placeholder="••••••••">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Nueva contraseña</label>
+                            <input class="form-control" type="password" placeholder="Mínimo 8 caracteres">
+                        </div>
+                        <button type="button" class="btn btn--primary btn--sm" style="align-self:flex-start;">Guardar cambios</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DIRECCIONES -->
+            <div id="section-direcciones" style="display:none;">
+                <h2 class="account-section-title">Mis Direcciones</h2>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-4); max-width:680px;">
+                    <div style="border:1.5px solid var(--color-secondary); border-radius:var(--r-md); padding:var(--sp-5); position:relative;">
+                        <span class="badge badge--new" style="position:absolute; top:var(--sp-3); right:var(--sp-3);">Principal</span>
+                        <p style="font-weight:var(--fw-medium); margin-bottom:var(--sp-2);">Ana García</p>
+                        <p style="font-size:var(--fs-sm); color:var(--text-muted); line-height:1.7;">Av. Presidente Masaryk 215<br>Col. Polanco, CDMX 11560<br>+52 55 1234 5678</p>
+                        <div style="display:flex; gap:var(--sp-2); margin-top:var(--sp-4);">
+                            <button class="btn btn--ghost btn--sm">Editar</button>
+                            <button class="btn btn--sm" style="color:var(--color-error); border:1.5px solid var(--border-soft);">Eliminar</button>
+                        </div>
+                    </div>
+                    <div style="border:1.5px dashed var(--border-medium); border-radius:var(--r-md); padding:var(--sp-5); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:var(--sp-3); cursor:pointer; min-height:150px;">
+                        <span style="font-size:2rem; color:var(--text-light);">+</span>
+                        <p style="font-size:var(--fs-sm); color:var(--text-muted);">Agregar dirección</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WISHLIST -->
+            <div id="section-wishlist" style="display:none;">
+                <h2 class="account-section-title">Lista de Deseos</h2>
+                <div class="products-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:var(--sp-4); max-width:680px;">
+                    <a href="producto-detalle.html" class="product-card" style="text-decoration:none;">
+                        <div class="product-card__img-wrap" style="background:linear-gradient(160deg,#E8E0D4,#C4B49A);"></div>
+                        <div class="product-card__body">
+                            <p class="product-card__cat">Vestidos</p>
+                            <h3 class="product-card__name">Vestido Satén Cruzado</h3>
+                            <div class="product-card__price"><span class="product-card__price-current">$2,890</span></div>
+                        </div>
+                    </a>
+                    <a href="producto-detalle.html" class="product-card" style="text-decoration:none;">
+                        <div class="product-card__img-wrap" style="background:linear-gradient(160deg,#D4E0D8,#9AC4A8);"></div>
+                        <div class="product-card__body">
+                            <p class="product-card__cat">Blusas</p>
+                            <h3 class="product-card__name">Blusa Seda con Lazada</h3>
+                            <div class="product-card__price"><span class="product-card__price-current">$1,290</span></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<footer class="site-footer">
+    <div class="footer-top">
+        <div class="footer-brand">
+            <div class="footer-brand__logo">Vel<span>our</span></div>
+            <p class="footer-brand__text">Moda premium diseñada para la mujer contemporánea.</p>
+        </div>
+        <div class="footer-col"><p class="footer-col__title">Tienda</p><div class="footer-col__links"><a href="#">Colección</a><a href="#">Sale</a></div></div>
+        <div class="footer-col"><p class="footer-col__title">Ayuda</p><div class="footer-col__links"><a href="#">Envíos</a><a href="#">Devoluciones</a><a href="#">Contacto</a></div></div>
+        <div class="footer-col"><p class="footer-col__title">Empresa</p><div class="footer-col__links"><a href="#">Sobre Velour</a></div></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 Velour. Todos los derechos reservados.</p></div>
+</footer>
+
+<script>
+    document.getElementById('burgerBtn').addEventListener('click', () =>
+        document.getElementById('mobileNav').classList.toggle('is-open'));
+
+    const sections = ['pedidos','perfil','direcciones','wishlist'];
+    document.querySelectorAll('.account-nav__link[data-section]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = link.dataset.section;
+            // nav active
+            document.querySelectorAll('.account-nav__link').forEach(l => l.classList.remove('account-nav__link--active'));
+            link.classList.add('account-nav__link--active');
+            // sections
+            sections.forEach(s => {
+                const el = document.getElementById('section-' + s);
+                if(el) el.style.display = s === target ? 'block' : 'none';
+            });
+        });
+    });
+</script>
+</body>
+</html>

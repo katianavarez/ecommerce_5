@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito — Velour</title>
+    <link rel="stylesheet" href="./css/variables.css">
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/layout.css">
+    <link rel="stylesheet" href="./css/paginas/cart.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="header-top">Envío gratis en compras mayores a $1,500 MXN &nbsp;·&nbsp;<a href="#">Ver beneficios →</a></div>
+    <div class="header-main">
+        <a href="index.html" class="site-logo">
+            <div class="site-logo__wordmark">Vel<span>our</span></div>
+            <div class="site-logo__sub">Moda de Autor</div>
+        </a>
+        <nav class="main-nav">
+            <a href="index.html" class="main-nav__link">Inicio</a>
+            <a href="productos.html" class="main-nav__link">Colección</a>
+        </nav>
+        <div class="header-right">
+            <div class="header-actions">
+                <a href="login.html" class="header-icon" aria-label="Mi cuenta">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </a>
+                <a href="carrito.html" class="header-icon" aria-label="Carrito">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+                    </svg>
+
+                    <span class="cart-badge">2</span>
+                </a>
+            </div>
+
+            <button class="header-burger" aria-label="Menú" id="burgerBtn">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="index.html" class="mobile-nav__link">Inicio</a>
+        <a href="productos.html" class="mobile-nav__link">Colección</a>
+    </nav>
+</header>
+
+<main>
+    <div class="cart-layout">
+        <div>
+            <h1 class="cart-title">Tu Carrito (2)</h1>
+
+            <div class="cart-items">
+
+                <!-- Ítem 1 -->
+                <div class="cart-item">
+                    <a href="producto-detalle.html" class="cart-item__img">
+                        <img src="./imgs/vestidos/vestidoAzulLargo.png" alt="Vestido Azul Largo">
+                    </a>
+                    <div class="cart-item__info">
+                        <p class="cart-item__cat">Vestidos</p>
+                        <h3 class="cart-item__name">Vestido Azul Largo</h3>
+                        <p class="cart-item__meta">Talla: M &nbsp;·&nbsp; Color: Tostado</p>
+                        <p class="cart-item__price">$2,890</p>
+                    </div>
+                    <div class="cart-item__actions">
+                        <div class="qty-control">
+                            <button class="qty-btn">−</button>
+                            <input class="qty-input" type="number" value="1" min="1" max="10">
+                            <button class="qty-btn">+</button>
+                        </div>
+                        <button class="cart-item__remove">Eliminar</button>
+                    </div>
+                </div>
+
+                <!-- Ítem 2 -->
+                <div class="cart-item">
+                    <a href="producto-detalle.html" class="cart-item__img">
+                        <img src="./imgs/blazers/blazerAzulRayas.png" alt="Blazer Estructurado Rayas">
+                    </a>
+                    <div class="cart-item__info">
+                        <p class="cart-item__cat">Blazers</p>
+                        <h3 class="cart-item__name">Blazer Estructurado Rayas</h3>
+                        <p class="cart-item__meta">Talla: S &nbsp;·&nbsp; Color: Azul Noche</p>
+                        <p class="cart-item__price">$1,890 <span style="font-size:var(--fs-xs); color:var(--text-light); text-decoration:line-through; margin-left:4px;">$2,520</span></p>
+                    </div>
+                    <div class="cart-item__actions">
+                        <div class="qty-control">
+                            <button class="qty-btn">−</button>
+                            <input class="qty-input" type="number" value="1" min="1" max="10">
+                            <button class="qty-btn">+</button>
+                        </div>
+                        <button class="cart-item__remove">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top:var(--sp-6);">
+                <a href="productos.html" class="btn btn--ghost btn--sm">← Seguir comprando</a>
+            </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="order-summary">
+            <h2 class="order-summary__title">Resumen del pedido</h2>
+
+            <div class="coupon-form">
+                <input class="form-control form-control--sm" type="text" placeholder="Código de descuento">
+                <button class="btn btn--outline btn--sm">Aplicar</button>
+            </div>
+
+            <div class="summary-lines">
+                <div class="summary-line">
+                    <span>Subtotal (2 artículos)</span>
+                    <span>$4,780</span>
+                </div>
+                <div class="summary-line">
+                    <span>Envío</span>
+                    <span class="summary-line--free">Gratis</span>
+                </div>
+                <div class="summary-line">
+                    <span>Descuento</span>
+                    <span style="color:var(--color-success);">–$630</span>
+                </div>
+                <div class="summary-line summary-line--total">
+                    <span>Total</span>
+                    <span>$4,150</span>
+                </div>
+            </div>
+
+            <a href="checkout.html" class="btn btn--gold btn--full btn--lg">Proceder al Pago</a>
+
+            <p style="text-align:center; font-size:var(--fs-xs); color:var(--text-muted); margin-top:var(--sp-4);">
+                Pago seguro &nbsp;·&nbsp; Devoluciones gratuitas
+            </p>
+
+            <div style="display:flex; justify-content:center; gap:var(--sp-2); margin-top:var(--sp-3);">
+                <span class="card-icon">VISA</span>
+                <span class="card-icon">MC</span>
+                <span class="card-icon">AMEX</span>
+                <span class="card-icon">PayPal</span>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="site-footer">
+    <div class="footer-bottom"><p>© 2025 Velour. Todos los derechos reservados.</p></div>
+</footer>
+
+<!--<script>
+    document.getElementById('burgerBtn').addEventListener('click', () =>
+        document.getElementById('mobileNav').classList.toggle('is-open'));
+</script>-->
+</body>
+</html>
