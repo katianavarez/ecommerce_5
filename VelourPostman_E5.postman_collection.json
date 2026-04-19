@@ -1,10 +1,10 @@
 {
   "info": {
-    "_postman_id": "21247cf7-211d-4d18-8252-bd00b9c298c9",
+    "_postman_id": "f779c939-87b5-4b16-a6a9-722ba7136bc5",
     "name": "VelourPostman_E5",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "52079975",
-    "_collection_link": "https://go.postman.co/collection/52079975-21247cf7-211d-4d18-8252-bd00b9c298c9?source=collection_link"
+    "_collection_link": "https://go.postman.co/collection/52079975-f779c939-87b5-4b16-a6a9-722ba7136bc5?source=collection_link"
   },
   "item": [
     {
@@ -12,10 +12,27 @@
       "request": {
         "method": "POST",
         "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"correo\": \"darkcrowvs@gmail.com\",\r\n    \"contrasena\": \"123123123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
         "url": {
-          "raw": "Token",
+          "raw": "http://localhost:8080/ECommerceWebAplication/api/auth/login",
+          "protocol": "http",
           "host": [
-            "Token"
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "ECommerceWebAplication",
+            "api",
+            "auth",
+            "login"
           ]
         }
       },
@@ -51,7 +68,7 @@
           },
           "status": "OK",
           "code": 200,
-          "_postman_previewlanguage": null,
+          "_postman_previewlanguage": "Text",
           "header": [
             {
               "key": "Content-Type",
@@ -82,8 +99,31 @@
     {
       "name": "ListarProductos",
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXJrY3Jvd3ZzQGdtYWlsLmNvbSIsInJvbCI6IkNMSUVOVEUiLCJpYXQiOjE3NzY2MTE0MDMsImV4cCI6MTc3NjY5NzgwM30.9FxkSuyQi-SqB-OlHRbF4bbTcGsAMxV3kPjeQkl5kfA",
+              "type": "string"
+            }
+          ]
+        },
         "method": "GET",
-        "header": []
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/ECommerceWebAplication/api/productos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "ECommerceWebAplication",
+            "api",
+            "productos"
+          ]
+        }
       },
       "response": [
         {
@@ -107,7 +147,7 @@
           },
           "status": "OK",
           "code": 200,
-          "_postman_previewlanguage": null,
+          "_postman_previewlanguage": "Text",
           "header": [
             {
               "key": "Content-Type",
@@ -188,7 +228,7 @@
           },
           "status": "OK",
           "code": 200,
-          "_postman_previewlanguage": null,
+          "_postman_previewlanguage": "Text",
           "header": [
             {
               "key": "Content-Type",
@@ -233,7 +273,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"usuarioId\": 5,\r\n    \"productoId\": 5,\r\n    \"cantidad\": 1,\r\n    \"talla\": \"M\"\r\n}",
+          "raw": "{\r\n    \"usuarioId\": 5,\r\n    \"productoId\": 5,\r\n    \"cantidad\": 1,\r\n    \"talla\": \"XS\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -285,7 +325,7 @@
           },
           "status": "Created",
           "code": 201,
-          "_postman_previewlanguage": null,
+          "_postman_previewlanguage": "Text",
           "header": [
             {
               "key": "Content-Type",
@@ -316,8 +356,32 @@
     {
       "name": "VerCarrito",
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXJrY3Jvd3ZzQGdtYWlsLmNvbSIsInJvbCI6IkNMSUVOVEUiLCJpYXQiOjE3NzY2MTE0MDMsImV4cCI6MTc3NjY5NzgwM30.9FxkSuyQi-SqB-OlHRbF4bbTcGsAMxV3kPjeQkl5kfA",
+              "type": "string"
+            }
+          ]
+        },
         "method": "GET",
-        "header": []
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/ECommerceWebAplication/api/carrito/5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "ECommerceWebAplication",
+            "api",
+            "carrito",
+            "5"
+          ]
+        }
       },
       "response": [
         {
@@ -350,11 +414,11 @@
             },
             {
               "key": "Content-Length",
-              "value": "162"
+              "value": "252"
             },
             {
               "key": "Date",
-              "value": "Sun, 19 Apr 2026 15:23:05 GMT"
+              "value": "Sun, 19 Apr 2026 17:18:53 GMT"
             },
             {
               "key": "Keep-Alive",
@@ -366,7 +430,7 @@
             }
           ],
           "cookie": [],
-          "body": "{\"id\":1,\"usuario\":{\"id\":5,\"nombre\":\"Casi\",\"correo\":\"darkcrowvs@gmail.com\",\"contraseña\":\"123123123\",\"telefono\":\"+5255000000322\",\"rol\":\"CLIENTE\",\"historialPedidos\""
+          "body": "{\n    \"usuarioId\": 5,\n    \"carritoId\": 1,\n    \"items\": [\n        {\n            \"productoId\": 5,\n            \"nombre\": \"A ver\",\n            \"imagenURL\": \"https://tse1.explicit.bing.net/th/id/OIP.sFDHRHYmQbnDvJ7xMLo4OwHaK_?rs=1&pid=ImgDetMain&o=7&rm=3\",\n            \"precioUnidad\": 2000,\n            \"cantidad\": 3,\n            \"subtotal\": 6000\n        }\n    ],\n    \"total\": 6000\n}"
         }
       ]
     },
@@ -439,7 +503,7 @@
           },
           "status": "Created",
           "code": 201,
-          "_postman_previewlanguage": null,
+          "_postman_previewlanguage": "Text",
           "header": [
             {
               "key": "Content-Type",
@@ -468,7 +532,7 @@
       ]
     },
     {
-      "name": "VerCarrito",
+      "name": "ConsultarPedidos",
       "request": {
         "auth": {
           "type": "bearer",
@@ -499,7 +563,7 @@
       },
       "response": [
         {
-          "name": "VerCarrito",
+          "name": "ConsultarPedidos",
           "originalRequest": {
             "method": "GET",
             "header": [],
@@ -520,7 +584,7 @@
           },
           "status": "OK",
           "code": 200,
-          "_postman_previewlanguage": null,
+          "_postman_previewlanguage": "Text",
           "header": [
             {
               "key": "Content-Type",
@@ -611,11 +675,11 @@
             },
             {
               "key": "Content-Length",
-              "value": "258"
+              "value": "5888"
             },
             {
               "key": "Date",
-              "value": "Sun, 19 Apr 2026 15:25:38 GMT"
+              "value": "Sun, 19 Apr 2026 17:22:06 GMT"
             },
             {
               "key": "Keep-Alive",
@@ -627,7 +691,7 @@
             }
           ],
           "cookie": [],
-          "body": "[{\"id\":48,\"numPedido\":\"PED-1776603993212-BDDF1105\",\"fecha\":\"2026-04-19\",\"total\":15.0,\"estado\":\"ENVIADO\",\"usuario\":{\"id\":5,\"nombre\":\"Casi\",\"correo\":\"darkcrowvs@gmail.com\",\"contraseña\":\"123123123\",\"telefono\":\"+5255000000322\",\"rol\":\"CLIENTE\",\"historialPedidos\""
+          "body": "{\n    \"total\": 49,\n    \"pedidos\": [\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-19\",\n            \"numItems\": 1,\n            \"total\": 12,\n            \"numPedido\": \"PED-1776601866221-6CDFF790\",\n            \"id\": 47\n        },\n        {\n            \"estado\": \"ENVIADO\",\n            \"fecha\": \"2026-04-19\",\n            \"numItems\": 1,\n            \"total\": 999,\n            \"numPedido\": \"PED-1776618444295-FE8B80AE\",\n            \"id\": 52\n        },\n        {\n            \"estado\": \"ENVIADO\",\n            \"fecha\": \"2026-04-19\",\n            \"numItems\": 1,\n            \"total\": 999,\n            \"numPedido\": \"PED-1776613643522-2A9D46A2\",\n            \"id\": 51\n        },\n        {\n            \"estado\": \"PENDIENTE\",\n            \"fecha\": \"2026-04-19\",\n            \"numItems\": 2,\n            \"total\": 10999,\n            \"numPedido\": \"PED-1776612200532-292D53AA\",\n            \"id\": 50\n        },\n        {\n            \"estado\": \"ENVIADO\",\n            \"fecha\": \"2026-04-19\",\n            \"numItems\": 1,\n            \"total\": 15,\n            \"numPedido\": \"PED-1776603993212-BDDF1105\",\n            \"id\": 48\n        },\n        {\n            \"estado\": \"PENDIENTE\",\n            \"fecha\": \"2026-04-19\",\n            \"numItems\": 1,\n            \"total\": 12000,\n            \"numPedido\": \"PED-1776619230569-DFFC0296\",\n            \"id\": 53\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 60,\n            \"numPedido\": \"PED-1776518634893-D3814AB4\",\n            \"id\": 10\n        },\n        {\n            \"estado\": \"CANCELADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 3,\n            \"total\": 60,\n            \"numPedido\": \"PED-1776519737888-FD41CC3F\",\n            \"id\": 11\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 2000,\n            \"numPedido\": \"PED-1776524277723-555FD788\",\n            \"id\": 12\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 2,\n            \"total\": 24,\n            \"numPedido\": \"PED-1776527548947-F668411D\",\n            \"id\": 13\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 2000,\n            \"numPedido\": \"PED-1776533323141-62400BC1\",\n            \"id\": 14\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 12,\n            \"numPedido\": \"PED-1776533333962-B06D121E\",\n            \"id\": 15\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 12,\n            \"numPedido\": \"PED-1776533347568-60147ADB\",\n            \"id\": 16\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 2000,\n            \"numPedido\": \"PED-1776533427323-5EBEE35A\",\n            \"id\": 17\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 2000,\n            \"numPedido\": \"PED-1776533441260-37BC1334\",\n            \"id\": 18\n        },\n        {\n            \"estado\": \"CANCELADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 2000,\n            \"numPedido\": \"PED-1776533447684-B4285BA5\",\n            \"id\": 19\n        },\n        {\n            \"estado\": \"CANCELADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 2000,\n            \"numPedido\": \"PED-1776533467488-8B938F17\",\n            \"id\": 20\n        },\n        {\n            \"estado\": \"CANCELADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 2000,\n            \"numPedido\": \"PED-1776533475512-3790D881\",\n            \"id\": 21\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 4000,\n            \"numPedido\": \"PED-1776539509497-B08236AD\",\n            \"id\": 22\n        },\n        {\n            \"estado\": \"CANCELADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 13,\n            \"numPedido\": \"PED-1776539706754-051AFEC8\",\n            \"id\": 23\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 12,\n            \"numPedido\": \"PED-1776542382708-C36B78E3\",\n            \"id\": 24\n        },\n        {\n            \"estado\": \"ENVIADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 13,\n            \"numPedido\": \"PED-1776545127857-78A5B821\",\n            \"id\": 25\n        },\n        {\n            \"estado\": \"CANCELADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 13,\n            \"numPedido\": \"PED-1776545147456-CA54F5EA\",\n            \"id\": 26\n        },\n        {\n            \"estado\": \"PENDIENTE\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 2000,\n            \"numPedido\": \"PED-1776549747360-969E8A91\",\n            \"id\": 27\n        },\n        {\n            \"estado\": \"PENDIENTE\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 13,\n            \"numPedido\": \"PED-1776552226702-B3C2A4BC\",\n            \"id\": 29\n        },\n        {\n            \"estado\": \"PENDIENTE\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 13,\n            \"numPedido\": \"PED-1776552244743-3FB3F7B2\",\n            \"id\": 30\n        },\n        {\n            \"estado\": \"PENDIENTE\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 13,\n            \"numPedido\": \"PED-1776552253409-D0A0D72E\",\n            \"id\": 31\n        },\n        {\n            \"estado\": \"PENDIENTE\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 13,\n            \"numPedido\": \"PED-1776552783998-EE03ED82\",\n            \"id\": 32\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 13,\n            \"numPedido\": \"PED-1776552794405-55E15310\",\n            \"id\": 33\n        },\n        {\n            \"estado\": \"PENDIENTE\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 13,\n            \"numPedido\": \"PED-1776552805584-91391275\",\n            \"id\": 34\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 999,\n            \"numPedido\": \"PED-1776553225278-6D01069D\",\n            \"id\": 35\n        },\n        {\n            \"estado\": \"PENDIENTE\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 999,\n            \"numPedido\": \"PED-1776553236971-FC6550C6\",\n            \"id\": 36\n        },\n        {\n            \"estado\": \"PENDIENTE\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 999,\n            \"numPedido\": \"PED-1776554145817-DBD0CE62\",\n            \"id\": 37\n        },\n        {\n            \"estado\": \"ENVIADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 999,\n            \"numPedido\": \"PED-1776554159489-35F0552B\",\n            \"id\": 38\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 999,\n            \"numPedido\": \"PED-1776554168644-54F82388\",\n            \"id\": 39\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 999,\n            \"numPedido\": \"PED-1776554618594-A3754ADC\",\n            \"id\": 40\n        },\n        {\n            \"estado\": \"PENDIENTE\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 9,\n            \"numPedido\": \"PED-1776555051304-D8970A9B\",\n            \"id\": 41\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 33,\n            \"numPedido\": \"PED-1776568362551-03FC4F5E\",\n            \"id\": 43\n        },\n        {\n            \"estado\": \"CANCELADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 2,\n            \"total\": 30,\n            \"numPedido\": \"PED-1776568378873-3C1F6F5D\",\n            \"id\": 44\n        },\n        {\n            \"estado\": \"CANCELADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 4000,\n            \"numPedido\": \"PED-1776569664824-7AB1F47F\",\n            \"id\": 45\n        },\n        {\n            \"estado\": \"CANCELADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 2000,\n            \"numPedido\": \"PED-1776569789754-C0D9D3FC\",\n            \"id\": 46\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 13,\n            \"numPedido\": \"PED-1776550172022-2E9E57E0\",\n            \"id\": 28\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 15,\n            \"numPedido\": \"PED-1776556511367-29A49E8A\",\n            \"id\": 42\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-17\",\n            \"numItems\": 1,\n            \"total\": 30,\n            \"numPedido\": \"PED-1776477148547-4D31406C\",\n            \"id\": 9\n        },\n        {\n            \"estado\": \"CANCELADO\",\n            \"fecha\": \"2026-04-17\",\n            \"numItems\": 1,\n            \"total\": 36,\n            \"numPedido\": \"PED-1776428676010-8C2C6001\",\n            \"id\": 8\n        },\n        {\n            \"estado\": \"CANCELADO\",\n            \"fecha\": \"2026-04-17\",\n            \"numItems\": 1,\n            \"total\": 12,\n            \"numPedido\": \"PED-1776428380011-26277603\",\n            \"id\": 7\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-15\",\n            \"numItems\": 1,\n            \"total\": 12,\n            \"numPedido\": \"PED-1776291263331-B073E6D2\",\n            \"id\": 3\n        },\n        {\n            \"estado\": \"CANCELADO\",\n            \"fecha\": \"2026-04-15\",\n            \"numItems\": 1,\n            \"total\": 84,\n            \"numPedido\": \"PED-1776265906582-03DB77A3\",\n            \"id\": 2\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-15\",\n            \"numItems\": 1,\n            \"total\": 12,\n            \"numPedido\": \"PED-1776265845822-FBCF689F\",\n            \"id\": 1\n        }\n    ],\n    \"usuarioId\": 5\n}"
         }
       ]
     },
@@ -648,7 +712,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"usuarioId\": 5,\r\n    \"productoId\": 3,\r\n    \"calificacion\": 5,\r\n    \"comentario\": \"Excelente calidad\"\r\n}",
+          "raw": "{\r\n    \"usuarioId\": 5,\r\n    \"productoId\": 5,\r\n    \"calificacion\": 5,\r\n    \"comentario\": \"Excelente calidad\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -677,7 +741,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"usuarioId\": 5,\r\n    \"productoId\": 3,\r\n    \"calificacion\": 5,\r\n    \"comentario\": \"Excelente calidad\"\r\n}",
+              "raw": "{\r\n    \"usuarioId\": 5,\r\n    \"productoId\": 5,\r\n    \"calificacion\": 5,\r\n    \"comentario\": \"Excelente calidad\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -698,8 +762,8 @@
               ]
             }
           },
-          "status": "Created",
-          "code": 201,
+          "status": "OK",
+          "code": 200,
           "_postman_previewlanguage": null,
           "header": [
             {
@@ -708,11 +772,11 @@
             },
             {
               "key": "Content-Length",
-              "value": "454"
+              "value": "132"
             },
             {
               "key": "Date",
-              "value": "Sun, 19 Apr 2026 15:26:58 GMT"
+              "value": "Sun, 19 Apr 2026 17:22:57 GMT"
             },
             {
               "key": "Keep-Alive",
@@ -724,7 +788,7 @@
             }
           ],
           "cookie": [],
-          "body": "{\"success\":true,\"message\":\"Resenia creada\",\"data\":{\"id\":24,\"calificacion\":5,\"comentario\":\"Excelente calidad\",\"fecha\":\"2026-04-19\",\"producto\":{\"id\":3,\"nombre\":\"Bueno \",\"descripcion\":\"asdasdasdsadasd\",\"precio\":12.0,\"imagenURL\":\"assets/img/categoria/blazers.png\",\"stock\":0,\"tallasDisponibles\":[\"XS\",\"S\"],\"stockPorTalla\":[{\"talla\":\"XS\",\"cantidad\":2},{\"talla\":\"S\",\"cantidad\":2}],\"color\":\"NEGRO\",\"activo\":true,\"categoria\":{\"id\":4,\"nombre\":\"Blazers\",\"productos\""
+          "body": "{\n    \"id\": 25,\n    \"calificacion\": 5,\n    \"comentario\": \"Excelente calidad\",\n    \"fecha\": \"2026-04-19\",\n    \"usuarioId\": 5,\n    \"usuarioNombre\": \"Casi\",\n    \"productoId\": 5\n}"
         }
       ]
     },
@@ -791,11 +855,11 @@
             },
             {
               "key": "Content-Length",
-              "value": "240"
+              "value": "787"
             },
             {
               "key": "Date",
-              "value": "Sun, 19 Apr 2026 15:27:48 GMT"
+              "value": "Sun, 19 Apr 2026 17:23:31 GMT"
             },
             {
               "key": "Keep-Alive",
@@ -807,7 +871,7 @@
             }
           ],
           "cookie": [],
-          "body": "[{\"id\":24,\"calificacion\":5,\"comentario\":\"Excelente calidad\",\"fecha\":\"2026-04-19\",\"producto\":{\"id\":3,\"nombre\":\"Bueno \",\"descripcion\":\"asdasdasdsadasd\",\"precio\":12.0,\"imagenURL\":\"assets/img/categoria/blazers.png\",\"stock\":0,\"tallasDisponibles\""
+          "body": "{\n    \"productoId\": 3,\n    \"resenas\": [\n        {\n            \"id\": 24,\n            \"calificacion\": 5,\n            \"comentario\": \"Excelente calidad\",\n            \"fecha\": \"2026-04-19\",\n            \"usuarioId\": 5,\n            \"usuarioNombre\": \"Casi\",\n            \"productoId\": 3\n        },\n        {\n            \"id\": 11,\n            \"calificacion\": 5,\n            \"comentario\": \"AAAAAAA\",\n            \"fecha\": \"2026-04-18\",\n            \"usuarioId\": 5,\n            \"usuarioNombre\": \"Casi\",\n            \"productoId\": 3\n        },\n        {\n            \"id\": 19,\n            \"calificacion\": 3,\n            \"comentario\": \"aaa\",\n            \"fecha\": \"2026-04-18\",\n            \"usuarioId\": 5,\n            \"usuarioNombre\": \"Casi\",\n            \"productoId\": 3\n        },\n        {\n            \"id\": 20,\n            \"calificacion\": 5,\n            \"comentario\": \"aaaaa\",\n            \"fecha\": \"2026-04-18\",\n            \"usuarioId\": 5,\n            \"usuarioNombre\": \"Casi\",\n            \"productoId\": 3\n        },\n        {\n            \"id\": 21,\n            \"calificacion\": 5,\n            \"comentario\": \"aaaaa\",\n            \"fecha\": \"2026-04-18\",\n            \"usuarioId\": 5,\n            \"usuarioNombre\": \"Casi\",\n            \"productoId\": 3\n        },\n        {\n            \"id\": 22,\n            \"calificacion\": 5,\n            \"comentario\": \"1\",\n            \"fecha\": \"2026-04-18\",\n            \"usuarioId\": 5,\n            \"usuarioNombre\": \"Casi\",\n            \"productoId\": 3\n        }\n    ],\n    \"promedio\": 4.7,\n    \"total\": 6\n}"
         }
       ]
     }
