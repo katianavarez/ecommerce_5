@@ -248,9 +248,36 @@
                                 de <strong><c:out value="${totalProductos}"/></strong> productos
                             </p>
                             <c:if test="${totalPaginas > 1}">
+                                <%-- Formulario base oculto con todos los filtros activos.
+                                     Los botones de página envían este form con la página que corresponde. --%>
+                                <form id="formPaginacion" method="GET"
+                                      action="${pageContext.request.contextPath}/app/productos"
+                                      style="display:none;">
+                                    <input type="hidden" name="pagina" id="inputPagina" value="1">
+                                    <c:if test="${not empty busqueda}">
+                                        <input type="hidden" name="busqueda" value="${busqueda}">
+                                    </c:if>
+                                    <c:forEach var="catId" items="${categoriasActivas}">
+                                        <input type="hidden" name="categoriaId" value="${catId}">
+                                    </c:forEach>
+                                    <c:forEach var="t" items="${tallasActivas}">
+                                        <input type="hidden" name="talla" value="${t}">
+                                    </c:forEach>
+                                    <c:if test="${not empty colorActivo}">
+                                        <input type="hidden" name="color" value="${colorActivo}">
+                                    </c:if>
+                                    <c:if test="${not empty precioMaxActivo}">
+                                        <input type="hidden" name="precioMax" value="${precioMaxActivo}">
+                                    </c:if>
+                                    <c:if test="${soloConStockActivo}">
+                                        <input type="hidden" name="soloConStock" value="true">
+                                    </c:if>
+                                </form>
+
                                 <nav class="pagination" style="margin-top:0;flex-shrink:0;" aria-label="Paginación">
                                     <c:if test="${paginaActual > 1}">
-                                        <a class="pagination__btn" href="${pageContext.request.contextPath}/app/productos?pagina=${paginaActual - 1}&busqueda=${busqueda}&color=${colorActivo}&precioMax=${precioMaxActivo}&soloConStock=${soloConStockActivo}">&#8249;</a>
+                                        <button type="button" class="pagination__btn"
+                                                onclick="irAPagina(${paginaActual - 1})">&#8249;</button>
                                     </c:if>
                                     <c:forEach var="i" begin="1" end="${totalPaginas}">
                                         <c:choose>
@@ -258,7 +285,8 @@
                                                 <a class="pagination__btn pagination__btn--active" href="#">${i}</a>
                                             </c:when>
                                             <c:when test="${i == 1 || i == totalPaginas || (i >= paginaActual - 1 && i <= paginaActual + 1)}">
-                                                <a class="pagination__btn" href="${pageContext.request.contextPath}/app/productos?pagina=${i}&busqueda=${busqueda}&color=${colorActivo}&precioMax=${precioMaxActivo}&soloConStock=${soloConStockActivo}"><c:out value="${i}"/></a>
+                                                <button type="button" class="pagination__btn"
+                                                        onclick="irAPagina(${i})"><c:out value="${i}"/></button>
                                             </c:when>
                                             <c:when test="${i == paginaActual - 2 || i == paginaActual + 2}">
                                                 <span style="display:inline-flex;align-items:center;justify-content:center;width:2.25rem;height:2.25rem;font-size:var(--fs-sm);color:var(--text-muted);">&#8230;</span>
@@ -266,7 +294,8 @@
                                         </c:choose>
                                     </c:forEach>
                                     <c:if test="${paginaActual < totalPaginas}">
-                                        <a class="pagination__btn" href="${pageContext.request.contextPath}/app/productos?pagina=${paginaActual + 1}&busqueda=${busqueda}&color=${colorActivo}&precioMax=${precioMaxActivo}&soloConStock=${soloConStockActivo}">&#8250;</a>
+                                        <button type="button" class="pagination__btn"
+                                                onclick="irAPagina(${paginaActual + 1})">&#8250;</button>
                                     </c:if>
                                 </nav>
                             </c:if>
