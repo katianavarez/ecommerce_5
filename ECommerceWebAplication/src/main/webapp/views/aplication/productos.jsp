@@ -310,6 +310,11 @@
         </footer>
 
         <script>
+            function irAPagina(num) {
+                document.getElementById('inputPagina').value = num;
+                document.getElementById('formPaginacion').submit();
+            }
+
             document.getElementById('burgerBtn').addEventListener('click', () =>
                 document.getElementById('mobileNav').classList.toggle('is-open'));
 
