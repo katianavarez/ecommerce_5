@@ -28,14 +28,23 @@ public class ProveedorBO {
 
     public Proveedor crear(Proveedor proveedor) throws Exception {
         validar(proveedor);
+        Proveedor existente = proveedorDAO.obtenerPorRfc(proveedor.getRfc());
+        if (existente != null)
+            throw new Exception("Ya existe un proveedor registrado con el RFC \"" 
+                + proveedor.getRfc().toUpperCase() + "\" ("
+                + existente.getNombre() + ").");
         return proveedorDAO.guardar(proveedor);
     }
 
     public Proveedor actualizar(Proveedor proveedor) throws Exception {
-        if (proveedorDAO.obtenerPorId(proveedor.getId()) == null) {
-            throw new Exception("Proveedor no encontrado");
-        }
+        if (proveedorDAO.obtenerPorId(proveedor.getId()) == null)
+            throw new Exception("Proveedor no encontrado.");
         validar(proveedor);
+        Proveedor conMismoRfc = proveedorDAO.obtenerPorRfc(proveedor.getRfc());
+        if (conMismoRfc != null && conMismoRfc.getId() != proveedor.getId())
+            throw new Exception("El RFC \"" + proveedor.getRfc().toUpperCase()
+                + "\" ya está registrado por otro proveedor ("
+                + conMismoRfc.getNombre() + ").");
         return proveedorDAO.actualizar(proveedor);
     }
 

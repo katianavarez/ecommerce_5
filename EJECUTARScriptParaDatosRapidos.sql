@@ -3,7 +3,8 @@
 -- 		no olvidar cambiar la contraseña en persistence en el proyecto.
 --   2. ejecutar el script despues de correr la app al menos
 --      una vez (para que hibernate genere las tablas).
---   3. la contraseña del admin es: Admin1234
+--   3. el correo de admin es: admin@gmail.com y 
+--     	la contraseña del admin es: Admin1234
 USE ecommerce_db;
 
 -- ignore evita duplicados si applistener ya las creó
@@ -244,7 +245,6 @@ WHERE p.imagen_url IN (
     'assets/img/blazers/blazerNegroCasual.png'
 );
 
--- ─── VERIFICACIÓN ──────────────────────────────────────────
 SELECT 'Categorías'                   AS tabla, COUNT(*) AS total FROM categorias
 UNION ALL SELECT 'Usuarios',                     COUNT(*)         FROM usuarios
 UNION ALL SELECT 'Productos',                    COUNT(*)         FROM productos

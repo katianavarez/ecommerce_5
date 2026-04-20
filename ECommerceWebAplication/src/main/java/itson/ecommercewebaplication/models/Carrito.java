@@ -16,7 +16,6 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.util.List;
 
-
 @Entity
 @Table(name = "carritos")
 public class Carrito{

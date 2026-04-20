@@ -20,7 +20,7 @@
     </head>
     <body>
         <header class="site-header">
-            <div class="header-top">Envío gratis en compras mayores a $1,500 MXN &nbsp;·&nbsp;<a href="#">Ver beneficios →</a></div>
+            <div class="header-top">Envío gratis en compras mayores a $1,500 MXN &nbsp;&nbsp;</div>
             <div class="header-main">
                 <a href="${pageContext.request.contextPath}/inicio" class="site-logo">
                     <div class="site-logo__wordmark">Vel<span>our</span></div>

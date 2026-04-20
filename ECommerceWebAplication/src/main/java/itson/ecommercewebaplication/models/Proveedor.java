@@ -17,10 +17,10 @@ public class Proveedor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String nombre;
 
-    @Column(length = 13)
+    @Column(length = 13, unique = true)
     private String rfc;
 
     @Column(length = 20)
@@ -30,14 +30,17 @@ public class Proveedor {
 
     private String direccion;
 
-    /** Soft delete: false = proveedor archivado. */
+    /**
+     * Soft delete: false = proveedor archivado.
+     */
     @Column(nullable = false)
     private boolean activo = true;
 
     @OneToMany(mappedBy = "proveedor")
     private List<Producto> productos;
 
-    public Proveedor() {}
+    public Proveedor() {
+    }
 
     public Proveedor(String nombre, String rfc, String telefono, String correo, String direccion) {
         this.nombre = nombre;
@@ -47,20 +50,67 @@ public class Proveedor {
         this.direccion = direccion;
     }
 
-    public int getId()                       { return id; }
-    public void setId(int id)                { this.id = id; }
-    public String getNombre()                { return nombre; }
-    public void setNombre(String nombre)     { this.nombre = nombre; }
-    public String getRfc()                   { return rfc; }
-    public void setRfc(String rfc)           { this.rfc = rfc; }
-    public String getTelefono()              { return telefono; }
-    public void setTelefono(String telefono) { this.telefono = telefono; }
-    public String getCorreo()                { return correo; }
-    public void setCorreo(String correo)     { this.correo = correo; }
-    public String getDireccion()             { return direccion; }
-    public void setDireccion(String d)       { this.direccion = d; }
-    public boolean isActivo()                { return activo; }
-    public void setActivo(boolean activo)    { this.activo = activo; }
-    public List<Producto> getProductos()     { return productos; }
-    public void setProductos(List<Producto> p) { this.productos = p; }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getRfc() {
+        return rfc;
+    }
+
+    public void setRfc(String rfc) {
+        this.rfc = rfc;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String d) {
+        this.direccion = d;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
+    public List<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<Producto> p) {
+        this.productos = p;
+    }
 }

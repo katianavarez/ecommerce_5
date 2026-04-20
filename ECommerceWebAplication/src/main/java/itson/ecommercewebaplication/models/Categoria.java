@@ -15,9 +15,8 @@ import jakarta.persistence.Transient;
 import java.text.Normalizer;
 import java.util.List;
 
-
 @Entity
-@Table(name= "categorias")
+@Table(name = "categorias")
 public class Categoria {
 
     @Id
@@ -26,7 +25,7 @@ public class Categoria {
 
     @Column(nullable = false, unique = true)
     private String nombre;
-    
+
     @OneToMany(mappedBy = "categoria")
     private List<Producto> productos;
 
@@ -68,11 +67,6 @@ public class Categoria {
         this.productos = productos;
     }
 
-    /**
-     * Devuelve el slug del nombre para usar como nombre de archivo de imagen.
-     * Ejemplo: "Pantalones" → "pantalones", "Ropa Deportiva" → "ropadeportiva"
-     * Usado en EL como ${cat.slug}
-     */
     @Transient
     public String getSlug() {
         if (nombre == null) return "";

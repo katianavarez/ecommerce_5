@@ -65,8 +65,12 @@ public class ProveedorAdminServlet extends HttpServlet {
             }
         } catch (Exception e) {
             req.setAttribute("error", "No se pudo guardar el proveedor. " + e.getMessage());
-            // Re-mostrar form con datos ingresados
-            req.setAttribute("proveedor", buildProveedorFromRequest(req));
+            Proveedor pError = buildProveedorFromRequest(req);
+            String idParam = req.getParameter("id");
+            if (idParam != null && !idParam.isBlank()) {
+                try { pError.setId(Integer.parseInt(idParam)); } catch (NumberFormatException ignored) {}
+            }
+            req.setAttribute("proveedor", pError);
             req.getRequestDispatcher("/views/admin/admin-proveedor-form.jsp").forward(req, res);
         }
     }

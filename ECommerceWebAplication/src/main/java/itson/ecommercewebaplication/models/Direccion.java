@@ -29,7 +29,10 @@ public class Direccion {
     @Column(name = "codigo_postal", nullable = false)
     private String codigoPostal;
 
-    /** true = dirección principal del usuario (la usada por defecto en checkout). */
+    /**
+     * true = dirección principal del usuario (la usada por defecto en
+     * checkout).
+     */
     @Column(nullable = false, columnDefinition = "TINYINT(1) DEFAULT 0")
     private boolean principal = false;
 
@@ -39,7 +42,8 @@ public class Direccion {
     private Usuario usuario;
 
     // Constructor sin usuario (usado en checkout sin guardar al usuario)
-    public Direccion() {}
+    public Direccion() {
+    }
 
     public Direccion(String calle, String ciudad, String estado, String codigoPostal) {
         this.calle = calle;
@@ -64,24 +68,62 @@ public class Direccion {
         this.usuario = usuario;
     }
 
-    // Getters y setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
-    public String getCalle() { return calle; }
-    public void setCalle(String calle) { this.calle = calle; }
-    public String getCiudad() { return ciudad; }
-    public void setCiudad(String ciudad) { this.ciudad = ciudad; }
-    public String getEstado() { return estado; }
-    public void setEstado(String estado) { this.estado = estado; }
-    public String getCodigoPostal() { return codigoPostal; }
-    public void setCodigoPostal(String codigoPostal) { this.codigoPostal = codigoPostal; }
-    public Usuario getUsuario() { return usuario; }
-    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
+    public int getId() {
+        return id;
+    }
 
-    public boolean isPrincipal()                  { return principal; }
-    public void setPrincipal(boolean principal)    { this.principal = principal; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    /** Texto resumido para mostrar en UI */
+    public String getCalle() {
+        return calle;
+    }
+
+    public void setCalle(String calle) {
+        this.calle = calle;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public boolean isPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(boolean principal) {
+        this.principal = principal;
+    }
+
     public String getResumen() {
         return calle + ", " + ciudad + ", " + estado + " " + codigoPostal;
     }

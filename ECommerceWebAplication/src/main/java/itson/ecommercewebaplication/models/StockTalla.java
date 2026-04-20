@@ -20,15 +20,27 @@ public class StockTalla {
     @Column(name = "cantidad", nullable = false)
     private int cantidad;
 
-    public StockTalla() {}
+    public StockTalla() {
+    }
 
     public StockTalla(Tallas talla, int cantidad) {
-        this.talla    = talla;
+        this.talla = talla;
         this.cantidad = cantidad;
     }
 
-    public Tallas getTalla()    { return talla; }
-    public void setTalla(Tallas talla) { this.talla = talla; }
-    public int getCantidad()    { return cantidad; }
-    public void setCantidad(int cantidad) { this.cantidad = cantidad; }
+    public Tallas getTalla() {
+        return talla;
+    }
+
+    public void setTalla(Tallas talla) {
+        this.talla = talla;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
 }

@@ -30,6 +30,17 @@ public class ProveedorDAO {
         }
     }
 
+    /** Busca un proveedor por RFC (para verificar duplicados antes de guardar). */
+    public Proveedor obtenerPorRfc(String rfc) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            java.util.List<Proveedor> r = em.createQuery(
+                "SELECT p FROM Proveedor p WHERE UPPER(p.rfc) = UPPER(:rfc)",
+                Proveedor.class).setParameter("rfc", rfc).getResultList();
+            return r.isEmpty() ? null : r.get(0);
+        } finally { em.close(); }
+    }
+
     public Proveedor obtenerPorId(int id) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
