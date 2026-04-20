@@ -85,7 +85,7 @@
                                         <div class="form-group">
                                             <label class="form-label">RFC *</label>
                                             <input class="form-control" type="text" name="rfc" value="<c:out value='${proveedor.rfc}'/>" required maxlength="13" placeholder="ABC010101XYZ" style="text-transform:uppercase;">
-                                            <p style="font-size:var(--fs-xs);color:var(--text-muted);margin-top:4px;">Formato mexicano. Opcional.</p>
+                                            <p style="font-size:var(--fs-xs);color:var(--text-muted);margin-top:4px;">Formato: ABC010101XYZ</p>
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Teléfono *</label>
