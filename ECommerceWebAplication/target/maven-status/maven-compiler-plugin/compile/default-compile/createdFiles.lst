@@ -16,6 +16,7 @@ itson\ecommercewebaplication\dao\CarritoDAO.class
 itson\ecommercewebaplication\apirest\AuthApiServlet.class
 itson\ecommercewebaplication\dao\CategoriaDAO.class
 itson\ecommercewebaplication\controllers\app\CuentaServlet.class
+itson\ecommercewebaplication\dao\ProveedorDAO.class
 itson\ecommercewebaplication\util\JWTUtil.class
 itson\ecommercewebaplication\util\PaginacionUtil.class
 itson\ecommercewebaplication\controllers\admin\LoginServlet.class
@@ -23,6 +24,7 @@ itson\ecommercewebaplication\controllers\app\LoginClienteServlet.class
 itson\ecommercewebaplication\listeners\AppListener.class
 itson\ecommercewebaplication\models\Pago.class
 itson\ecommercewebaplication\apirest\PedidosApiServlet.class
+itson\ecommercewebaplication\controllers\admin\ProveedorAdminServlet.class
 itson\ecommercewebaplication\models\Resenia.class
 itson\ecommercewebaplication\controllers\app\ProductoDetalleServlet.class
 itson\ecommercewebaplication\controllers\app\CheckoutServlet.class
@@ -31,6 +33,7 @@ itson\ecommercewebaplication\util\JsonUtil.class
 itson\ecommercewebaplication\filters\ClienteAuthFilter.class
 itson\ecommercewebaplication\models\Direccion.class
 itson\ecommercewebaplication\enums\Colores.class
+itson\ecommercewebaplication\bo\ProveedorBO.class
 itson\ecommercewebaplication\apirest\ProductosApiServlet.class
 itson\ecommercewebaplication\bo\PedidoBO.class
 itson\ecommercewebaplication\filters\AdminDataFilter.class
@@ -56,6 +59,8 @@ itson\ecommercewebaplication\controllers\admin\ProductoAdminServlet.class
 itson\ecommercewebaplication\controllers\app\ProductosServlet.class
 itson\ecommercewebaplication\dto\ResenaRequestDTO.class
 itson\ecommercewebaplication\bo\CategoriaBO.class
+itson\ecommercewebaplication\models\Proveedor.class
+itson\ecommercewebaplication\util\PasswordUtil.class
 itson\ecommercewebaplication\models\Pedido.class
 itson\ecommercewebaplication\bo\UsuarioBO.class
 itson\ecommercewebaplication\controllers\app\LogoutClienteServlet.class

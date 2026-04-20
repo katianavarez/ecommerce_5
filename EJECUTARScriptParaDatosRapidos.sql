@@ -17,6 +17,12 @@ INSERT IGNORE INTO categorias (nombre) VALUES
     ('Tops'),
     ('Accesorios');
 
+-- Proveedores de muestra
+INSERT IGNORE INTO proveedores (nombre, rfc, telefono, correo, direccion, activo) VALUES
+    ('Textiles del Norte SA', 'TDN010101AB1', '6441234567', 'ventas@textilesnorte.mx', 'Av. Industrial 100, Cd. Obregón, Sonora', 1),
+    ('Confecciones Velour MX', 'CVM020202CD2', '6442345678', 'contacto@velour.mx', 'Blvd. Las Torres 250, Hermosillo, Sonora', 1),
+    ('Importadora Moda Italia', 'IMI030303EF3', '5512345678', 'pedidos@modaitalia.mx', 'Polanco 45, CDMX', 1);
+
 -- admin. contraseña: Admin1234
 INSERT IGNORE INTO usuarios (nombre, correo, contraseña, telefono, rol)
 VALUES (

@@ -3,6 +3,7 @@ package itson.ecommercewebaplication.bo;
 import itson.ecommercewebaplication.dao.UsuarioDAO;
 import itson.ecommercewebaplication.enums.Rol;
 import itson.ecommercewebaplication.models.Usuario;
+import itson.ecommercewebaplication.util.PasswordUtil;
 import java.util.List;
 
 /**
@@ -21,7 +22,23 @@ public class UsuarioBO {
             throw new Exception("La contraseña es requerida.");
         }
         Usuario u = usuarioDAO.obtenerPorCorreo(correo);
-        if (u == null || !u.getContraseña().equals(contrasena)) {
+        if (u == null) {
+            throw new Exception("El correo o la contraseña son incorrectos.");
+        }
+        String stored = u.getContraseña();
+        boolean ok;
+        if (PasswordUtil.esHash(stored)) {
+            ok = PasswordUtil.verify(contrasena, stored);
+        } else {
+            // Usuario legacy con contraseña en texto plano (seed inicial).
+            // Si coincide, lo migramos a BCrypt en silencio.
+            ok = stored != null && stored.equals(contrasena);
+            if (ok) {
+                u.setContraseña(PasswordUtil.hash(contrasena));
+                usuarioDAO.actualizar(u);
+            }
+        }
+        if (!ok) {
             throw new Exception("El correo o la contraseña son incorrectos.");
         }
         return u;
@@ -53,6 +70,7 @@ public class UsuarioBO {
         if (usuario.getRol() == null) {
             usuario.setRol(Rol.CLIENTE);
         }
+        usuario.setContraseña(PasswordUtil.hash(usuario.getContraseña()));
         return usuarioDAO.guardar(usuario);
     }
 
@@ -90,11 +108,19 @@ public class UsuarioBO {
         if (usuario == null) {
             throw new Exception("Usuario no encontrado.");
         }
-        if (!usuario.getContraseña().equals(contrasenaActual)) {
+
+        String stored = usuario.getContraseña();
+        boolean ok;
+        if (PasswordUtil.esHash(stored)) {
+            ok = PasswordUtil.verify(contrasenaActual, stored);
+        } else {
+            ok = stored != null && stored.equals(contrasenaActual);
+        }
+        if (!ok) {
             throw new Exception("La contraseña actual no es correcta.");
         }
 
-        usuario.setContraseña(nuevaContrasena);
+        usuario.setContraseña(PasswordUtil.hash(nuevaContrasena));
         usuarioDAO.actualizar(usuario);
     }
 

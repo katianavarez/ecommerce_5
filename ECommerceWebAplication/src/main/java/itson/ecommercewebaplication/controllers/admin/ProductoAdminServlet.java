@@ -2,10 +2,12 @@ package itson.ecommercewebaplication.controllers.admin;
 
 import itson.ecommercewebaplication.bo.CategoriaBO;
 import itson.ecommercewebaplication.bo.ProductoBO;
+import itson.ecommercewebaplication.bo.ProveedorBO;
 import itson.ecommercewebaplication.enums.Colores;
 import itson.ecommercewebaplication.enums.Tallas;
 import itson.ecommercewebaplication.models.Categoria;
 import itson.ecommercewebaplication.models.Producto;
+import itson.ecommercewebaplication.models.Proveedor;
 import itson.ecommercewebaplication.models.StockTalla;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -25,11 +27,13 @@ public class ProductoAdminServlet extends HttpServlet {
 
     private ProductoBO productoBO;
     private CategoriaBO categoriaBO;
+    private ProveedorBO proveedorBO;
 
     @Override
     public void init() throws ServletException {
         productoBO = new ProductoBO();
         categoriaBO = new CategoriaBO();
+        proveedorBO = new ProveedorBO();
     }
 
     @Override
@@ -151,6 +155,7 @@ public class ProductoAdminServlet extends HttpServlet {
 
     private void cargarFormAtributos(HttpServletRequest req) {
         req.setAttribute("categorias", categoriaBO.obtenerTodas());
+        req.setAttribute("proveedores", proveedorBO.obtenerActivos());
         req.setAttribute("tallas", Tallas.values());
         req.setAttribute("colores", Colores.values());
     }
@@ -226,6 +231,15 @@ public class ProductoAdminServlet extends HttpServlet {
         }
 
         Categoria categoria = categoriaBO.obtenerPorId(categoriaId);
+
+        Proveedor proveedor = null;
+        String proveedorStr = req.getParameter("proveedorId");
+        if (proveedorStr != null && !proveedorStr.isBlank()) {
+            try {
+                proveedor = proveedorBO.obtenerPorId(Integer.parseInt(proveedorStr));
+            } catch (NumberFormatException ignored) {}
+        }
+
         Producto p = new Producto();
         p.setNombre(nombre);
         p.setDescripcion(descripcion);
@@ -234,6 +248,7 @@ public class ProductoAdminServlet extends HttpServlet {
         p.setStock(totalStock);
         p.setColor(colorNombre);
         p.setCategoria(categoria);
+        p.setProveedor(proveedor);
         p.setTallasDisponibles(tallasDisp);
         p.setStockPorTalla(stockPorTalla.isEmpty() ? null : stockPorTalla);
         return p;

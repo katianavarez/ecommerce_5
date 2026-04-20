@@ -57,7 +57,7 @@
 
                     <c:if test="${not empty error}">
                         <div style="background:#f8d7da;border:1px solid #f5c6cb;color:#721c24;padding:var(--sp-3) var(--sp-4);border-radius:var(--r-md);margin-bottom:var(--sp-4);">
-                            ${error}
+                            <c:out value="${error}"/>
                         </div>
                     </c:if>
 

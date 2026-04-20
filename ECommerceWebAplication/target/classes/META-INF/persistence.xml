@@ -10,6 +10,7 @@
     <class>itson.ecommercewebaplication.models.Pago</class>
     <class>itson.ecommercewebaplication.models.Pedido</class>
     <class>itson.ecommercewebaplication.models.Producto</class>
+    <class>itson.ecommercewebaplication.models.Proveedor</class>
     <class>itson.ecommercewebaplication.models.Resenia</class>
     <properties>
       <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

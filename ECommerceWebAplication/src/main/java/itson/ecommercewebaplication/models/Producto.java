@@ -70,6 +70,11 @@ public class Producto {
     @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
 
+    /** Proveedor opcional — null si el producto no tiene proveedor asociado. */
+    @ManyToOne
+    @JoinColumn(name = "proveedor_id")
+    private Proveedor proveedor;
+
     @OneToMany(mappedBy = "producto")
     private List<Resenia> resenias;
 
@@ -96,6 +101,8 @@ public class Producto {
     public void setActivo(boolean activo)  { this.activo = activo; }
     public Categoria getCategoria()                  { return categoria; }
     public void setCategoria(Categoria c)            { this.categoria = c; }
+    public Proveedor getProveedor()                  { return proveedor; }
+    public void setProveedor(Proveedor proveedor)    { this.proveedor = proveedor; }
     public List<Resenia> getResenias()               { return resenias; }
     public void setResenias(List<Resenia> r)         { this.resenias = r; }
 

@@ -97,6 +97,9 @@ public class ProductosApiServlet extends HttpServlet {
         m.put("categoria",   p.getCategoria() != null
             ? Map.of("id", p.getCategoria().getId(), "nombre", p.getCategoria().getNombre())
             : null);
+        m.put("proveedor",   p.getProveedor() != null
+            ? Map.of("id", p.getProveedor().getId(), "nombre", p.getProveedor().getNombre())
+            : null);
         List<String> tallas = new ArrayList<>();
         if (p.getTallasDisponibles() != null)
             for (var t : p.getTallasDisponibles()) tallas.add(t.name());
