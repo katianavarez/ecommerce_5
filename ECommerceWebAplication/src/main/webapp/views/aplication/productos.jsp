@@ -310,6 +310,7 @@
         </footer>
 
         <script>
+            // Navegar a otra página preservando todos los filtros activos
             function irAPagina(num) {
                 document.getElementById('inputPagina').value = num;
                 document.getElementById('formPaginacion').submit();
