@@ -55,6 +55,9 @@
                     <a href="${pageContext.request.contextPath}/admin/pedidos" class="admin-nav__link ">
                         <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
                         Pedidos
+                        <c:if test="${pedidosPendientes > 0}">
+                            <span class="admin-nav__badge admin-nav__badge--warn"><c:out value="${pedidosPendientes}"/></span>
+                        </c:if>
                     </a>
                     <p class="admin-nav__section">Comunidad</p>
                     <a href="${pageContext.request.contextPath}/admin/resenas" class="admin-nav__link ">
@@ -126,8 +129,8 @@
                                                     <c:if test="${not empty prov.correo}"><c:out value="${prov.correo}"/><br></c:if>
                                                     <c:if test="${not empty prov.telefono}"><c:out value="${prov.telefono}"/></c:if>
                                                     <c:if test="${empty prov.correo and empty prov.telefono}">—</c:if>
-                                                </td>
-                                                <td style="color:var(--text-muted);font-size:var(--fs-sm);"><c:out value="${empty prov.direccion ? '—' : prov.direccion}"/></td>
+                                                    </td>
+                                                    <td style="color:var(--text-muted);font-size:var(--fs-sm);"><c:out value="${empty prov.direccion ? '—' : prov.direccion}"/></td>
                                                 <td>
                                                     <div class="admin-table__actions">
                                                         <a href="${pageContext.request.contextPath}/admin/proveedores?accion=editar&id=${prov.id}" class="admin-action-btn" title="Editar">
@@ -198,11 +201,23 @@
             </div>
         </div>
         <script>
-            const adminToggle=document.getElementById('adminMenuToggle');const adminSidebar=document.querySelector('.admin-sidebar');const adminOverlay=document.getElementById('adminOverlay');
-            function openAdminSidebar(){adminSidebar.classList.add('is-open');adminOverlay.classList.add('is-open');document.body.style.overflow='hidden';}
-            function closeAdminSidebar(){adminSidebar.classList.remove('is-open');adminOverlay.classList.remove('is-open');document.body.style.overflow='';}
-            if(adminToggle)adminToggle.addEventListener('click',()=>adminSidebar.classList.contains('is-open')?closeAdminSidebar():openAdminSidebar());
-            if(adminOverlay)adminOverlay.addEventListener('click',closeAdminSidebar);
+            const adminToggle = document.getElementById('adminMenuToggle');
+            const adminSidebar = document.querySelector('.admin-sidebar');
+            const adminOverlay = document.getElementById('adminOverlay');
+            function openAdminSidebar() {
+                adminSidebar.classList.add('is-open');
+                adminOverlay.classList.add('is-open');
+                document.body.style.overflow = 'hidden';
+            }
+            function closeAdminSidebar() {
+                adminSidebar.classList.remove('is-open');
+                adminOverlay.classList.remove('is-open');
+                document.body.style.overflow = '';
+            }
+            if (adminToggle)
+                adminToggle.addEventListener('click', () => adminSidebar.classList.contains('is-open') ? closeAdminSidebar() : openAdminSidebar());
+            if (adminOverlay)
+                adminOverlay.addEventListener('click', closeAdminSidebar);
         </script>
     </body>
 </html>

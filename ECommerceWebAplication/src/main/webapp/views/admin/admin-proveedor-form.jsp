@@ -55,6 +55,9 @@
                     <a href="${pageContext.request.contextPath}/admin/pedidos" class="admin-nav__link ">
                         <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
                         Pedidos
+                        <c:if test="${pedidosPendientes > 0}">
+                            <span class="admin-nav__badge admin-nav__badge--warn"><c:out value="${pedidosPendientes}"/></span>
+                        </c:if>
                     </a>
                     <p class="admin-nav__section">Comunidad</p>
                     <a href="${pageContext.request.contextPath}/admin/resenas" class="admin-nav__link ">
