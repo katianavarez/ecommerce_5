@@ -44,18 +44,18 @@
 
                         <c:if test="${not empty error}">
                             <div style="background:#f8d7da;border:1px solid #f5c6cb;color:#721c24;padding:var(--sp-3) var(--sp-4);border-radius:var(--r-md);margin-bottom:var(--sp-4);font-size:var(--fs-sm);">
-                                ${error}
+                                <c:out value="${error}"/>
                             </div>
                         </c:if>
 
                         <form class="auth-form" method="POST" action="${pageContext.request.contextPath}/auth/login">
                             <c:if test="${not empty param.redirect}">
-                                <input type="hidden" name="redirect" value="${param.redirect}">
+                                <input type="hidden" name="redirect" value="<c:out value='${param.redirect}'/>">
                             </c:if>
                             <div class="form-group">
                                 <label class="form-label" for="correo">Correo electrónico</label>
                                 <input class="form-control" type="email" id="correo" name="correo"
-                                       placeholder="ana@correo.com" value="${correo}" required>
+                                       placeholder="ana@correo.com" value="<c:out value='${correo}'/>" required>
                             </div>
                             <div class="form-group">
                                 <label class="form-label" for="contrasena">Contraseña</label>

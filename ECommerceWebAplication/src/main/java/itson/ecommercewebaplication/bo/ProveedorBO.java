@@ -54,16 +54,19 @@ public class ProveedorBO {
     }
 
     private void validar(Proveedor p) throws Exception {
-        if (p.getNombre() == null || p.getNombre().isBlank()) {
-            throw new Exception("El nombre del proveedor es requerido");
-        }
-        if (p.getRfc() != null && !p.getRfc().isBlank()
-                && !RFC_PATTERN.matcher(p.getRfc().toUpperCase()).matches()) {
-            throw new Exception("El RFC tiene un formato inválido");
-        }
-        if (p.getCorreo() != null && !p.getCorreo().isBlank()
-                && !CORREO_PATTERN.matcher(p.getCorreo()).matches()) {
-            throw new Exception("El correo tiene un formato inválido");
-        }
+        if (p.getNombre() == null || p.getNombre().isBlank())
+            throw new Exception("El nombre del proveedor es requerido.");
+        if (p.getRfc() == null || p.getRfc().isBlank())
+            throw new Exception("El RFC es requerido.");
+        if (!RFC_PATTERN.matcher(p.getRfc().toUpperCase()).matches())
+            throw new Exception("El RFC tiene un formato inválido (ej: ABC010101XYZ).");
+        if (p.getTelefono() == null || p.getTelefono().isBlank())
+            throw new Exception("El teléfono es requerido.");
+        if (p.getCorreo() == null || p.getCorreo().isBlank())
+            throw new Exception("El correo de contacto es requerido.");
+        if (!CORREO_PATTERN.matcher(p.getCorreo()).matches())
+            throw new Exception("El correo tiene un formato inválido.");
+        if (p.getDireccion() == null || p.getDireccion().isBlank())
+            throw new Exception("La dirección es requerida.");
     }
 }

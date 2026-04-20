@@ -83,22 +83,22 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group">
-                                            <label class="form-label">RFC</label>
-                                            <input class="form-control" type="text" name="rfc" value="<c:out value='${proveedor.rfc}'/>" maxlength="13" placeholder="ABC010101XYZ" style="text-transform:uppercase;">
+                                            <label class="form-label">RFC *</label>
+                                            <input class="form-control" type="text" name="rfc" value="<c:out value='${proveedor.rfc}'/>" required maxlength="13" placeholder="ABC010101XYZ" style="text-transform:uppercase;">
                                             <p style="font-size:var(--fs-xs);color:var(--text-muted);margin-top:4px;">Formato mexicano. Opcional.</p>
                                         </div>
                                         <div class="form-group">
-                                            <label class="form-label">Teléfono</label>
-                                            <input class="form-control" type="tel" name="telefono" value="<c:out value='${proveedor.telefono}'/>" maxlength="20" placeholder="6440000000">
+                                            <label class="form-label">Teléfono *</label>
+                                            <input class="form-control" type="tel" name="telefono" value="<c:out value='${proveedor.telefono}'/>" required maxlength="20" placeholder="6440000000">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">Correo de contacto</label>
+                                        <label class="form-label">Correo de contacto *</label>
                                         <input class="form-control" type="email" name="correo" value="<c:out value='${proveedor.correo}'/>" placeholder="contacto@proveedor.com">
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">Dirección</label>
-                                        <textarea class="form-control" name="direccion" rows="2"><c:out value="${proveedor.direccion}"/></textarea>
+                                        <label class="form-label">Dirección *</label>
+                                        <textarea class="form-control" name="direccion" rows="2" required><c:out value="${proveedor.direccion}"/></textarea>
                                     </div>
 
                                     <div style="display:flex;gap:var(--sp-3);margin-top:var(--sp-5);">

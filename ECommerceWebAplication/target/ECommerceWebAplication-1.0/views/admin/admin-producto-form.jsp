@@ -54,6 +54,10 @@
                         <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                         Productos
                     </a>
+                    <a href="${pageContext.request.contextPath}/admin/proveedores" class="admin-nav__link ">
+                        <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M16 3h5v5"/><path d="M21 3l-7 7"/><path d="M8 21H3v-5"/><path d="M3 21l7-7"/></svg>
+                        Proveedores
+                    </a>
                     <p class="admin-nav__section">Ventas</p>
                     <a href="${pageContext.request.contextPath}/admin/pedidos" class="admin-nav__link ">
                         <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
@@ -91,7 +95,7 @@
                 </div>
                 <div class="admin-body">
                     <c:if test="${not empty error}">
-                        <div style="background:#f8d7da;border:1px solid #f5c6cb;color:#721c24;padding:var(--sp-3) var(--sp-4);border-radius:var(--r-md);margin-bottom:var(--sp-4);">${error}</div>
+                        <div style="background:#f8d7da;border:1px solid #f5c6cb;color:#721c24;padding:var(--sp-3) var(--sp-4);border-radius:var(--r-md);margin-bottom:var(--sp-4);"><c:out value="${error}"/></div>
                     </c:if>
 
                     <form method="POST" action="${pageContext.request.contextPath}/admin/productos">
@@ -106,7 +110,7 @@
                                 <div class="product-form">
                                     <div class="form-group">
                                         <label class="form-label">Nombre *</label>
-                                        <input class="form-control" type="text" name="nombre" value="${producto.nombre}" required>
+                                        <input class="form-control" type="text" name="nombre" value="<c:out value='${producto.nombre}'/>" required>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Descripción *</label>
@@ -129,6 +133,20 @@
                                                 </c:forEach>
                                             </select>
                                         </div>
+                                    </div>
+
+                                    <%-- Proveedor (opcional) --%>
+                                    <div class="form-group">
+                                        <label class="form-label">Proveedor</label>
+                                        <select class="form-control" name="proveedorId">
+                                            <option value="">-- Sin proveedor --</option>
+                                            <c:forEach var="prov" items="${proveedores}">
+                                                <option value="${prov.id}" ${producto.proveedor.id == prov.id ? 'selected' : ''}>
+                                                    <c:out value="${prov.nombre}"/>
+                                                </option>
+                                            </c:forEach>
+                                        </select>
+                                        <p style="font-size:var(--fs-xs);color:var(--text-muted);margin-top:4px;">Opcional. Solo se muestran proveedores activos.</p>
                                     </div>
 
                                     <%-- Color — botones predefinidos --%>
