@@ -74,15 +74,17 @@ public class ProductosServlet extends HttpServlet {
             long totalProductos;
 
             if (busqueda != null && !busqueda.isBlank()) {
-                productos = productoBO.buscarPorNombre(busqueda);
-                totalProductos = productos.size();
+                List<Producto> todos = productoBO.buscarPorNombre(busqueda);
+                totalProductos = todos.size();
+                productos = paginar(todos, pagina, TAMANO_PAGINA);
                 req.setAttribute("busqueda", busqueda);
             } else if (usaFiltros) {
-                productos = productoBO.filtrar(
+                List<Producto> todos = productoBO.filtrar(
                         categoriaIds.isEmpty() ? null : categoriaIds,
                         tallasSelec.isEmpty() ? null : tallasSelec,
                         color, null, precioMax, soloConStock);
-                totalProductos = productos.size();
+                totalProductos = todos.size();
+                productos = paginar(todos, pagina, TAMANO_PAGINA);
             } else {
                 totalProductos = productoBO.contarProductos();
                 productos = productoBO.obtenerPaginados(pagina, TAMANO_PAGINA);
@@ -121,5 +123,14 @@ public class ProductosServlet extends HttpServlet {
             req.setAttribute("soloConStockActivo", false);
             req.getRequestDispatcher("/views/aplication/productos.jsp").forward(req, res);
         }
+    }
+
+    private List<Producto> paginar(List<Producto> todos, int pagina, int tamano) {
+        int desde = (pagina - 1) * tamano;
+        if (desde >= todos.size()) {
+            return Collections.emptyList();
+        }
+        int hasta = Math.min(desde + tamano, todos.size());
+        return todos.subList(desde, hasta);
     }
 }
