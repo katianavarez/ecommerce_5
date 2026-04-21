@@ -144,24 +144,9 @@ INSERT INTO productos (nombre, descripcion, precio, imagen_url, stock, color, ac
 
 ('Top Negro Escote Drapeado',
  'Top negro con escote drapeado asimétrico. Sofisticado y atrevido para noches especiales.',
- 560.00, 'assets/img/tops/topNegroEscoteDrapeado.png', 28, 'NEGRO', 1, @tops),
+ 560.00, 'assets/img/tops/topNegroEscoteDrapeado.png', 28, 'NEGRO', 1, @tops);
 
--- ACCESORIOS (4) — sin tallas
-('Bolsa Beige Asa Trenzada',
- 'Bolsa de mano en beige con asa trenzada artesanal. Complemento perfecto para looks casuales.',
- 1350.00, 'assets/img/accesorios/bolsaBeigeAsaTrenzada.png', 15, 'BEIGE', 1, @accesorios),
 
-('Bolsa Negra',
- 'Bolsa negra de uso diario. Espaciosa y práctica con acabado mate.',
- 980.00, 'assets/img/accesorios/bolsaNegraPRUEBA.png', 10, 'NEGRO', 1, @accesorios),
-
-('Bolsa Rosa Estructurada',
- 'Bolsa estructurada en rosa palo. Chic y femenina, ideal para outfits de primavera.',
- 1450.00, 'assets/img/accesorios/bolsaRosaEstructurada.png', 12, 'ROSA', 1, @accesorios),
-
-('Bolsa Vino Grande',
- 'Bolsa grande en vino oscuro. Capacidad y estilo para el día a día más exigente.',
- 1580.00, 'assets/img/accesorios/bolsaVinoGrande.png', 8, 'VINO', 1, @accesorios);
 
 INSERT INTO producto_tallas (producto_id, talla)
 SELECT p.id, t.talla
