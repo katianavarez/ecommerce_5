@@ -39,17 +39,6 @@
                     <!-- <a href="productos.html" class="main-nav__link">Sale</a>-->
                 </nav>
 
-                <form class="search-form" role="search">
-                    <input class="search-form__input" type="search" placeholder="Buscar prendas...">
-                    <button class="search-form__btn" type="submit" aria-label="Buscar">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                        <circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/>
-                        </svg>
-                    </button>
-                </form>
-
-
-
                 <div class="header-right">
                     <div class="header-actions">
                         <%-- Icono cuenta: si hay sesión activa → cuenta, si no → login --%>
