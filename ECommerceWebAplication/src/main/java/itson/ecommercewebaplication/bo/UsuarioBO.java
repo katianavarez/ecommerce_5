@@ -25,13 +25,14 @@ public class UsuarioBO {
         if (u == null) {
             throw new Exception("El correo o la contraseña son incorrectos.");
         }
+        if (!u.isActivo()) {
+            throw new Exception("Esta cuenta ha sido dada de baja. Contacta al administrador.");
+        }
         String stored = u.getContraseña();
         boolean ok;
         if (PasswordUtil.esHash(stored)) {
             ok = PasswordUtil.verify(contrasena, stored);
         } else {
-            // Usuario legacy con contraseña en texto plano (seed inicial).
-            // Si coincide, lo migramos a BCrypt en silencio.
             ok = stored != null && stored.equals(contrasena);
             if (ok) {
                 u.setContraseña(PasswordUtil.hash(contrasena));

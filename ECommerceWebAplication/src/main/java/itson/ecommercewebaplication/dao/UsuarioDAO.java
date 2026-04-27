@@ -86,7 +86,8 @@ public class UsuarioDAO {
             em.getTransaction().begin();
             Usuario u = em.find(Usuario.class, id);
             if (u != null) {
-                em.remove(u);
+                u.setActivo(false);
+                em.merge(u);
             }
             em.getTransaction().commit();
         } catch (Exception e) {

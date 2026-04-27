@@ -155,7 +155,6 @@
                                     <!-- Actualizar estado con transiciones permitidas -->
                                     <c:choose>
                                         <c:when test="${pedido.estado.name() == 'ENTREGADO' || pedido.estado.name() == 'CANCELADO'}">
-                                            <%-- Estado final — no se puede cambiar --%>
                                             <div style="margin-top:var(--sp-5);padding:var(--sp-3) var(--sp-4);background:var(--bg-muted);border-radius:var(--r-md);display:flex;align-items:center;gap:var(--sp-3);">
                                                 <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" style="color:var(--text-muted);flex-shrink:0;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
                                                 <p style="font-size:var(--fs-sm);color:var(--text-muted);">
@@ -170,8 +169,6 @@
                                             <form method="POST" action="${pageContext.request.contextPath}/admin/pedidos" style="margin-top:var(--sp-5);display:flex;gap:var(--sp-3);align-items:center;">
                                                 <input type="hidden" name="accion" value="actualizarEstado">
                                                 <input type="hidden" name="id" value="${pedido.id}">
-                                                <%-- estadoActual permite al servidor detectar si el estado ya cambió
-                                                     (p.ej. al presionar "atrás" y reenviar el form con datos viejos) --%>
                                                 <input type="hidden" name="estadoActual" value="${pedido.estado.name()}">
                                                 <select class="admin-select" name="nuevoEstado">
                                                     <c:choose>
@@ -196,7 +193,6 @@
                             </div>
                         </c:when>
                         <c:otherwise>
-                            <!-- Tabs por estado + búsqueda + orden -->
                             <form id="formFiltrosPedidos" method="GET" action="${pageContext.request.contextPath}/admin/pedidos">
                                 <%-- Tabs de estado --%>
                                 <div class="admin-tabs" style="margin-bottom:var(--sp-4);">
@@ -219,7 +215,6 @@
                                     </c:forEach>
                                 </div>
 
-                                <%-- Barra búsqueda + orden --%>
                                 <div class="admin-table-head">
                                     <h2 class="admin-table-head__title">
                                         <c:choose>
@@ -244,7 +239,6 @@
                                             <option value="mayorMonto" ${ordenActual == 'mayorMonto' ? 'selected' : ''}>Mayor monto</option>
                                             <option value="menorMonto" ${ordenActual == 'menorMonto' ? 'selected' : ''}>Menor monto</option>
                                         </select>
-                                        <%-- Mantener estado seleccionado al ordenar --%>
                                         <input type="hidden" name="estado" value="${estadoSeleccionado}">
                                     </div>
                                 </div>

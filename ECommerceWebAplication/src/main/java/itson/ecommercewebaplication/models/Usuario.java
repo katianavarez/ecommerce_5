@@ -17,7 +17,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "usuarios")
-public class Usuario{
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,30 +25,33 @@ public class Usuario{
 
     @Column(nullable = false)
     private String nombre;
-    
+
     @Column(nullable = false, unique = true)
     private String correo;
-    
+
     @Column(nullable = false)
     private String contraseña;
-    
+
     @Column(nullable = false)
     private String telefono;
-    
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Rol rol;
-    
+
+    @Column(nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
+    private boolean activo = true;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "direccion_id", referencedColumnName = "id")
     private Direccion direccion;
-    
+
     @OneToMany(mappedBy = "usuario")
     private List<Pedido> historialPedidos;
-    
+
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Carrito carrito;
-    
+
     @OneToMany(mappedBy = "usuario")
     private List<Resenia> resenias;
 
@@ -159,6 +162,13 @@ public class Usuario{
     public void setResenias(List<Resenia> resenias) {
         this.resenias = resenias;
     }
-    
-    
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
 }

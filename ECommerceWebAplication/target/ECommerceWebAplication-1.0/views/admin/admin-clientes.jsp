@@ -93,7 +93,10 @@
                 </div>
                 <div class="admin-body">
                     <c:if test="${not empty param.success}">
-                        <div style="background:#d4edda;border:1px solid #c3e6cb;color:#155724;padding:var(--sp-3) var(--sp-4);border-radius:var(--r-md);margin-bottom:var(--sp-4);">✓ Cliente eliminado.</div>
+                        <div style="background:#d4edda;border:1px solid #c3e6cb;color:#155724;padding:var(--sp-3) var(--sp-4);border-radius:var(--r-md);margin-bottom:var(--sp-4);">✓ Cliente dado de baja correctamente.</div>
+                    </c:if>
+                    <c:if test="${not empty error}">
+                        <div style="background:#f8d7da;border:1px solid #f5c6cb;color:#721c24;padding:var(--sp-3) var(--sp-4);border-radius:var(--r-md);margin-bottom:var(--sp-4);"><c:out value="${error}"/></div>
                     </c:if>
 
                     <div class="admin-table-wrap">
