@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Smoke test JS — Velour</title>
+    <style>
+        body { font: 14px/1.5 system-ui, sans-serif; padding: 24px; max-width: 720px; margin: auto; }
+        h1 { font-size: 1.4rem; }
+        button { padding: 6px 12px; margin: 4px 4px 4px 0; cursor: pointer; }
+        pre { background: #f5f5f5; padding: 12px; border-radius: 4px; max-height: 280px; overflow: auto; }
+        .row { margin: 12px 0; }
+        input { padding: 4px 6px; }
+    </style>
+</head>
+<body>
+    <h1>Smoke test — assets/js</h1>
+    <p>Esta página solo verifica que los módulos JS cargan y la API responde. Borrar antes de producción.</p>
+
+    <div class="row">
+        <strong>Sesión actual:</strong>
+        <span id="sesion">…</span>
+        <button id="btnLimpiar">Limpiar localStorage</button>
+    </div>
+
+    <div class="row">
+        <input id="correo" placeholder="correo" value="equipo@gmail.com">
+        <input id="pass" type="password" placeholder="contraseña" value="Cliente123">
+        <button id="btnLogin">POST /api/auth/login</button>
+    </div>
+
+    <div class="row">
+        <button id="btnProductos">GET /api/productos</button>
+        <button id="btnCarrito">GET /api/carrito/{miId}</button>
+        <button id="btnAgregar">POST /api/carrito (productoId=1, qty=1)</button>
+    </div>
+
+    <div class="row">
+        <strong>Carrito guest (localStorage):</strong>
+        <button id="btnGuestAdd">Agregar item guest</button>
+        <button id="btnGuestList">Ver guest</button>
+        <button id="btnGuestClear">Vaciar guest</button>
+    </div>
+
+    <pre id="out">(sin salida aún)</pre>
+
+    <script type="module">
+        import { apiGet, apiPost } from './api.js';
+        import { setSession, clearSession, getNombre, getRol, getUserId, isLogged } from './auth.js';
+        import { agregar, obtener, vaciar, totales } from './cart-storage.js';
+
+        const out = document.getElementById('out');
+        const sesion = document.getElementById('sesion');
+
+        const log = (label, value) => {
+            out.textContent = label + '\n' + (typeof value === 'string' ? value : JSON.stringify(value, null, 2));
+        };
+        const refrescarSesion = () => {
+            sesion.textContent = isLogged()
+                ? `${getNombre()} (rol=${getRol()}, id=${getUserId()})`
+                : '(sin sesión)';
+        };
+        refrescarSesion();
+
+        document.getElementById('btnLimpiar').onclick = () => { clearSession(); vaciar(); refrescarSesion(); log('Limpio', 'OK'); };
+
+        document.getElementById('btnLogin').onclick = async () => {
+            try {
+                const data = await apiPost('/auth/login', {
+                    correo: document.getElementById('correo').value,
+                    contrasena: document.getElementById('pass').value
+                }, { auth: false });
+                setSession({ token: data.token, nombre: data.nombre, rol: data.rol });
+                refrescarSesion();
+                log('Login OK', data);
+            } catch (e) { log('Login FAIL', e.message); }
+        };
+
+        document.getElementById('btnProductos').onclick = async () => {
+            try { log('Productos', await apiGet('/productos', { query: { size: 3 } })); }
+            catch (e) { log('FAIL', e.message); }
+        };
+
+        document.getElementById('btnCarrito').onclick = async () => {
+            try {
+                const id = getUserId();
+                if (!id) { log('Sin id de usuario en sesión', '(login primero o decodificar JWT)'); return; }
+                log('Carrito', await apiGet('/carrito/' + id));
+            } catch (e) { log('FAIL', e.message); }
+        };
+
+        document.getElementById('btnAgregar').onclick = async () => {
+            try { log('Carrito tras POST', await apiPost('/carrito', { productoId: 1, cantidad: 1 })); }
+            catch (e) { log('FAIL', e.message); }
+        };
+
+        document.getElementById('btnGuestAdd').onclick = () => {
+            agregar({ productoId: 99, nombre: 'Demo', imagenURL: '', precioUnidad: 100, cantidad: 1, talla: 'M' });
+            log('guest agregado', { items: obtener(), totales: totales() });
+        };
+        document.getElementById('btnGuestList').onclick = () => log('guest', { items: obtener(), totales: totales() });
+        document.getElementById('btnGuestClear').onclick = () => { vaciar(); log('guest vaciado', '[]'); };
+    </script>
+</body>
+</html>
