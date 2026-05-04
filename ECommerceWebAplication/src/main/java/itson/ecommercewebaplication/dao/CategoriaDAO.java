@@ -1,9 +1,10 @@
 package itson.ecommercewebaplication.dao;
 
 import itson.ecommercewebaplication.models.Categoria;
-import itson.ecommercewebaplication.models.Producto;
 import itson.ecommercewebaplication.util.JPAUtil;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
 import java.util.List;
 
 /**
@@ -26,6 +27,34 @@ public class CategoriaDAO {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             return em.find(Categoria.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+    public Categoria obtenerPorNombre(String nombre) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            TypedQuery<Categoria> q = em.createQuery(
+                    "SELECT c FROM Categoria c WHERE LOWER(c.nombre) = LOWER(:nombre)",
+                    Categoria.class);
+            q.setParameter("nombre", nombre);
+            return q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+
+    public long contarProductos(int categoriaId) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            TypedQuery<Long> q = em.createQuery(
+                    "SELECT COUNT(p) FROM Producto p WHERE p.categoria.id = :cId",
+                    Long.class);
+            q.setParameter("cId", categoriaId);
+            return q.getSingleResult();
         } finally {
             em.close();
         }

@@ -46,6 +46,7 @@ itson\ecommercewebaplication\enums\EstadoPedido.class
 itson\ecommercewebaplication\controllers\admin\LogoutServlet.class
 itson\ecommercewebaplication\dto\CarritoItemRequestDTO.class
 itson\ecommercewebaplication\models\Categoria.class
+itson\ecommercewebaplication\controllers\admin\CategoriaAdminServlet.class
 itson\ecommercewebaplication\models\Carrito.class
 itson\ecommercewebaplication\bo\ProductoBO.class
 itson\ecommercewebaplication\dto\ResponseDTO.class
