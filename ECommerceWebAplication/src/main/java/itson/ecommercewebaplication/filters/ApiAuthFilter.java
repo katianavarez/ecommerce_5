@@ -1,5 +1,7 @@
 package itson.ecommercewebaplication.filters;
 
+import itson.ecommercewebaplication.bo.UsuarioBO;
+import itson.ecommercewebaplication.models.Usuario;
 import itson.ecommercewebaplication.util.JWTUtil;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
@@ -14,15 +16,17 @@ import java.io.IOException;
 @WebFilter(filterName = "ApiAuthFilter", urlPatterns = {"/api/*"})
 public class ApiAuthFilter implements Filter {
 
+    private final UsuarioBO usuarioBO = new UsuarioBO();
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        // Permitir el login sin token (de lo contrario es imposible obtener uno)
         String uri = req.getRequestURI();
-        if (uri.contains("/api/auth/login")) {
+        // Endpoints públicos: login y registro (sin estos no se puede obtener un token)
+        if (uri.endsWith("/api/auth/login") || uri.endsWith("/api/auth/registro")) {
             chain.doFilter(request, response);
             return;
         }
@@ -44,8 +48,21 @@ public class ApiAuthFilter implements Filter {
         try {
             String token = authHeader.substring(7);
             String correo = JWTUtil.validarToken(token);
+            String rol = JWTUtil.getRolFromToken(token);
+
+            // Resolver el usuario contra BD para inyectar su id real y validar que sigue activo.
+            Usuario usuario = usuarioBO.obtenerPorCorreo(correo);
+            if (usuario == null || !usuario.isActivo()) {
+                res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                res.setContentType("application/json");
+                res.getWriter().write("{\"success\":false,\"message\":\"Cuenta no disponible\"}");
+                return;
+            }
+
             req.setAttribute("correoUsuario", correo);
-            req.setAttribute("rolUsuario", JWTUtil.getRolFromToken(token));
+            req.setAttribute("rolUsuario", rol);
+            req.setAttribute("usuarioIdAuth", usuario.getId());
+            req.setAttribute("usuarioAuth", usuario);
             chain.doFilter(request, response);
         } catch (Exception e) {
             res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

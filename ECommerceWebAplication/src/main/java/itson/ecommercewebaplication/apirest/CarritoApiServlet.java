@@ -1,8 +1,6 @@
 package itson.ecommercewebaplication.apirest;
 
 import itson.ecommercewebaplication.bo.CarritoBO;
-import itson.ecommercewebaplication.bo.UsuarioBO;
-import itson.ecommercewebaplication.dto.CarritoItemRequestDTO;
 import itson.ecommercewebaplication.models.Carrito;
 import itson.ecommercewebaplication.models.DetallePedido;
 import itson.ecommercewebaplication.models.Usuario;
@@ -14,38 +12,37 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * 
+ *
  * @author PC
  */
 @WebServlet(name = "CarritoApiServlet", urlPatterns = {"/api/carrito", "/api/carrito/*"})
 public class CarritoApiServlet extends HttpServlet {
 
     private CarritoBO carritoBO;
-    private UsuarioBO usuarioBO;
 
     @Override
     public void init() throws ServletException {
         carritoBO = new CarritoBO();
-        usuarioBO = new UsuarioBO();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
+        Usuario usuario = (Usuario) req.getAttribute("usuarioAuth");
+        if (usuario == null) { JsonUtil.error(res, 401, "No autenticado."); return; }
+
         try {
             Map<?, ?> body = JsonUtil.readBody(req, Map.class);
-            int usuarioId  = ((Number) body.get("usuarioId")).intValue();
             int productoId = ((Number) body.get("productoId")).intValue();
             int cantidad   = ((Number) body.get("cantidad")).intValue();
+            String talla   = body.get("talla") != null ? body.get("talla").toString() : null;
+            if (talla != null && talla.isBlank()) talla = null;
 
-            Usuario usuario = usuarioBO.obtenerPorId(usuarioId);
-            if (usuario == null) { JsonUtil.error(res, 404, "Usuario no encontrado."); return; }
-
-            Carrito carrito = carritoBO.agregarItem(usuario, productoId, cantidad);
+            Carrito carrito = carritoBO.agregarItem(usuario, productoId, cantidad, talla);
             JsonUtil.ok(res, toMap(carrito));
         } catch (IllegalArgumentException | NullPointerException e) {
-            JsonUtil.error(res, 400, "Body inválido. Campos requeridos: usuarioId, productoId, cantidad.");
+            JsonUtil.error(res, 400, "Body inválido. Campos requeridos: productoId, cantidad. Opcional: talla.");
         } catch (Exception e) {
             JsonUtil.error(res, 500, e.getMessage());
         }
@@ -55,40 +52,67 @@ public class CarritoApiServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
+        Usuario usuario = (Usuario) req.getAttribute("usuarioAuth");
+        if (usuario == null) { JsonUtil.error(res, 401, "No autenticado."); return; }
+
         String pathInfo = req.getPathInfo();
-        if (pathInfo == null || pathInfo.equals("/")) {
-            JsonUtil.error(res, 400, "Falta el usuarioId. Usa GET /api/carrito/{usuarioId}");
-            return;
+        // Validar que el {usuarioId} del path coincide con el del token (RESTful path, evita IDOR).
+        if (pathInfo != null && !pathInfo.equals("/")) {
+            try {
+                int pathId = Integer.parseInt(pathInfo.substring(1).split("/")[0]);
+                if (pathId != usuario.getId()) {
+                    JsonUtil.error(res, 403, "No puedes consultar el carrito de otro usuario.");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                JsonUtil.error(res, 400, "usuarioId inválido."); return;
+            }
         }
+
         try {
-            String[] parts = pathInfo.split("/");
-            int usuarioId = Integer.parseInt(parts[1]);
-            Carrito carrito = carritoBO.obtenerPorUsuario(usuarioId);
+            Carrito carrito = carritoBO.obtenerPorUsuario(usuario.getId());
             if (carrito == null) {
-                JsonUtil.ok(res, Map.of("usuarioId", usuarioId, "items", List.of(), "total", 0.0));
+                JsonUtil.ok(res, Map.of("usuarioId", usuario.getId(), "items", List.of(), "total", 0.0));
                 return;
             }
             JsonUtil.ok(res, toMap(carrito));
-        } catch (NumberFormatException e) {
-            JsonUtil.error(res, 400, "usuarioId inválido.");
         } catch (Exception e) {
             JsonUtil.error(res, 500, e.getMessage());
         }
     }
 
+    /**
+     * DELETE /api/carrito/producto/{productoId}                  -> borra item por producto (sin talla)
+     * DELETE /api/carrito/producto/{productoId}/talla/{talla}    -> borra item específico por talla
+     */
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        String pathInfo = req.getPathInfo(); 
+        Usuario usuario = (Usuario) req.getAttribute("usuarioAuth");
+        if (usuario == null) { JsonUtil.error(res, 401, "No autenticado."); return; }
+
+        String pathInfo = req.getPathInfo();
+        if (pathInfo == null || pathInfo.equals("/")) {
+            JsonUtil.error(res, 400,
+                "Usa DELETE /api/carrito/producto/{productoId} o /api/carrito/producto/{productoId}/talla/{talla}.");
+            return;
+        }
         try {
-            String[] parts = pathInfo.split("/");
-            int usuarioId  = Integer.parseInt(parts[1]);
-            int productoId = Integer.parseInt(parts[3]);
-            Usuario usuario = usuarioBO.obtenerPorId(usuarioId);
-            if (usuario == null) { JsonUtil.error(res, 404, "Usuario no encontrado."); return; }
-            carritoBO.eliminarItem(usuario, productoId);
+            String[] parts = pathInfo.split("/"); // ["", "producto", "<id>", ("talla", "<talla>")?]
+            if (parts.length < 3 || !"producto".equals(parts[1])) {
+                JsonUtil.error(res, 400, "Ruta no reconocida."); return;
+            }
+            int productoId = Integer.parseInt(parts[2]);
+            String talla = null;
+            if (parts.length >= 5 && "talla".equals(parts[3])) {
+                talla = parts[4];
+                if (talla.isBlank()) talla = null;
+            }
+            carritoBO.eliminarItem(usuario, productoId, talla);
             JsonUtil.ok(res, Map.of("success", true, "message", "Item eliminado del carrito."));
+        } catch (NumberFormatException e) {
+            JsonUtil.error(res, 400, "productoId inválido.");
         } catch (Exception e) {
             JsonUtil.error(res, 500, e.getMessage());
         }

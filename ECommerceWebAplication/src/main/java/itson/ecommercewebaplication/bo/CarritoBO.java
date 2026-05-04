@@ -2,14 +2,17 @@ package itson.ecommercewebaplication.bo;
 
 import itson.ecommercewebaplication.dao.CarritoDAO;
 import itson.ecommercewebaplication.dao.ProductoDAO;
+import itson.ecommercewebaplication.enums.Tallas;
 import itson.ecommercewebaplication.models.Carrito;
 import itson.ecommercewebaplication.models.DetallePedido;
 import itson.ecommercewebaplication.models.Producto;
+import itson.ecommercewebaplication.models.StockTalla;
 import itson.ecommercewebaplication.models.Usuario;
 import itson.ecommercewebaplication.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -106,7 +109,12 @@ public class CarritoBO {
         return carrito;
     }
 
+    /** Compatibilidad: agregar sin talla (productos sin tallas). */
     public Carrito agregarItem(Usuario usuario, int productoId, int cantidad) throws Exception {
+        return agregarItem(usuario, productoId, cantidad, null);
+    }
+
+    public Carrito agregarItem(Usuario usuario, int productoId, int cantidad, String talla) throws Exception {
         if (cantidad <= 0) {
             throw new Exception("La cantidad debe ser mayor a cero.");
         }
@@ -115,8 +123,10 @@ public class CarritoBO {
         if (producto == null) {
             throw new Exception("Producto no encontrado.");
         }
-        if (producto.getStock() < cantidad) {
-            throw new Exception("Stock insuficiente. Disponible: " + producto.getStock());
+        if (talla != null && talla.isBlank()) talla = null;
+        int stockDisponible = stockDisponiblePara(producto, talla);
+        if (stockDisponible < cantidad) {
+            throw new Exception("Stock insuficiente. Disponible: " + stockDisponible);
         }
 
         EntityManager em = JPAUtil.getEntityManager();
@@ -133,14 +143,14 @@ public class CarritoBO {
                 carrito = em.find(Carrito.class, carrito.getId());
             }
 
-            // Buscar si ya está en el carrito
             Producto prodManaged = em.find(Producto.class, productoId);
             boolean encontrado = false;
             for (DetallePedido d : carrito.getDetalles()) {
-                if (d.getProducto().getId() == productoId) {
+                if (d.getProducto().getId() == productoId && Objects.equals(d.getTalla(), talla)) {
                     int nueva = d.getCantidad() + cantidad;
-                    if (prodManaged.getStock() < nueva) {
-                        throw new Exception("No hay suficiente stock. Disponible: " + prodManaged.getStock());
+                    if (stockDisponiblePara(prodManaged, talla) < nueva) {
+                        throw new Exception("No hay suficiente stock. Disponible: "
+                                + stockDisponiblePara(prodManaged, talla));
                     }
                     d.setCantidad(nueva);
                     encontrado = true;
@@ -148,7 +158,9 @@ public class CarritoBO {
                 }
             }
             if (!encontrado) {
-                carrito.getDetalles().add(new DetallePedido(cantidad, prodManaged.getPrecio(), prodManaged));
+                DetallePedido nuevo = new DetallePedido(cantidad, prodManaged.getPrecio(), prodManaged);
+                nuevo.setTalla(talla);
+                carrito.getDetalles().add(nuevo);
             }
 
             recalcularTotal(carrito);
@@ -163,6 +175,21 @@ public class CarritoBO {
         } finally {
             em.close();
         }
+    }
+
+    private int stockDisponiblePara(Producto producto, String tallaStr) {
+        if (tallaStr != null && producto.getStockPorTalla() != null && !producto.getStockPorTalla().isEmpty()) {
+            try {
+                Tallas talla = Tallas.valueOf(tallaStr);
+                for (StockTalla st : producto.getStockPorTalla()) {
+                    if (st.getTalla() == talla) return st.getCantidad();
+                }
+                return 0;
+            } catch (IllegalArgumentException ignored) {
+                return 0;
+            }
+        }
+        return producto.getStock();
     }
 
     public Carrito actualizarCantidad(Usuario usuario, int productoId, int cantidad) throws Exception {
@@ -217,7 +244,18 @@ public class CarritoBO {
         }
     }
 
+    /** Compatibilidad: elimina TODAS las variantes de talla del producto. */
     public void eliminarItem(Usuario usuario, int productoId) throws Exception {
+        eliminarItem(usuario, productoId, null);
+    }
+
+    /**
+     * Si {@code talla == null}, elimina todas las líneas con ese producto.
+     * Si {@code talla != null}, elimina solo la línea (producto + talla) específica.
+     */
+    public void eliminarItem(Usuario usuario, int productoId, String talla) throws Exception {
+        if (talla != null && talla.isBlank()) talla = null;
+        final String tallaFinal = talla;
         EntityManager em = JPAUtil.getEntityManager();
         try {
             em.getTransaction().begin();
@@ -226,7 +264,11 @@ public class CarritoBO {
                 throw new Exception("El carrito no existe.");
             }
             Carrito managed = em.find(Carrito.class, carrito.getId());
-            boolean eliminado = managed.getDetalles().removeIf(d -> d.getProducto().getId() == productoId);
+            boolean eliminado = managed.getDetalles().removeIf(d -> {
+                if (d.getProducto().getId() != productoId) return false;
+                if (tallaFinal == null) return true;
+                return Objects.equals(d.getTalla(), tallaFinal);
+            });
             if (!eliminado) {
                 throw new Exception("El producto no está en el carrito.");
             }

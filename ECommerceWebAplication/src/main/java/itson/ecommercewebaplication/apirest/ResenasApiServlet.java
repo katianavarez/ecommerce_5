@@ -3,7 +3,6 @@ package itson.ecommercewebaplication.apirest;
 import itson.ecommercewebaplication.bo.PedidoBO;
 import itson.ecommercewebaplication.bo.ProductoBO;
 import itson.ecommercewebaplication.bo.ResenaBO;
-import itson.ecommercewebaplication.bo.UsuarioBO;
 import itson.ecommercewebaplication.models.Producto;
 import itson.ecommercewebaplication.models.Resenia;
 import itson.ecommercewebaplication.models.Usuario;
@@ -16,21 +15,19 @@ import java.time.LocalDate;
 import java.util.*;
 
 /**
- * 
+ *
  * @author PC
  */
 @WebServlet(name = "ResenasApiServlet", urlPatterns = {"/api/resenas", "/api/resenas/*"})
 public class ResenasApiServlet extends HttpServlet {
 
     private ResenaBO  resenaBO;
-    private UsuarioBO usuarioBO;
     private ProductoBO productoBO;
     private PedidoBO  pedidoBO;
 
     @Override
     public void init() throws ServletException {
         resenaBO   = new ResenaBO();
-        usuarioBO  = new UsuarioBO();
         productoBO = new ProductoBO();
         pedidoBO   = new PedidoBO();
     }
@@ -39,7 +36,7 @@ public class ResenasApiServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        String pathInfo = req.getPathInfo(); 
+        String pathInfo = req.getPathInfo();
 
         try {
             if (pathInfo == null || pathInfo.equals("/")) {
@@ -76,9 +73,11 @@ public class ResenasApiServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
+        Usuario usuario = (Usuario) req.getAttribute("usuarioAuth");
+        if (usuario == null) { JsonUtil.error(res, 401, "No autenticado."); return; }
+
         try {
             Map<?, ?> body       = JsonUtil.readBody(req, Map.class);
-            int usuarioId        = ((Number) body.get("usuarioId")).intValue();
             int productoId       = ((Number) body.get("productoId")).intValue();
             int calificacion     = ((Number) body.get("calificacion")).intValue();
             String comentario    = (String) body.get("comentario");
@@ -87,11 +86,10 @@ public class ResenasApiServlet extends HttpServlet {
                 JsonUtil.error(res, 400, "calificacion debe estar entre 1 y 5."); return;
             }
 
-            Usuario  usuario  = usuarioBO.obtenerPorId(usuarioId);
             Producto producto = productoBO.obtenerPorId(productoId);
-            if (usuario  == null) { JsonUtil.error(res, 404, "Usuario no encontrado.");  return; }
             if (producto == null) { JsonUtil.error(res, 404, "Producto no encontrado."); return; }
 
+            int usuarioId = usuario.getId();
             if (!pedidoBO.usuarioComproProducto(usuarioId, productoId)) {
                 JsonUtil.error(res, 403, "Solo puedes reseñar productos que hayas comprado."); return;
             }
@@ -109,7 +107,7 @@ public class ResenasApiServlet extends HttpServlet {
             JsonUtil.ok(res, toMap(creada));
 
         } catch (NullPointerException e) {
-            JsonUtil.error(res, 400, "Faltan campos: usuarioId, productoId, calificacion.");
+            JsonUtil.error(res, 400, "Faltan campos: productoId, calificacion.");
         } catch (Exception e) {
             JsonUtil.error(res, 500, e.getMessage());
         }
