@@ -60,7 +60,7 @@
                 <a href="${pageContext.request.contextPath}/inicio" class="mobile-nav__link">Inicio</a>
                 <a href="${pageContext.request.contextPath}/app/productos" class="mobile-nav__link">Colección</a>
                 <a href="${pageContext.request.contextPath}/app/carrito" class="mobile-nav__link">Carrito</a>
-                <a href="${pageContext.request.contextPath}/auth/logout" class="mobile-nav__link">Cerrar sesión</a>
+                <a href="${pageContext.request.contextPath}/auth/logout" class="mobile-nav__link" data-action="logout">Cerrar sesión</a>
             </nav>
         </header>
 
@@ -91,6 +91,7 @@
                         </a>
                         <a href="${pageContext.request.contextPath}/auth/logout"
                            class="account-nav__link"
+                           data-action="logout"
                            style="color:var(--color-error);border-top:1px solid var(--border-soft);margin-top:var(--sp-2);padding-top:var(--sp-5);">
                             <svg class="account-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
                             Cerrar sesión
@@ -442,6 +443,8 @@
             </div>
             <div class="footer-bottom"><p>© 2025 Velour. Todos los derechos reservados.</p></div>
         </footer>
+
+        <script type="module" src="${pageContext.request.contextPath}/assets/js/logout.js"></script>
 
         <script>
             // Burger menu

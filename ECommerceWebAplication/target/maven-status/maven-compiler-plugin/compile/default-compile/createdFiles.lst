@@ -1,3 +1,4 @@
+itson\ecommercewebaplication\apirest\AuthLogoutApiServlet.class
 itson\ecommercewebaplication\dao\ResenaDAO.class
 itson\ecommercewebaplication\controllers\app\RegistroServlet.class
 itson\ecommercewebaplication\controllers\admin\DashboardServlet.class

@@ -30,14 +30,19 @@ public class CarritoApiServlet extends HttpServlet {
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         Usuario usuario = (Usuario) req.getAttribute("usuarioAuth");
-        if (usuario == null) { JsonUtil.error(res, 401, "No autenticado."); return; }
+        if (usuario == null) {
+            JsonUtil.error(res, 401, "No autenticado.");
+            return;
+        }
 
         try {
             Map<?, ?> body = JsonUtil.readBody(req, Map.class);
             int productoId = ((Number) body.get("productoId")).intValue();
-            int cantidad   = ((Number) body.get("cantidad")).intValue();
-            String talla   = body.get("talla") != null ? body.get("talla").toString() : null;
-            if (talla != null && talla.isBlank()) talla = null;
+            int cantidad = ((Number) body.get("cantidad")).intValue();
+            String talla = body.get("talla") != null ? body.get("talla").toString() : null;
+            if (talla != null && talla.isBlank()) {
+                talla = null;
+            }
 
             Carrito carrito = carritoBO.agregarItem(usuario, productoId, cantidad, talla);
             JsonUtil.ok(res, toMap(carrito));
@@ -53,10 +58,12 @@ public class CarritoApiServlet extends HttpServlet {
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         Usuario usuario = (Usuario) req.getAttribute("usuarioAuth");
-        if (usuario == null) { JsonUtil.error(res, 401, "No autenticado."); return; }
+        if (usuario == null) {
+            JsonUtil.error(res, 401, "No autenticado.");
+            return;
+        }
 
         String pathInfo = req.getPathInfo();
-        // Validar que el {usuarioId} del path coincide con el del token (RESTful path, evita IDOR).
         if (pathInfo != null && !pathInfo.equals("/")) {
             try {
                 int pathId = Integer.parseInt(pathInfo.substring(1).split("/")[0]);
@@ -65,7 +72,8 @@ public class CarritoApiServlet extends HttpServlet {
                     return;
                 }
             } catch (NumberFormatException e) {
-                JsonUtil.error(res, 400, "usuarioId inválido."); return;
+                JsonUtil.error(res, 400, "usuarioId inválido.");
+                return;
             }
         }
 
@@ -81,33 +89,35 @@ public class CarritoApiServlet extends HttpServlet {
         }
     }
 
-    /**
-     * DELETE /api/carrito/producto/{productoId}                  -> borra item por producto (sin talla)
-     * DELETE /api/carrito/producto/{productoId}/talla/{talla}    -> borra item específico por talla
-     */
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         Usuario usuario = (Usuario) req.getAttribute("usuarioAuth");
-        if (usuario == null) { JsonUtil.error(res, 401, "No autenticado."); return; }
-
-        String pathInfo = req.getPathInfo();
-        if (pathInfo == null || pathInfo.equals("/")) {
-            JsonUtil.error(res, 400,
-                "Usa DELETE /api/carrito/producto/{productoId} o /api/carrito/producto/{productoId}/talla/{talla}.");
+        if (usuario == null) {
+            JsonUtil.error(res, 401, "No autenticado.");
             return;
         }
+
+        String pathInfo = req.getPathInfo();
         try {
-            String[] parts = pathInfo.split("/"); // ["", "producto", "<id>", ("talla", "<talla>")?]
+            if (pathInfo == null || pathInfo.equals("/")) {
+                carritoBO.vaciar(usuario);
+                JsonUtil.ok(res, Map.of("success", true, "message", "Carrito vaciado."));
+                return;
+            }
+            String[] parts = pathInfo.split("/");
             if (parts.length < 3 || !"producto".equals(parts[1])) {
-                JsonUtil.error(res, 400, "Ruta no reconocida."); return;
+                JsonUtil.error(res, 400, "Ruta no reconocida.");
+                return;
             }
             int productoId = Integer.parseInt(parts[2]);
             String talla = null;
             if (parts.length >= 5 && "talla".equals(parts[3])) {
                 talla = parts[4];
-                if (talla.isBlank()) talla = null;
+                if (talla.isBlank()) {
+                    talla = null;
+                }
             }
             carritoBO.eliminarItem(usuario, productoId, talla);
             JsonUtil.ok(res, Map.of("success", true, "message", "Item eliminado del carrito."));
@@ -118,26 +128,63 @@ public class CarritoApiServlet extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        Usuario usuario = (Usuario) req.getAttribute("usuarioAuth");
+        if (usuario == null) {
+            JsonUtil.error(res, 401, "No autenticado.");
+            return;
+        }
+
+        try {
+            Map<?, ?> body = JsonUtil.readBody(req, Map.class);
+            int productoId = ((Number) body.get("productoId")).intValue();
+            int cantidad = ((Number) body.get("cantidad")).intValue();
+            String talla = body.get("talla") != null ? body.get("talla").toString() : null;
+            if (talla != null && talla.isBlank()) {
+                talla = null;
+            }
+
+            if (cantidad <= 0) {
+                carritoBO.eliminarItem(usuario, productoId, talla);
+                Carrito carrito = carritoBO.obtenerPorUsuario(usuario.getId());
+                JsonUtil.ok(res, carrito != null ? toMap(carrito)
+                        : Map.of("usuarioId", usuario.getId(), "items", List.of(), "total", 0.0));
+                return;
+            }
+
+            carritoBO.eliminarItem(usuario, productoId, talla);
+            Carrito carrito = carritoBO.agregarItem(usuario, productoId, cantidad, talla);
+            JsonUtil.ok(res, toMap(carrito));
+        } catch (IllegalArgumentException | NullPointerException e) {
+            JsonUtil.error(res, 400, "Body inválido. Campos requeridos: productoId, cantidad. Opcional: talla.");
+        } catch (Exception e) {
+            JsonUtil.error(res, 500, e.getMessage());
+        }
+    }
+
     private Map<String, Object> toMap(Carrito c) {
         List<Map<String, Object>> items = new ArrayList<>();
         if (c.getDetalles() != null) {
             for (DetallePedido d : c.getDetalles()) {
                 Map<String, Object> item = new LinkedHashMap<>();
-                item.put("productoId",   d.getProducto() != null ? d.getProducto().getId() : null);
-                item.put("nombre",       d.getProducto() != null ? d.getProducto().getNombre() : null);
-                item.put("imagenURL",    d.getProducto() != null ? d.getProducto().getImagenURL() : null);
+                item.put("productoId", d.getProducto() != null ? d.getProducto().getId() : null);
+                item.put("nombre", d.getProducto() != null ? d.getProducto().getNombre() : null);
+                item.put("imagenURL", d.getProducto() != null ? d.getProducto().getImagenURL() : null);
                 item.put("precioUnidad", d.getPrecioUnidad());
-                item.put("cantidad",     d.getCantidad());
-                item.put("talla",        d.getTalla());
-                item.put("subtotal",     d.getPrecioUnidad() * d.getCantidad());
+                item.put("cantidad", d.getCantidad());
+                item.put("talla", d.getTalla());
+                item.put("subtotal", d.getPrecioUnidad() * d.getCantidad());
                 items.add(item);
             }
         }
         return Map.of(
-            "carritoId", c.getId(),
-            "usuarioId", c.getUsuario() != null ? c.getUsuario().getId() : null,
-            "items",     items,
-            "total",     c.getTotal()
+                "carritoId", c.getId(),
+                "usuarioId", c.getUsuario() != null ? c.getUsuario().getId() : null,
+                "items", items,
+                "total", c.getTotal()
         );
     }
 }

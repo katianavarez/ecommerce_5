@@ -309,6 +309,9 @@
             <div class="footer-bottom"><p>© 2025 Velour. Todos los derechos reservados.</p></div>
         </footer>
 
+        <%-- Productos vía Fetch (Avance 4): el módulo sobreescribe aplicarFiltros() global. --%>
+        <script type="module" src="${pageContext.request.contextPath}/assets/js/productos.js"></script>
+
         <script>
             // Navegar a otra página preservando todos los filtros activos
             function irAPagina(num) {

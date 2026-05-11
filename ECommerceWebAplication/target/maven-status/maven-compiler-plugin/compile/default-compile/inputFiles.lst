@@ -19,6 +19,7 @@ C:\Users\I-Fre\Documents\GitHub\ecommerce_5\ECommerceWebAplication\src\main\java
 C:\Users\I-Fre\Documents\GitHub\ecommerce_5\ECommerceWebAplication\src\main\java\itson\ecommercewebaplication\bo\CarritoBO.java
 C:\Users\I-Fre\Documents\GitHub\ecommerce_5\ECommerceWebAplication\src\main\java\itson\ecommercewebaplication\bo\UsuarioBO.java
 C:\Users\I-Fre\Documents\GitHub\ecommerce_5\ECommerceWebAplication\src\main\java\itson\ecommercewebaplication\dto\ResenaRequestDTO.java
+C:\Users\I-Fre\Documents\GitHub\ecommerce_5\ECommerceWebAplication\src\main\java\itson\ecommercewebaplication\apirest\AuthLogoutApiServlet.java
 C:\Users\I-Fre\Documents\GitHub\ecommerce_5\ECommerceWebAplication\src\main\java\itson\ecommercewebaplication\controllers\app\CuentaServlet.java
 C:\Users\I-Fre\Documents\GitHub\ecommerce_5\ECommerceWebAplication\src\main\java\itson\ecommercewebaplication\controllers\app\LoginClienteServlet.java
 C:\Users\I-Fre\Documents\GitHub\ecommerce_5\ECommerceWebAplication\src\main\java\itson\ecommercewebaplication\models\Proveedor.java

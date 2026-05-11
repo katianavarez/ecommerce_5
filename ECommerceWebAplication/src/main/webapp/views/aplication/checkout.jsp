@@ -34,7 +34,7 @@
 
         <main>
             <div class="checkout-layout">
-                <form class="checkout-form" method="POST" action="${pageContext.request.contextPath}/app/checkout">
+                <form id="checkoutForm" class="checkout-form" method="POST" action="${pageContext.request.contextPath}/app/checkout">
 
                     <c:if test="${not empty error}">
                         <div style="background:#f8d7da;border:1px solid #f5c6cb;color:#721c24;padding:var(--sp-3) var(--sp-4);border-radius:var(--r-md);margin-bottom:var(--sp-4);">
@@ -249,6 +249,8 @@
         <footer class="site-footer">
             <div class="footer-bottom"><p>© 2025 Velour. Todos los derechos reservados.</p></div>
         </footer>
+
+        <script type="module" src="${pageContext.request.contextPath}/assets/js/checkout.js"></script>
 
         <script>
             // ── Mostrar/ocultar campos según método de pago ──

@@ -175,10 +175,12 @@
                         </c:otherwise>
                     </c:choose>
 
-                    <%-- Formulario agregar al carrito — con validación de talla --%>
                     <c:if test="${producto.stock > 0}">
                         <form method="POST" action="${pageContext.request.contextPath}/app/carrito"
-                              id="formCarrito" onsubmit="return validarTalla()">
+                              id="formCarrito"
+                              data-producto-nombre="<c:out value='${producto.nombre}'/>"
+                              data-producto-imagen="<c:out value='${producto.imagenURL}'/>"
+                              data-producto-precio="${producto.precio}">
                             <input type="hidden" name="accion" value="agregar">
                             <input type="hidden" name="productoId" value="${producto.id}">
                             <%-- Campo talla: solo se envía si el producto tiene tallas disponibles --%>
@@ -332,7 +334,8 @@
                                         reseña<c:if test="${resenasRestantes > 1}">s</c:if> más para este producto.
                                     </p>
                                 </c:if>
-                                <form method="POST" action="${pageContext.request.contextPath}/app/producto">
+                                <form id="formResena" method="POST" action="${pageContext.request.contextPath}/app/producto"
+                                      data-producto-id="${producto.id}">
                                     <input type="hidden" name="productoId" value="${producto.id}">
 
                                     <%-- Calificación con estrellas clickeables --%>
@@ -371,6 +374,8 @@
         <footer class="site-footer">
             <div class="footer-bottom"><p>© 2025 Velour. Todos los derechos reservados.</p></div>
         </footer>
+
+        <script type="module" src="${pageContext.request.contextPath}/assets/js/producto-detalle.js"></script>
 
         <script>
             function changeQty(delta) {

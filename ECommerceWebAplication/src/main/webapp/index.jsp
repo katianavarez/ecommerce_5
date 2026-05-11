@@ -85,7 +85,7 @@
                 <c:choose>
                     <c:when test="${not empty sessionScope.clienteLogueado}">
                         <a href="${pageContext.request.contextPath}/app/cuenta" class="mobile-nav__link">Mi cuenta</a>
-                        <a href="${pageContext.request.contextPath}/auth/logout" class="mobile-nav__link">Cerrar sesión</a>
+                        <a href="${pageContext.request.contextPath}/auth/logout" class="mobile-nav__link" data-action="logout">Cerrar sesión</a>
                     </c:when>
                     <c:otherwise>
                         <a href="${pageContext.request.contextPath}/auth/login" class="mobile-nav__link">Iniciar sesión</a>
@@ -279,8 +279,9 @@
             </div>
         </footer>
 
+        <script type="module" src="${pageContext.request.contextPath}/assets/js/logout.js"></script>
+
         <script>
-            // Toggle menú móvil
             const burger = document.getElementById('burgerBtn');
             const mobileNav = document.getElementById('mobileNav');
             burger.addEventListener('click', () => mobileNav.classList.toggle('is-open'));

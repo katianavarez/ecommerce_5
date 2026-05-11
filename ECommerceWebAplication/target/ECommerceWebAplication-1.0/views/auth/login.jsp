@@ -48,7 +48,11 @@
                             </div>
                         </c:if>
 
-                        <form class="auth-form" method="POST" action="${pageContext.request.contextPath}/auth/login">
+                        <div id="loginError"
+                             style="display:none;background:#f8d7da;border:1px solid #f5c6cb;color:#721c24;padding:var(--sp-3) var(--sp-4);border-radius:var(--r-md);margin-bottom:var(--sp-4);font-size:var(--fs-sm);">
+                        </div>
+
+                        <form id="loginForm" class="auth-form" method="POST" action="${pageContext.request.contextPath}/auth/login">
                             <c:if test="${not empty param.redirect}">
                                 <input type="hidden" name="redirect" value="<c:out value='${param.redirect}'/>">
                             </c:if>
@@ -75,5 +79,7 @@
                 </div>
             </div>
         </main>
+
+        <script type="module" src="${pageContext.request.contextPath}/assets/js/login.js"></script>
     </body>
 </html>

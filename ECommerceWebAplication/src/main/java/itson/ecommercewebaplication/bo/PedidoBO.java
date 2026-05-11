@@ -139,6 +139,10 @@ public class PedidoBO {
         if (pedido == null) {
             throw new Exception("Pedido no encontrado");
         }
+        if (nuevoEstado == EstadoPedido.CANCELADO && pedido.getEstado() != EstadoPedido.CANCELADO) {
+            cancelarPedido(pedidoId);
+            return pedidoDAO.obtenerPorId(pedidoId);
+        }
         pedido.setEstado(nuevoEstado);
         return pedidoDAO.actualizar(pedido);
     }
@@ -154,12 +158,36 @@ public class PedidoBO {
             if (pedido.getEstado() == EstadoPedido.ENTREGADO) {
                 throw new Exception("No se puede cancelar un pedido ya entregado");
             }
+            if (pedido.getEstado() == EstadoPedido.CANCELADO) {
+                em.getTransaction().commit();
+                return;
+            }
             for (DetallePedido detalle : pedido.getDetalles()) {
                 Producto p = em.find(Producto.class, detalle.getProducto().getId());
-                if (p != null) {
-                    p.setStock(p.getStock() + detalle.getCantidad());
-                    em.merge(p);
+                if (p == null) {
+                    continue;
                 }
+
+                // Restaurar stock total
+                p.setStock(p.getStock() + detalle.getCantidad());
+
+                // Restaurar stock por talla si el detalle tenía talla y el producto la maneja
+                String tallaStr = detalle.getTalla();
+                if (tallaStr != null && !tallaStr.isBlank()
+                        && p.getStockPorTalla() != null && !p.getStockPorTalla().isEmpty()) {
+                    try {
+                        itson.ecommercewebaplication.enums.Tallas tallaEnum
+                                = itson.ecommercewebaplication.enums.Tallas.valueOf(tallaStr);
+                        for (itson.ecommercewebaplication.models.StockTalla st : p.getStockPorTalla()) {
+                            if (st.getTalla() == tallaEnum) {
+                                st.setCantidad(st.getCantidad() + detalle.getCantidad());
+                                break;
+                            }
+                        }
+                    } catch (IllegalArgumentException ignored) {
+                    }
+                }
+                em.merge(p);
             }
             pedido.setEstado(EstadoPedido.CANCELADO);
             em.merge(pedido);

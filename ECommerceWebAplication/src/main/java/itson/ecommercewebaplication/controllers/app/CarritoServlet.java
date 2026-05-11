@@ -1,10 +1,12 @@
 package itson.ecommercewebaplication.controllers.app;
 
+import itson.ecommercewebaplication.bo.CarritoBO;
 import itson.ecommercewebaplication.bo.ProductoBO;
 import itson.ecommercewebaplication.enums.Tallas;
 import itson.ecommercewebaplication.models.DetallePedido;
 import itson.ecommercewebaplication.models.Producto;
 import itson.ecommercewebaplication.models.StockTalla;
+import itson.ecommercewebaplication.models.Usuario;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -20,10 +22,12 @@ import java.util.List;
 public class CarritoServlet extends HttpServlet {
 
     private ProductoBO productoBO;
+    private CarritoBO carritoBO;
 
     @Override
     public void init() throws ServletException {
         productoBO = new ProductoBO();
+        carritoBO = new CarritoBO();
     }
 
     @Override
@@ -31,11 +35,20 @@ public class CarritoServlet extends HttpServlet {
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
-        @SuppressWarnings("unchecked")
-        List<DetallePedido> carrito = (List<DetallePedido>) session.getAttribute("carrito");
-        if (carrito == null) {
-            carrito = new ArrayList<>();
+
+        Usuario usuario = (Usuario) session.getAttribute("clienteLogueado");
+        List<DetallePedido> carrito;
+        if (usuario != null) {
+            carrito = carritoBO.recuperarItemsDesdeDB(usuario.getId());
             session.setAttribute("carrito", carrito);
+        } else {
+            @SuppressWarnings("unchecked")
+            List<DetallePedido> sessCarrito = (List<DetallePedido>) session.getAttribute("carrito");
+            carrito = sessCarrito;
+            if (carrito == null) {
+                carrito = new ArrayList<>();
+                session.setAttribute("carrito", carrito);
+            }
         }
 
         double subtotal = carrito.stream().mapToDouble(d -> d.getPrecioUnidad() * d.getCantidad()).sum();

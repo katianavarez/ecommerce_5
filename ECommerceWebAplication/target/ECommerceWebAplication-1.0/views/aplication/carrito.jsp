@@ -154,5 +154,7 @@
         <footer class="site-footer">
             <div class="footer-bottom"><p>© 2025 Velour. Todos los derechos reservados.</p></div>
         </footer>
+
+        <script type="module" src="${pageContext.request.contextPath}/assets/js/carrito.js"></script>
     </body>
 </html>
