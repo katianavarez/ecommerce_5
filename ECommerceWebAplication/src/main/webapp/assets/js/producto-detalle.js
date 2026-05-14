@@ -1,6 +1,5 @@
 import { apiPost } from './api.js';
 import { isLogged } from './auth.js';
-import { agregar as agregarGuest } from './cart-storage.js';
 import { showError, showSuccess } from './ui.js';
 
 const form = document.getElementById('formCarrito');
@@ -11,10 +10,6 @@ if (form) {
     const cantidadInput = form.querySelector('#qtyInput');
     const tallaInput = form.querySelector('#tallaInput');
     const tallaHint = document.getElementById('tallaHint');
-
-    const nombre = form.dataset.productoNombre || '';
-    const imagenURL = form.dataset.productoImagen || '';
-    const precioUnidad = parseFloat(form.dataset.productoPrecio || '0');
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -28,6 +23,11 @@ if (form) {
         const cantidad = parseInt(cantidadInput ? cantidadInput.value : '1', 10) || 1;
         const talla = tallaInput ? (tallaInput.value || null) : null;
 
+        if (!isLogged()) {
+            form.submit();
+            return;
+        }
+
         const btn = form.querySelector('button[type="submit"]');
         const original = btn ? btn.textContent : '';
         if (btn) {
@@ -36,11 +36,7 @@ if (form) {
         }
 
         try {
-            if (isLogged()) {
-                await apiPost('/carrito', {productoId, cantidad, talla});
-            } else {
-                agregarGuest({productoId, nombre, imagenURL, precioUnidad, cantidad, talla});
-            }
+            await apiPost('/carrito', {productoId, cantidad, talla});
             actualizarBadge(cantidad);
             showSuccess('Producto agregado al carrito');
         } catch (err) {

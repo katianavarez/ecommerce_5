@@ -25,10 +25,13 @@ public class ApiAuthFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
 
         String uri = req.getRequestURI();
-        // Endpoints públicos: login, registro y logout (este último idempotente).
+        boolean getPublico = "GET".equalsIgnoreCase(req.getMethod())
+                && (uri.contains("/api/productos")
+                || uri.contains("/api/resenas/producto"));
         if (uri.endsWith("/api/auth/login")
                 || uri.endsWith("/api/auth/registro")
-                || uri.endsWith("/api/auth/logout")) {
+                || uri.endsWith("/api/auth/logout")
+                || getPublico) {
             chain.doFilter(request, response);
             return;
         }

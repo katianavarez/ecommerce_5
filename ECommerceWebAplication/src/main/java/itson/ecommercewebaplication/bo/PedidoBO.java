@@ -117,6 +117,7 @@ public class PedidoBO {
                         detalle.getPrecioUnidad(),
                         em.find(Producto.class, detalle.getProducto().getId())
                 );
+                nuevo.setTalla(detalle.getTalla());
                 em.persist(nuevo);
                 detallesNuevos.add(nuevo);
             }
