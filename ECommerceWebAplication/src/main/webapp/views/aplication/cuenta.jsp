@@ -204,7 +204,7 @@
                         <%-- Formulario datos personales --%>
                         <div style="max-width:520px;background:var(--bg-surface);border:1px solid var(--border-soft);border-radius:var(--r-lg);padding:var(--sp-6);margin-bottom:var(--sp-6);">
                             <p style="font-size:var(--fs-sm);font-weight:var(--fw-medium);color:var(--text-heading);margin-bottom:var(--sp-5);">Información personal</p>
-                            <form method="POST" action="${pageContext.request.contextPath}/app/cuenta">
+                            <form id="formPerfil" method="POST" action="${pageContext.request.contextPath}/app/cuenta">
                                 <input type="hidden" name="accion" value="actualizarPerfil">
                                 <div style="display:flex;flex-direction:column;gap:var(--sp-4);">
                                     <div class="form-group">
@@ -445,6 +445,8 @@
         </footer>
 
         <script type="module" src="${pageContext.request.contextPath}/assets/js/logout.js"></script>
+
+        <script type="module" src="${pageContext.request.contextPath}/assets/js/cuenta.js"></script>
 
         <script>
             // Burger menu

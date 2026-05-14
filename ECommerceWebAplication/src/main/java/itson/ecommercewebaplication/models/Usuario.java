@@ -32,7 +32,8 @@ public class Usuario {
     @Column(nullable = false)
     private String contraseña;
 
-    @Column(nullable = false)
+    // Teléfono opcional: el registro permite dejarlo en blanco.
+    @Column(nullable = true)
     private String telefono;
 
     @Enumerated(EnumType.STRING)

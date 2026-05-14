@@ -97,25 +97,47 @@
                 </div>
                 <div class="admin-body">
                     <c:if test="${not empty param.success}">
-                        <div style="background:#d4edda;border:1px solid #c3e6cb;color:#155724;padding:var(--sp-3) var(--sp-4);border-radius:var(--r-md);margin-bottom:var(--sp-4);">✓ Cliente dado de baja correctamente.</div>
+                        <div style="background:#d4edda;border:1px solid #c3e6cb;color:#155724;padding:var(--sp-3) var(--sp-4);border-radius:var(--r-md);margin-bottom:var(--sp-4);">
+                            <c:choose>
+                                <c:when test="${param.success == 'deleted'}">✓ Cliente dado de baja correctamente.</c:when>
+                                <c:when test="${param.success == 'reactivated'}">✓ Cliente reactivado correctamente.</c:when>
+                                <c:otherwise>✓ Operación exitosa.</c:otherwise>
+                            </c:choose>
+                        </div>
                     </c:if>
                     <c:if test="${not empty error}">
                         <div style="background:#f8d7da;border:1px solid #f5c6cb;color:#721c24;padding:var(--sp-3) var(--sp-4);border-radius:var(--r-md);margin-bottom:var(--sp-4);"><c:out value="${error}"/></div>
                     </c:if>
 
+                    <%-- Tabs de filtro: Activos / Inactivos / Todos --%>
+                    <div class="admin-tabs" style="margin-bottom:var(--sp-4);">
+                        <a class="admin-tab ${filtroActual == 'activos' ? 'admin-tab--active' : ''}"
+                           href="${pageContext.request.contextPath}/admin/clientes?filtro=activos">
+                            Activos (<c:out value="${conteoActivos}"/>)
+                        </a>
+                        <a class="admin-tab ${filtroActual == 'inactivos' ? 'admin-tab--active' : ''}"
+                           href="${pageContext.request.contextPath}/admin/clientes?filtro=inactivos">
+                            Inactivos (<c:out value="${conteoInactivos}"/>)
+                        </a>
+                        <a class="admin-tab ${filtroActual == 'todos' ? 'admin-tab--active' : ''}"
+                           href="${pageContext.request.contextPath}/admin/clientes?filtro=todos">
+                            Todos (<c:out value="${conteoTodos}"/>)
+                        </a>
+                    </div>
+
                     <div class="admin-table-wrap">
                         <table class="admin-table">
                             <thead>
-                                <tr><th>Cliente</th><th>Correo</th><th>Teléfono</th><th>Rol</th><th>Acciones</th></tr>
+                                <tr><th>Cliente</th><th>Correo</th><th>Teléfono</th><th>Estado</th><th>Acciones</th></tr>
                             </thead>
                             <tbody>
                                 <c:choose>
                                     <c:when test="${empty clientes}">
-                                        <tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:var(--sp-8);">No hay clientes registrados.</td></tr>
+                                        <tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:var(--sp-8);">No hay clientes en este filtro.</td></tr>
                                     </c:when>
                                     <c:otherwise>
                                         <c:forEach var="cliente" items="${clientes}">
-                                            <tr>
+                                            <tr style="${not cliente.activo ? 'opacity:0.6;' : ''}">
                                                 <td>
                                                     <div style="display:flex;align-items:center;gap:var(--sp-3);">
                                                         <div style="width:36px;height:36px;border-radius:50%;background:var(--color-secondary-light);color:var(--color-secondary-hover);font-family:var(--font-display);font-size:var(--fs-md);font-weight:var(--fw-medium);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
@@ -126,16 +148,41 @@
                                                 </td>
                                                 <td style="color:var(--text-muted);font-size:var(--fs-sm);"><c:out value="${cliente.correo}"/></td>
                                                 <td style="color:var(--text-muted);font-size:var(--fs-sm);"><c:out value="${cliente.telefono}"/></td>
-                                                <td><span class="badge badge--entregado"><c:out value="${cliente.rol}"/></span></td>
                                                 <td>
-                                                    <form method="POST" action="${pageContext.request.contextPath}/admin/clientes"
-                                                          onsubmit="return confirm('¿Eliminar cliente ${cliente.nombre}?');">
-                                                        <input type="hidden" name="accion" value="eliminar">
-                                                        <input type="hidden" name="id" value="${cliente.id}">
-                                                        <button type="submit" class="admin-action-btn admin-action-btn--danger" title="Eliminar">
-                                                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
-                                                        </button>
-                                                    </form>
+                                                    <c:choose>
+                                                        <c:when test="${cliente.activo}">
+                                                            <span class="badge badge--entregado">Activo</span>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <span class="badge badge--cancelado">Inactivo</span>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${cliente.activo}">
+                                                            <form method="POST" action="${pageContext.request.contextPath}/admin/clientes"
+                                                                  onsubmit="return confirm('¿Dar de baja al cliente ${cliente.nombre}?');" style="display:inline;">
+                                                                <input type="hidden" name="accion" value="eliminar">
+                                                                <input type="hidden" name="id" value="${cliente.id}">
+                                                                <input type="hidden" name="filtro" value="${filtroActual}">
+                                                                <button type="submit" class="admin-action-btn admin-action-btn--danger" title="Dar de baja">
+                                                                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+                                                                </button>
+                                                            </form>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <form method="POST" action="${pageContext.request.contextPath}/admin/clientes"
+                                                                  onsubmit="return confirm('¿Reactivar al cliente ${cliente.nombre}?');" style="display:inline;">
+                                                                <input type="hidden" name="accion" value="reactivar">
+                                                                <input type="hidden" name="id" value="${cliente.id}">
+                                                                <input type="hidden" name="filtro" value="${filtroActual}">
+                                                                <button type="submit" class="admin-action-btn" title="Reactivar" style="color:var(--color-success);">
+                                                                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.4"/></svg>
+                                                                </button>
+                                                            </form>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </td>
                                             </tr>
                                         </c:forEach>

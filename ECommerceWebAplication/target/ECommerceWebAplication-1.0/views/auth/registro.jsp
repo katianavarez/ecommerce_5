@@ -46,6 +46,10 @@
                             </div>
                         </c:if>
 
+                        <div id="registroError"
+                             style="display:none;background:#f8d7da;border:1px solid #f5c6cb;color:#721c24;padding:var(--sp-3) var(--sp-4);border-radius:var(--r-md);margin-bottom:var(--sp-4);font-size:var(--fs-sm);">
+                        </div>
+
                         <form class="auth-form" method="POST"
                               action="${pageContext.request.contextPath}/auth/registro"
                               novalidate id="registroForm">
@@ -68,7 +72,36 @@
                                 <label class="form-label" for="telefono">Teléfono</label>
                                 <input class="form-control" type="tel" id="telefono" name="telefono"
                                        placeholder="+52 55 0000 0000"
-                                       maxlength="13" value="<c:out value='${telefono}'/>">
+                                       maxlength="20" value="<c:out value='${telefono}'/>">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="calle">Dirección (calle y número) *</label>
+                                <input class="form-control" type="text" id="calle" name="calle"
+                                       placeholder="Av. Ejemplo 123" maxlength="150"
+                                       value="<c:out value='${calle}'/>" required>
+                            </div>
+
+                            <div class="form-row" style="display:flex;gap:var(--sp-3);">
+                                <div class="form-group" style="flex:1;">
+                                    <label class="form-label" for="ciudad">Ciudad *</label>
+                                    <input class="form-control" type="text" id="ciudad" name="ciudad"
+                                           placeholder="Cd. Obregón" maxlength="80"
+                                           value="<c:out value='${ciudad}'/>" required>
+                                </div>
+                                <div class="form-group" style="flex:1;">
+                                    <label class="form-label" for="estado">Estado *</label>
+                                    <input class="form-control" type="text" id="estado" name="estado"
+                                           placeholder="Sonora" maxlength="80"
+                                           value="<c:out value='${estado}'/>" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="codigoPostal">Código postal *</label>
+                                <input class="form-control" type="text" id="codigoPostal" name="codigoPostal"
+                                       placeholder="85000" maxlength="10"
+                                       value="<c:out value='${codigoPostal}'/>" required>
                             </div>
 
                             <div class="form-group">
@@ -102,6 +135,9 @@
                 </div>
             </div>
         </main>
+
+        <%-- Registro via Fetch API (Avance 4). Si el módulo falla, el form cae al servlet web. --%>
+        <script type="module" src="${pageContext.request.contextPath}/assets/js/registro.js"></script>
 
         <script>
             // Contador de caracteres en tiempo real

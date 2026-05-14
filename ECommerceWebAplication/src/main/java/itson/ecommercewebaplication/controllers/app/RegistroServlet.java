@@ -1,6 +1,7 @@
 package itson.ecommercewebaplication.controllers.app;
 
 import itson.ecommercewebaplication.bo.UsuarioBO;
+import itson.ecommercewebaplication.models.Direccion;
 import itson.ecommercewebaplication.models.Usuario;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -40,19 +41,28 @@ public class RegistroServlet extends HttpServlet {
         String correo = req.getParameter("correo");
         String contrasena = req.getParameter("contrasena");
         String telefono = req.getParameter("telefono");
+        String calle = req.getParameter("calle");
+        String ciudad = req.getParameter("ciudad");
+        String estado = req.getParameter("estado");
+        String codigoPostal = req.getParameter("codigoPostal");
         try {
             Usuario usuario = new Usuario();
             usuario.setNombre(nombre);
             usuario.setCorreo(correo);
             usuario.setContraseña(contrasena);
             usuario.setTelefono(telefono);
-            usuarioBO.registrar(usuario);
+            Direccion direccion = new Direccion(calle, ciudad, estado, codigoPostal);
+            usuarioBO.registrar(usuario, direccion);
             res.sendRedirect(req.getContextPath() + "/auth/login?registered=true");
         } catch (Exception e) {
             req.setAttribute("error", e.getMessage());
             req.setAttribute("nombre", nombre);
             req.setAttribute("correo", correo);
             req.setAttribute("telefono", telefono);
+            req.setAttribute("calle", calle);
+            req.setAttribute("ciudad", ciudad);
+            req.setAttribute("estado", estado);
+            req.setAttribute("codigoPostal", codigoPostal);
             req.getRequestDispatcher("/views/auth/registro.jsp").forward(req, res);
         }
     }

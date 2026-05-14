@@ -99,4 +99,24 @@ public class UsuarioDAO {
             em.close();
         }
     }
+
+    public void activar(int id) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            Usuario u = em.find(Usuario.class, id);
+            if (u != null) {
+                u.setActivo(true);
+                em.merge(u);
+            }
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
 }

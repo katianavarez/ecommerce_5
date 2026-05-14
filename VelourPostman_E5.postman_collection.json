@@ -2,876 +2,377 @@
   "info": {
     "_postman_id": "f779c939-87b5-4b16-a6a9-722ba7136bc5",
     "name": "VelourPostman_E5",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "52079975",
-    "_collection_link": "https://go.postman.co/collection/52079975-f779c939-87b5-4b16-a6a9-722ba7136bc5?source=collection_link"
+    "description": "API REST del proyecto Velour (Equipo 5).\n\nVariables de colección:\n- baseUrl: http://localhost:8080/ECommerceWebAplication\n- token: se autocompleta tras correr 'Auth › Login'.\n- usuarioId: idem.\n\nFlujo sugerido: Login → ListarProductos → AgregarCarrito → CrearPedido.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{token}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl",   "value": "http://localhost:8080/ECommerceWebAplication", "type": "string" },
+    { "key": "token",     "value": "",                                              "type": "string" },
+    { "key": "usuarioId", "value": "",                                              "type": "string" }
+  ],
   "item": [
     {
-      "name": "Token",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"correo\": \"darkcrowvs@gmail.com\",\r\n    \"contrasena\": \"123123123\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login (cliente seed)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Login OK', () => pm.response.to.have.status(200));",
+                  "if (res && res.data) {",
+                  "  pm.collectionVariables.set('token', res.data.token || '');",
+                  "  pm.collectionVariables.set('usuarioId', String(res.data.usuarioId || ''));",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"correo\": \"equipo@gmail.com\",\n  \"contrasena\": \"Cliente123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
             }
           }
         },
-        "url": {
-          "raw": "http://localhost:8080/ECommerceWebAplication/api/auth/login",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "ECommerceWebAplication",
-            "api",
-            "auth",
-            "login"
-          ]
-        }
-      },
-      "response": [
         {
-          "name": "Token",
-          "originalRequest": {
+          "name": "Login (admin seed)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res && res.data) {",
+                  "  pm.collectionVariables.set('token', res.data.token || '');",
+                  "  pm.collectionVariables.set('usuarioId', String(res.data.usuarioId || ''));",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": { "type": "noauth" },
             "method": "POST",
-            "header": [],
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"correo\": \"darkcrowvs@gmail.com\",\r\n    \"contrasena\": \"123123123\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "raw": "{\n  \"correo\": \"admin@gmail.com\",\n  \"contrasena\": \"Admin1234\"\n}"
             },
             "url": {
-              "raw": "http://localhost:8080/ECommerceWebAplication/api/auth/login",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "ECommerceWebAplication",
-                "api",
-                "auth",
-                "login"
-              ]
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
             }
-          },
-          "status": "OK",
-          "code": 200,
-          "_postman_previewlanguage": "Text",
-          "header": [
+          }
+        },
+        {
+          "name": "Registro (nuevo cliente)",
+          "event": [
             {
-              "key": "Content-Type",
-              "value": "application/json;charset=UTF-8"
-            },
-            {
-              "key": "Content-Length",
-              "value": "266"
-            },
-            {
-              "key": "Date",
-              "value": "Sun, 19 Apr 2026 15:10:03 GMT"
-            },
-            {
-              "key": "Keep-Alive",
-              "value": "timeout=20"
-            },
-            {
-              "key": "Connection",
-              "value": "keep-alive"
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res && res.data) {",
+                  "  pm.collectionVariables.set('token', res.data.token || '');",
+                  "  pm.collectionVariables.set('usuarioId', String(res.data.usuarioId || ''));",
+                  "}"
+                ]
+              }
             }
           ],
-          "cookie": [],
-          "body": "{\n    \"success\": true,\n    \"message\": \"Login exitoso\",\n    \"data\": {\n        \"token\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXJrY3Jvd3ZzQGdtYWlsLmNvbSIsInJvbCI6IkNMSUVOVEUiLCJpYXQiOjE3NzY2MTE0MDMsImV4cCI6MTc3NjY5NzgwM30.9FxkSuyQi-SqB-OlHRbF4bbTcGsAMxV3kPjeQkl5kfA\",\n        \"rol\": \"CLIENTE\",\n        \"nombre\": \"Casi\"\n    }\n}"
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Cliente Demo\",\n  \"correo\": \"demo@velour.mx\",\n  \"contrasena\": \"Demo12345\",\n  \"telefono\": \"6440000001\",\n  \"calle\": \"Av. Demo 100\",\n  \"ciudad\": \"Cd. Obregón\",\n  \"estado\": \"Sonora\",\n  \"codigoPostal\": \"85000\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/registro",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "registro"]
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{}" },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "logout"]
+            }
+          }
         }
       ]
     },
     {
-      "name": "ListarProductos",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXJrY3Jvd3ZzQGdtYWlsLmNvbSIsInJvbCI6IkNMSUVOVEUiLCJpYXQiOjE3NzY2MTE0MDMsImV4cCI6MTc3NjY5NzgwM30.9FxkSuyQi-SqB-OlHRbF4bbTcGsAMxV3kPjeQkl5kfA",
-              "type": "string"
-            }
-          ]
-        },
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:8080/ECommerceWebAplication/api/productos",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "ECommerceWebAplication",
-            "api",
-            "productos"
-          ]
-        }
-      },
-      "response": [
+      "name": "Productos",
+      "item": [
         {
           "name": "ListarProductos",
-          "originalRequest": {
+          "request": {
             "method": "GET",
-            "header": [],
             "url": {
-              "raw": "http://localhost:8080/ECommerceWebAplication/api/productos",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "ECommerceWebAplication",
-                "api",
-                "productos"
+              "raw": "{{baseUrl}}/api/productos?page=1&size=12",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "productos"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "size", "value": "12" }
               ]
             }
-          },
-          "status": "OK",
-          "code": 200,
-          "_postman_previewlanguage": "Text",
-          "header": [
-            {
-              "key": "Content-Type",
-              "value": "application/json;charset=UTF-8"
-            },
-            {
-              "key": "Content-Length",
-              "value": "237"
-            },
-            {
-              "key": "Date",
-              "value": "Sun, 19 Apr 2026 15:10:49 GMT"
-            },
-            {
-              "key": "Keep-Alive",
-              "value": "timeout=20"
-            },
-            {
-              "key": "Connection",
-              "value": "keep-alive"
-            }
-          ],
-          "cookie": [],
-          "body": "[{\"id\":18,\"nombre\":\"top\",\"descripcion\":\"aaaaaa\",\"precio\":33.0,\"imagenURL\":\"assets/img/categoria/blazers.png\",\"stock\":0,\"tallasDisponibles\":[],\"stockPorTalla\":[],\"color\":\"GRIS\",\"activo\":true,\"categoria\":{\"id\":7,\"nombre\":\"Tops\",\"productos\""
-        }
-      ]
-    },
-    {
-      "name": "DetalleProducto",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXJrY3Jvd3ZzQGdtYWlsLmNvbSIsInJvbCI6IkNMSUVOVEUiLCJpYXQiOjE3NzY2MTE0MDMsImV4cCI6MTc3NjY5NzgwM30.9FxkSuyQi-SqB-OlHRbF4bbTcGsAMxV3kPjeQkl5kfA",
-              "type": "string"
-            }
-          ]
+          }
         },
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:8080/ECommerceWebAplication/api/productos/3",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "ECommerceWebAplication",
-            "api",
-            "productos",
-            "3"
-          ]
-        }
-      },
-      "response": [
+        {
+          "name": "ListarProductos (con filtros)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/productos?categoriaId=1&talla=M&color=NEGRO&precioMax=2000&soloConStock=true",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "productos"],
+              "query": [
+                { "key": "categoriaId",  "value": "1" },
+                { "key": "talla",        "value": "M" },
+                { "key": "color",        "value": "NEGRO" },
+                { "key": "precioMax",    "value": "2000" },
+                { "key": "soloConStock", "value": "true" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "BuscarProductos",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/productos?busqueda=vestido",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "productos"],
+              "query": [{ "key": "busqueda", "value": "vestido" }]
+            }
+          }
+        },
         {
           "name": "DetalleProducto",
-          "originalRequest": {
+          "request": {
             "method": "GET",
-            "header": [],
             "url": {
-              "raw": "http://localhost:8080/ECommerceWebAplication/api/productos/3",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "ECommerceWebAplication",
-                "api",
-                "productos",
-                "3"
-              ]
+              "raw": "{{baseUrl}}/api/productos/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "productos", "1"]
             }
-          },
-          "status": "OK",
-          "code": 200,
-          "_postman_previewlanguage": "Text",
-          "header": [
-            {
-              "key": "Content-Type",
-              "value": "application/json;charset=UTF-8"
-            },
-            {
-              "key": "Content-Length",
-              "value": "313"
-            },
-            {
-              "key": "Date",
-              "value": "Sun, 19 Apr 2026 15:11:56 GMT"
-            },
-            {
-              "key": "Keep-Alive",
-              "value": "timeout=20"
-            },
-            {
-              "key": "Connection",
-              "value": "keep-alive"
-            }
-          ],
-          "cookie": [],
-          "body": "{\"id\":3,\"nombre\":\"Bueno \",\"descripcion\":\"asdasdasdsadasd\",\"precio\":12.0,\"imagenURL\":\"assets/img/categoria/blazers.png\",\"stock\":0,\"tallasDisponibles\":[\"XS\",\"S\"],\"stockPorTalla\":[{\"talla\":\"XS\",\"cantidad\":2},{\"talla\":\"S\",\"cantidad\":2}],\"color\":\"NEGRO\",\"activo\":true,\"categoria\":{\"id\":4,\"nombre\":\"Blazers\",\"productos\""
+          }
         }
       ]
     },
     {
-      "name": "AgregarProductoCarrito",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXJrY3Jvd3ZzQGdtYWlsLmNvbSIsInJvbCI6IkNMSUVOVEUiLCJpYXQiOjE3NzY2MTE0MDMsImV4cCI6MTc3NjY5NzgwM30.9FxkSuyQi-SqB-OlHRbF4bbTcGsAMxV3kPjeQkl5kfA",
-              "type": "string"
-            }
-          ]
-        },
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"usuarioId\": 5,\r\n    \"productoId\": 5,\r\n    \"cantidad\": 1,\r\n    \"talla\": \"XS\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:8080/ECommerceWebAplication/api/carrito",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "ECommerceWebAplication",
-            "api",
-            "carrito"
-          ]
-        }
-      },
-      "response": [
+      "name": "Carrito",
+      "item": [
         {
           "name": "AgregarProductoCarrito",
-          "originalRequest": {
+          "request": {
             "method": "POST",
-            "header": [],
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"usuarioId\": 5,\r\n    \"productoId\": 5,\r\n    \"cantidad\": 1,\r\n    \"talla\": \"M\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "raw": "{\n  \"productoId\": 1,\n  \"cantidad\": 1,\n  \"talla\": \"M\"\n}"
             },
             "url": {
-              "raw": "http://localhost:8080/ECommerceWebAplication/api/carrito",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "ECommerceWebAplication",
-                "api",
-                "carrito"
-              ]
+              "raw": "{{baseUrl}}/api/carrito",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "carrito"]
             }
-          },
-          "status": "Created",
-          "code": 201,
-          "_postman_previewlanguage": "Text",
-          "header": [
-            {
-              "key": "Content-Type",
-              "value": "application/json;charset=UTF-8"
-            },
-            {
-              "key": "Content-Length",
-              "value": "226"
-            },
-            {
-              "key": "Date",
-              "value": "Sun, 19 Apr 2026 15:19:00 GMT"
-            },
-            {
-              "key": "Keep-Alive",
-              "value": "timeout=20"
-            },
-            {
-              "key": "Connection",
-              "value": "keep-alive"
-            }
-          ],
-          "cookie": [],
-          "body": "{\"success\":true,\"message\":\"Producto agregado al carrito\",\"data\":{\"id\":1,\"usuario\":{\"id\":5,\"nombre\":\"Casi\",\"correo\":\"darkcrowvs@gmail.com\",\"contraseña\":\"123123123\",\"telefono\":\"+5255000000322\",\"rol\":\"CLIENTE\",\"historialPedidos\""
-        }
-      ]
-    },
-    {
-      "name": "VerCarrito",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXJrY3Jvd3ZzQGdtYWlsLmNvbSIsInJvbCI6IkNMSUVOVEUiLCJpYXQiOjE3NzY2MTE0MDMsImV4cCI6MTc3NjY5NzgwM30.9FxkSuyQi-SqB-OlHRbF4bbTcGsAMxV3kPjeQkl5kfA",
-              "type": "string"
-            }
-          ]
+          }
         },
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:8080/ECommerceWebAplication/api/carrito/5",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "ECommerceWebAplication",
-            "api",
-            "carrito",
-            "5"
-          ]
-        }
-      },
-      "response": [
         {
           "name": "VerCarrito",
-          "originalRequest": {
+          "request": {
             "method": "GET",
-            "header": [],
             "url": {
-              "raw": "http://localhost:8080/ECommerceWebAplication/api/carrito/5",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "ECommerceWebAplication",
-                "api",
-                "carrito",
-                "5"
-              ]
+              "raw": "{{baseUrl}}/api/carrito/{{usuarioId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "carrito", "{{usuarioId}}"]
             }
-          },
-          "status": "OK",
-          "code": 200,
-          "_postman_previewlanguage": null,
-          "header": [
-            {
-              "key": "Content-Type",
-              "value": "application/json;charset=UTF-8"
+          }
+        },
+        {
+          "name": "ActualizarCantidad",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productoId\": 1,\n  \"cantidad\": 3,\n  \"talla\": \"M\"\n}"
             },
-            {
-              "key": "Content-Length",
-              "value": "252"
-            },
-            {
-              "key": "Date",
-              "value": "Sun, 19 Apr 2026 17:18:53 GMT"
-            },
-            {
-              "key": "Keep-Alive",
-              "value": "timeout=20"
-            },
-            {
-              "key": "Connection",
-              "value": "keep-alive"
+            "url": {
+              "raw": "{{baseUrl}}/api/carrito",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "carrito"]
             }
-          ],
-          "cookie": [],
-          "body": "{\n    \"usuarioId\": 5,\n    \"carritoId\": 1,\n    \"items\": [\n        {\n            \"productoId\": 5,\n            \"nombre\": \"A ver\",\n            \"imagenURL\": \"https://tse1.explicit.bing.net/th/id/OIP.sFDHRHYmQbnDvJ7xMLo4OwHaK_?rs=1&pid=ImgDetMain&o=7&rm=3\",\n            \"precioUnidad\": 2000,\n            \"cantidad\": 3,\n            \"subtotal\": 6000\n        }\n    ],\n    \"total\": 6000\n}"
+          }
+        },
+        {
+          "name": "EliminarItem (con talla)",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/carrito/producto/1/talla/M",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "carrito", "producto", "1", "talla", "M"]
+            }
+          }
+        },
+        {
+          "name": "VaciarCarrito",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/carrito",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "carrito"]
+            }
+          }
         }
       ]
     },
     {
-      "name": "CrearPedido",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXJrY3Jvd3ZzQGdtYWlsLmNvbSIsInJvbCI6IkNMSUVOVEUiLCJpYXQiOjE3NzY2MTE0MDMsImV4cCI6MTc3NjY5NzgwM30.9FxkSuyQi-SqB-OlHRbF4bbTcGsAMxV3kPjeQkl5kfA",
-              "type": "string"
-            }
-          ]
-        },
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n  \"usuarioId\": 5,\r\n  \"calle\": \"Villa ITSON\",\r\n  \"ciudad\": \"Cd. Obregon\",\r\n  \"estado\": \"Sonora\",\r\n  \"codigoPostal\": \"83000\",\r\n  \"metodoPago\": \"TRANSFERENCIA\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:8080/ECommerceWebAplication/api/pedidos",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "ECommerceWebAplication",
-            "api",
-            "pedidos"
-          ]
-        }
-      },
-      "response": [
+      "name": "Pedidos",
+      "item": [
         {
           "name": "CrearPedido",
-          "originalRequest": {
+          "request": {
             "method": "POST",
-            "header": [],
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"usuarioId\": 5,\r\n  \"calle\": \"Villa ITSON\",\r\n  \"ciudad\": \"Cd. Obregon\",\r\n  \"estado\": \"Sonora\",\r\n  \"codigoPostal\": \"83000\",\r\n  \"metodoPago\": \"TRANSFERENCIA\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "raw": "{\n  \"calle\": \"Villa ITSON 123\",\n  \"ciudad\": \"Cd. Obregón\",\n  \"estado\": \"Sonora\",\n  \"codigoPostal\": \"85000\",\n  \"metodoPago\": \"TRANSFERENCIA\"\n}"
             },
             "url": {
-              "raw": "http://localhost:8080/ECommerceWebAplication/api/pedidos",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "ECommerceWebAplication",
-                "api",
-                "pedidos"
-              ]
-            }
-          },
-          "status": "Created",
-          "code": 201,
-          "_postman_previewlanguage": "Text",
-          "header": [
-            {
-              "key": "Content-Type",
-              "value": "application/json;charset=UTF-8"
-            },
-            {
-              "key": "Content-Length",
-              "value": "324"
-            },
-            {
-              "key": "Date",
-              "value": "Sun, 19 Apr 2026 15:23:20 GMT"
-            },
-            {
-              "key": "Keep-Alive",
-              "value": "timeout=20"
-            },
-            {
-              "key": "Connection",
-              "value": "keep-alive"
-            }
-          ],
-          "cookie": [],
-          "body": "{\"success\":true,\"message\":\"Pedido creado exitosamente\",\"data\":{\"id\":50,\"numPedido\":\"PED-1776612200532-292D53AA\",\"fecha\":\"2026-04-19\",\"total\":10999.0,\"estado\":\"PENDIENTE\",\"usuario\":{\"id\":5,\"nombre\":\"Casi\",\"correo\":\"darkcrowvs@gmail.com\",\"contraseña\":\"123123123\",\"telefono\":\"+5255000000322\",\"rol\":\"CLIENTE\",\"historialPedidos\""
-        }
-      ]
-    },
-    {
-      "name": "ConsultarPedidos",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXJrY3Jvd3ZzQGdtYWlsLmNvbSIsInJvbCI6IkNMSUVOVEUiLCJpYXQiOjE3NzY2MTE0MDMsImV4cCI6MTc3NjY5NzgwM30.9FxkSuyQi-SqB-OlHRbF4bbTcGsAMxV3kPjeQkl5kfA",
-              "type": "string"
-            }
-          ]
-        },
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:8080/ECommerceWebAplication/api/pedidos/1",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "ECommerceWebAplication",
-            "api",
-            "pedidos",
-            "1"
-          ]
-        }
-      },
-      "response": [
-        {
-          "name": "ConsultarPedidos",
-          "originalRequest": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/ECommerceWebAplication/api/pedidos/1",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "ECommerceWebAplication",
-                "api",
-                "pedidos",
-                "1"
-              ]
-            }
-          },
-          "status": "OK",
-          "code": 200,
-          "_postman_previewlanguage": "Text",
-          "header": [
-            {
-              "key": "Content-Type",
-              "value": "application/json;charset=UTF-8"
-            },
-            {
-              "key": "Content-Length",
-              "value": "258"
-            },
-            {
-              "key": "Date",
-              "value": "Sun, 19 Apr 2026 15:24:52 GMT"
-            },
-            {
-              "key": "Keep-Alive",
-              "value": "timeout=20"
-            },
-            {
-              "key": "Connection",
-              "value": "keep-alive"
-            }
-          ],
-          "cookie": [],
-          "body": "{\"id\":1,\"numPedido\":\"PED-1776265845822-FBCF689F\",\"fecha\":\"2026-04-15\",\"total\":12.0,\"estado\":\"ENTREGADO\",\"usuario\":{\"id\":5,\"nombre\":\"Casi\",\"correo\":\"darkcrowvs@gmail.com\",\"contraseña\":\"123123123\",\"telefono\":\"+5255000000322\",\"rol\":\"CLIENTE\",\"historialPedidos\""
-        }
-      ]
-    },
-    {
-      "name": "HistorialPedidos",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXJrY3Jvd3ZzQGdtYWlsLmNvbSIsInJvbCI6IkNMSUVOVEUiLCJpYXQiOjE3NzY2MTE0MDMsImV4cCI6MTc3NjY5NzgwM30.9FxkSuyQi-SqB-OlHRbF4bbTcGsAMxV3kPjeQkl5kfA",
-              "type": "string"
-            }
-          ]
-        },
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:8080/ECommerceWebAplication/api/pedidos/usuario/5",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "ECommerceWebAplication",
-            "api",
-            "pedidos",
-            "usuario",
-            "5"
-          ]
-        }
-      },
-      "response": [
-        {
-          "name": "HistorialPedidos",
-          "originalRequest": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/ECommerceWebAplication/api/pedidos/usuario/5",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "ECommerceWebAplication",
-                "api",
-                "pedidos",
-                "usuario",
-                "5"
-              ]
-            }
-          },
-          "status": "OK",
-          "code": 200,
-          "_postman_previewlanguage": null,
-          "header": [
-            {
-              "key": "Content-Type",
-              "value": "application/json;charset=UTF-8"
-            },
-            {
-              "key": "Content-Length",
-              "value": "5888"
-            },
-            {
-              "key": "Date",
-              "value": "Sun, 19 Apr 2026 17:22:06 GMT"
-            },
-            {
-              "key": "Keep-Alive",
-              "value": "timeout=20"
-            },
-            {
-              "key": "Connection",
-              "value": "keep-alive"
-            }
-          ],
-          "cookie": [],
-          "body": "{\n    \"total\": 49,\n    \"pedidos\": [\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-19\",\n            \"numItems\": 1,\n            \"total\": 12,\n            \"numPedido\": \"PED-1776601866221-6CDFF790\",\n            \"id\": 47\n        },\n        {\n            \"estado\": \"ENVIADO\",\n            \"fecha\": \"2026-04-19\",\n            \"numItems\": 1,\n            \"total\": 999,\n            \"numPedido\": \"PED-1776618444295-FE8B80AE\",\n            \"id\": 52\n        },\n        {\n            \"estado\": \"ENVIADO\",\n            \"fecha\": \"2026-04-19\",\n            \"numItems\": 1,\n            \"total\": 999,\n            \"numPedido\": \"PED-1776613643522-2A9D46A2\",\n            \"id\": 51\n        },\n        {\n            \"estado\": \"PENDIENTE\",\n            \"fecha\": \"2026-04-19\",\n            \"numItems\": 2,\n            \"total\": 10999,\n            \"numPedido\": \"PED-1776612200532-292D53AA\",\n            \"id\": 50\n        },\n        {\n            \"estado\": \"ENVIADO\",\n            \"fecha\": \"2026-04-19\",\n            \"numItems\": 1,\n            \"total\": 15,\n            \"numPedido\": \"PED-1776603993212-BDDF1105\",\n            \"id\": 48\n        },\n        {\n            \"estado\": \"PENDIENTE\",\n            \"fecha\": \"2026-04-19\",\n            \"numItems\": 1,\n            \"total\": 12000,\n            \"numPedido\": \"PED-1776619230569-DFFC0296\",\n            \"id\": 53\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 60,\n            \"numPedido\": \"PED-1776518634893-D3814AB4\",\n            \"id\": 10\n        },\n        {\n            \"estado\": \"CANCELADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 3,\n            \"total\": 60,\n            \"numPedido\": \"PED-1776519737888-FD41CC3F\",\n            \"id\": 11\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 2000,\n            \"numPedido\": \"PED-1776524277723-555FD788\",\n            \"id\": 12\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 2,\n            \"total\": 24,\n            \"numPedido\": \"PED-1776527548947-F668411D\",\n            \"id\": 13\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 2000,\n            \"numPedido\": \"PED-1776533323141-62400BC1\",\n            \"id\": 14\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 12,\n            \"numPedido\": \"PED-1776533333962-B06D121E\",\n            \"id\": 15\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 12,\n            \"numPedido\": \"PED-1776533347568-60147ADB\",\n            \"id\": 16\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 2000,\n            \"numPedido\": \"PED-1776533427323-5EBEE35A\",\n            \"id\": 17\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 2000,\n            \"numPedido\": \"PED-1776533441260-37BC1334\",\n            \"id\": 18\n        },\n        {\n            \"estado\": \"CANCELADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 2000,\n            \"numPedido\": \"PED-1776533447684-B4285BA5\",\n            \"id\": 19\n        },\n        {\n            \"estado\": \"CANCELADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 2000,\n            \"numPedido\": \"PED-1776533467488-8B938F17\",\n            \"id\": 20\n        },\n        {\n            \"estado\": \"CANCELADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 2000,\n            \"numPedido\": \"PED-1776533475512-3790D881\",\n            \"id\": 21\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 4000,\n            \"numPedido\": \"PED-1776539509497-B08236AD\",\n            \"id\": 22\n        },\n        {\n            \"estado\": \"CANCELADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 13,\n            \"numPedido\": \"PED-1776539706754-051AFEC8\",\n            \"id\": 23\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 12,\n            \"numPedido\": \"PED-1776542382708-C36B78E3\",\n            \"id\": 24\n        },\n        {\n            \"estado\": \"ENVIADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 13,\n            \"numPedido\": \"PED-1776545127857-78A5B821\",\n            \"id\": 25\n        },\n        {\n            \"estado\": \"CANCELADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 13,\n            \"numPedido\": \"PED-1776545147456-CA54F5EA\",\n            \"id\": 26\n        },\n        {\n            \"estado\": \"PENDIENTE\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 2000,\n            \"numPedido\": \"PED-1776549747360-969E8A91\",\n            \"id\": 27\n        },\n        {\n            \"estado\": \"PENDIENTE\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 13,\n            \"numPedido\": \"PED-1776552226702-B3C2A4BC\",\n            \"id\": 29\n        },\n        {\n            \"estado\": \"PENDIENTE\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 13,\n            \"numPedido\": \"PED-1776552244743-3FB3F7B2\",\n            \"id\": 30\n        },\n        {\n            \"estado\": \"PENDIENTE\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 13,\n            \"numPedido\": \"PED-1776552253409-D0A0D72E\",\n            \"id\": 31\n        },\n        {\n            \"estado\": \"PENDIENTE\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 13,\n            \"numPedido\": \"PED-1776552783998-EE03ED82\",\n            \"id\": 32\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 13,\n            \"numPedido\": \"PED-1776552794405-55E15310\",\n            \"id\": 33\n        },\n        {\n            \"estado\": \"PENDIENTE\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 13,\n            \"numPedido\": \"PED-1776552805584-91391275\",\n            \"id\": 34\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 999,\n            \"numPedido\": \"PED-1776553225278-6D01069D\",\n            \"id\": 35\n        },\n        {\n            \"estado\": \"PENDIENTE\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 999,\n            \"numPedido\": \"PED-1776553236971-FC6550C6\",\n            \"id\": 36\n        },\n        {\n            \"estado\": \"PENDIENTE\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 999,\n            \"numPedido\": \"PED-1776554145817-DBD0CE62\",\n            \"id\": 37\n        },\n        {\n            \"estado\": \"ENVIADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 999,\n            \"numPedido\": \"PED-1776554159489-35F0552B\",\n            \"id\": 38\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 999,\n            \"numPedido\": \"PED-1776554168644-54F82388\",\n            \"id\": 39\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 999,\n            \"numPedido\": \"PED-1776554618594-A3754ADC\",\n            \"id\": 40\n        },\n        {\n            \"estado\": \"PENDIENTE\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 9,\n            \"numPedido\": \"PED-1776555051304-D8970A9B\",\n            \"id\": 41\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 33,\n            \"numPedido\": \"PED-1776568362551-03FC4F5E\",\n            \"id\": 43\n        },\n        {\n            \"estado\": \"CANCELADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 2,\n            \"total\": 30,\n            \"numPedido\": \"PED-1776568378873-3C1F6F5D\",\n            \"id\": 44\n        },\n        {\n            \"estado\": \"CANCELADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 4000,\n            \"numPedido\": \"PED-1776569664824-7AB1F47F\",\n            \"id\": 45\n        },\n        {\n            \"estado\": \"CANCELADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 2000,\n            \"numPedido\": \"PED-1776569789754-C0D9D3FC\",\n            \"id\": 46\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 13,\n            \"numPedido\": \"PED-1776550172022-2E9E57E0\",\n            \"id\": 28\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-18\",\n            \"numItems\": 1,\n            \"total\": 15,\n            \"numPedido\": \"PED-1776556511367-29A49E8A\",\n            \"id\": 42\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-17\",\n            \"numItems\": 1,\n            \"total\": 30,\n            \"numPedido\": \"PED-1776477148547-4D31406C\",\n            \"id\": 9\n        },\n        {\n            \"estado\": \"CANCELADO\",\n            \"fecha\": \"2026-04-17\",\n            \"numItems\": 1,\n            \"total\": 36,\n            \"numPedido\": \"PED-1776428676010-8C2C6001\",\n            \"id\": 8\n        },\n        {\n            \"estado\": \"CANCELADO\",\n            \"fecha\": \"2026-04-17\",\n            \"numItems\": 1,\n            \"total\": 12,\n            \"numPedido\": \"PED-1776428380011-26277603\",\n            \"id\": 7\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-15\",\n            \"numItems\": 1,\n            \"total\": 12,\n            \"numPedido\": \"PED-1776291263331-B073E6D2\",\n            \"id\": 3\n        },\n        {\n            \"estado\": \"CANCELADO\",\n            \"fecha\": \"2026-04-15\",\n            \"numItems\": 1,\n            \"total\": 84,\n            \"numPedido\": \"PED-1776265906582-03DB77A3\",\n            \"id\": 2\n        },\n        {\n            \"estado\": \"ENTREGADO\",\n            \"fecha\": \"2026-04-15\",\n            \"numItems\": 1,\n            \"total\": 12,\n            \"numPedido\": \"PED-1776265845822-FBCF689F\",\n            \"id\": 1\n        }\n    ],\n    \"usuarioId\": 5\n}"
-        }
-      ]
-    },
-    {
-      "name": "CrearReseña",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXJrY3Jvd3ZzQGdtYWlsLmNvbSIsInJvbCI6IkNMSUVOVEUiLCJpYXQiOjE3NzY2MTE0MDMsImV4cCI6MTc3NjY5NzgwM30.9FxkSuyQi-SqB-OlHRbF4bbTcGsAMxV3kPjeQkl5kfA",
-              "type": "string"
-            }
-          ]
-        },
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"usuarioId\": 5,\r\n    \"productoId\": 5,\r\n    \"calificacion\": 5,\r\n    \"comentario\": \"Excelente calidad\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
+              "raw": "{{baseUrl}}/api/pedidos",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "pedidos"]
             }
           }
         },
-        "url": {
-          "raw": "http://localhost:8080/ECommerceWebAplication/api/resenas",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "ECommerceWebAplication",
-            "api",
-            "resenas"
-          ]
-        }
-      },
-      "response": [
         {
-          "name": "CrearReseña",
-          "originalRequest": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"usuarioId\": 5,\r\n    \"productoId\": 5,\r\n    \"calificacion\": 5,\r\n    \"comentario\": \"Excelente calidad\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
+          "name": "ConsultarPedido",
+          "request": {
+            "method": "GET",
             "url": {
-              "raw": "http://localhost:8080/ECommerceWebAplication/api/resenas",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "ECommerceWebAplication",
-                "api",
-                "resenas"
-              ]
+              "raw": "{{baseUrl}}/api/pedidos/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "pedidos", "1"]
             }
-          },
-          "status": "OK",
-          "code": 200,
-          "_postman_previewlanguage": null,
-          "header": [
-            {
-              "key": "Content-Type",
-              "value": "application/json;charset=UTF-8"
-            },
-            {
-              "key": "Content-Length",
-              "value": "132"
-            },
-            {
-              "key": "Date",
-              "value": "Sun, 19 Apr 2026 17:22:57 GMT"
-            },
-            {
-              "key": "Keep-Alive",
-              "value": "timeout=20"
-            },
-            {
-              "key": "Connection",
-              "value": "keep-alive"
+          }
+        },
+        {
+          "name": "HistorialPedidos",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/pedidos/usuario/{{usuarioId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "pedidos", "usuario", "{{usuarioId}}"]
             }
-          ],
-          "cookie": [],
-          "body": "{\n    \"id\": 25,\n    \"calificacion\": 5,\n    \"comentario\": \"Excelente calidad\",\n    \"fecha\": \"2026-04-19\",\n    \"usuarioId\": 5,\n    \"usuarioNombre\": \"Casi\",\n    \"productoId\": 5\n}"
+          }
         }
       ]
     },
     {
-      "name": "VerReseñas",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXJrY3Jvd3ZzQGdtYWlsLmNvbSIsInJvbCI6IkNMSUVOVEUiLCJpYXQiOjE3NzY2MTE0MDMsImV4cCI6MTc3NjY5NzgwM30.9FxkSuyQi-SqB-OlHRbF4bbTcGsAMxV3kPjeQkl5kfA",
-              "type": "string"
-            }
-          ]
-        },
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:8080/ECommerceWebAplication/api/resenas/producto/3",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "ECommerceWebAplication",
-            "api",
-            "resenas",
-            "producto",
-            "3"
-          ]
-        }
-      },
-      "response": [
+      "name": "Reseñas",
+      "item": [
         {
-          "name": "VerReseñas",
-          "originalRequest": {
-            "method": "GET",
-            "header": [],
+          "name": "CrearReseña",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productoId\": 1,\n  \"calificacion\": 5,\n  \"comentario\": \"Excelente calidad y entrega rápida.\"\n}"
+            },
             "url": {
-              "raw": "http://localhost:8080/ECommerceWebAplication/api/resenas/producto/3",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "ECommerceWebAplication",
-                "api",
-                "resenas",
-                "producto",
-                "3"
-              ]
+              "raw": "{{baseUrl}}/api/resenas",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "resenas"]
             }
-          },
-          "status": "OK",
-          "code": 200,
-          "_postman_previewlanguage": null,
-          "header": [
-            {
-              "key": "Content-Type",
-              "value": "application/json;charset=UTF-8"
-            },
-            {
-              "key": "Content-Length",
-              "value": "787"
-            },
-            {
-              "key": "Date",
-              "value": "Sun, 19 Apr 2026 17:23:31 GMT"
-            },
-            {
-              "key": "Keep-Alive",
-              "value": "timeout=20"
-            },
-            {
-              "key": "Connection",
-              "value": "keep-alive"
+          }
+        },
+        {
+          "name": "VerReseñasDeProducto",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/resenas/producto/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "resenas", "producto", "1"]
             }
-          ],
-          "cookie": [],
-          "body": "{\n    \"productoId\": 3,\n    \"resenas\": [\n        {\n            \"id\": 24,\n            \"calificacion\": 5,\n            \"comentario\": \"Excelente calidad\",\n            \"fecha\": \"2026-04-19\",\n            \"usuarioId\": 5,\n            \"usuarioNombre\": \"Casi\",\n            \"productoId\": 3\n        },\n        {\n            \"id\": 11,\n            \"calificacion\": 5,\n            \"comentario\": \"AAAAAAA\",\n            \"fecha\": \"2026-04-18\",\n            \"usuarioId\": 5,\n            \"usuarioNombre\": \"Casi\",\n            \"productoId\": 3\n        },\n        {\n            \"id\": 19,\n            \"calificacion\": 3,\n            \"comentario\": \"aaa\",\n            \"fecha\": \"2026-04-18\",\n            \"usuarioId\": 5,\n            \"usuarioNombre\": \"Casi\",\n            \"productoId\": 3\n        },\n        {\n            \"id\": 20,\n            \"calificacion\": 5,\n            \"comentario\": \"aaaaa\",\n            \"fecha\": \"2026-04-18\",\n            \"usuarioId\": 5,\n            \"usuarioNombre\": \"Casi\",\n            \"productoId\": 3\n        },\n        {\n            \"id\": 21,\n            \"calificacion\": 5,\n            \"comentario\": \"aaaaa\",\n            \"fecha\": \"2026-04-18\",\n            \"usuarioId\": 5,\n            \"usuarioNombre\": \"Casi\",\n            \"productoId\": 3\n        },\n        {\n            \"id\": 22,\n            \"calificacion\": 5,\n            \"comentario\": \"1\",\n            \"fecha\": \"2026-04-18\",\n            \"usuarioId\": 5,\n            \"usuarioNombre\": \"Casi\",\n            \"productoId\": 3\n        }\n    ],\n    \"promedio\": 4.7,\n    \"total\": 6\n}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Perfil",
+      "item": [
+        {
+          "name": "EditarPerfil",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Equipo 5 Actualizado\",\n  \"telefono\": \"6440000999\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios/{{usuarioId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "usuarios", "{{usuarioId}}"]
+            }
+          }
+        },
+        {
+          "name": "CambiarContraseña",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"actual\": \"Cliente123\",\n  \"nueva\": \"Cliente1234\",\n  \"confirmar\": \"Cliente1234\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios/{{usuarioId}}/password",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "usuarios", "{{usuarioId}}", "password"]
+            }
+          }
         }
       ]
     }

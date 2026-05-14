@@ -2,8 +2,11 @@ package itson.ecommercewebaplication.bo;
 
 import itson.ecommercewebaplication.dao.UsuarioDAO;
 import itson.ecommercewebaplication.enums.Rol;
+import itson.ecommercewebaplication.models.Direccion;
 import itson.ecommercewebaplication.models.Usuario;
+import itson.ecommercewebaplication.util.JPAUtil;
 import itson.ecommercewebaplication.util.PasswordUtil;
+import jakarta.persistence.EntityManager;
 import java.util.List;
 
 /**
@@ -49,7 +52,7 @@ public class UsuarioBO {
         return u != null && u.getRol() == Rol.ADMINISTRADOR;
     }
 
-    public Usuario registrar(Usuario usuario) throws Exception {
+    public Usuario registrar(Usuario usuario, Direccion direccion) throws Exception {
         if (usuario.getNombre() == null || usuario.getNombre().isBlank()) {
             throw new Exception("El nombre completo es requerido.");
         }
@@ -65,6 +68,13 @@ public class UsuarioBO {
         if (usuario.getContraseña().length() < 8) {
             throw new Exception("La contraseña debe tener al menos 8 caracteres.");
         }
+        if (direccion == null
+                || direccion.getCalle() == null || direccion.getCalle().isBlank()
+                || direccion.getCiudad() == null || direccion.getCiudad().isBlank()
+                || direccion.getEstado() == null || direccion.getEstado().isBlank()
+                || direccion.getCodigoPostal() == null || direccion.getCodigoPostal().isBlank()) {
+            throw new Exception("La dirección es requerida (calle, ciudad, estado, código postal).");
+        }
         if (usuarioDAO.obtenerPorCorreo(usuario.getCorreo()) != null) {
             throw new Exception("El correo ya se encuentra registrado en el sistema.");
         }
@@ -72,7 +82,24 @@ public class UsuarioBO {
             usuario.setRol(Rol.CLIENTE);
         }
         usuario.setContraseña(PasswordUtil.hash(usuario.getContraseña()));
-        return usuarioDAO.guardar(usuario);
+
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(usuario);
+            direccion.setUsuario(usuario);
+            direccion.setPrincipal(true);
+            em.persist(direccion);
+            em.getTransaction().commit();
+            return usuario;
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new Exception("Error al registrar usuario: " + e.getMessage(), e);
+        } finally {
+            em.close();
+        }
     }
 
     public Usuario actualizarPerfil(int usuarioId, String nombre, String telefono) throws Exception {
@@ -149,5 +176,12 @@ public class UsuarioBO {
             throw new Exception("Usuario no encontrado.");
         }
         usuarioDAO.eliminar(id);
+    }
+
+    public void activar(int id) throws Exception {
+        if (usuarioDAO.obtenerPorId(id) == null) {
+            throw new Exception("Usuario no encontrado.");
+        }
+        usuarioDAO.activar(id);
     }
 }
