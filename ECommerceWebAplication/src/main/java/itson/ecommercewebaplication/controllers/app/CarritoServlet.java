@@ -75,6 +75,13 @@ public class CarritoServlet extends HttpServlet {
             } else if ("eliminar".equals(accion)) {
                 eliminar(req, session);
             } else if ("vaciar".equals(accion)) {
+                Usuario usuario = (Usuario) session.getAttribute("clienteLogueado");
+                if (usuario != null) {
+                    try {
+                        carritoBO.vaciar(usuario);
+                    } catch (Exception ignored) {
+                    }
+                }
                 session.removeAttribute("carrito");
             }
             res.sendRedirect(req.getContextPath() + "/app/carrito");
@@ -87,10 +94,16 @@ public class CarritoServlet extends HttpServlet {
     private void agregar(HttpServletRequest req, HttpSession session) throws Exception {
         int productoId = Integer.parseInt(req.getParameter("productoId"));
         int cantidad = Integer.parseInt(req.getParameter("cantidad"));
-        String tallaStr = req.getParameter("talla"); 
+        String tallaStr = req.getParameter("talla");
 
         if (cantidad <= 0) {
             throw new Exception("La cantidad debe ser mayor a cero.");
+        }
+
+        Usuario usuario = (Usuario) session.getAttribute("clienteLogueado");
+        if (usuario != null) {
+            carritoBO.agregarItem(usuario, productoId, cantidad, tallaStr);
+            return;
         }
 
         Producto producto = productoBO.obtenerPorId(productoId);
@@ -144,6 +157,12 @@ public class CarritoServlet extends HttpServlet {
             throw new Exception("La cantidad debe ser mayor a cero.");
         }
 
+        Usuario usuario = (Usuario) session.getAttribute("clienteLogueado");
+        if (usuario != null) {
+            carritoBO.actualizarCantidad(usuario, productoId, cantidad, tallaStr);
+            return;
+        }
+
         @SuppressWarnings("unchecked")
         List<DetallePedido> carrito = (List<DetallePedido>) session.getAttribute("carrito");
         if (carrito != null) {
@@ -166,9 +185,16 @@ public class CarritoServlet extends HttpServlet {
         }
     }
 
-    private void eliminar(HttpServletRequest req, HttpSession session) {
+    private void eliminar(HttpServletRequest req, HttpSession session) throws Exception {
         int productoId = Integer.parseInt(req.getParameter("productoId"));
         String tallaStr = req.getParameter("talla");
+
+        Usuario usuario = (Usuario) session.getAttribute("clienteLogueado");
+        if (usuario != null) {
+            carritoBO.eliminarItem(usuario, productoId, tallaStr);
+            return;
+        }
+
         @SuppressWarnings("unchecked")
         List<DetallePedido> carrito = (List<DetallePedido>) session.getAttribute("carrito");
         if (carrito != null) {

@@ -1,8 +1,10 @@
 package itson.ecommercewebaplication.apirest;
 
+import itson.ecommercewebaplication.bo.CarritoBO;
 import itson.ecommercewebaplication.bo.UsuarioBO;
 import itson.ecommercewebaplication.dto.ResponseDTO;
 import itson.ecommercewebaplication.enums.Rol;
+import itson.ecommercewebaplication.models.DetallePedido;
 import itson.ecommercewebaplication.models.Direccion;
 import itson.ecommercewebaplication.models.Usuario;
 import itson.ecommercewebaplication.util.JSONMapper;
@@ -12,16 +14,19 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @WebServlet(name = "AuthRegistroApiServlet", urlPatterns = {"/api/auth/registro"})
 public class AuthRegistroApiServlet extends HttpServlet {
 
     private UsuarioBO usuarioBO;
+    private CarritoBO carritoBO;
 
     @Override
     public void init() throws ServletException {
         usuarioBO = new UsuarioBO();
+        carritoBO = new CarritoBO();
     }
 
     @Override
@@ -55,6 +60,16 @@ public class AuthRegistroApiServlet extends HttpServlet {
             session.setAttribute("clienteLogueado", registrado);
             session.setAttribute("clienteId", registrado.getId());
             session.setAttribute("clienteNombre", registrado.getNombre());
+
+            @SuppressWarnings("unchecked")
+            List<DetallePedido> carritoSesion
+                    = (List<DetallePedido>) session.getAttribute("carrito");
+            if (carritoSesion != null && !carritoSesion.isEmpty()) {
+                try {
+                    carritoBO.persistirCarrito(registrado, carritoSesion);
+                } catch (Exception ignored) {
+                }
+            }
 
             Map<String, Object> data = new LinkedHashMap<>();
             data.put("token", token);

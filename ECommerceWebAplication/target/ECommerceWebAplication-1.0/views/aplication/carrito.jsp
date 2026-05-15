@@ -90,7 +90,9 @@
                                                 <input type="hidden" name="productoId" value="${item.producto.id}">
                                                 <input type="hidden" name="talla" value="${item.talla}">
                                                 <div class="qty-control">
-                                                    <button type="submit" name="cantidad" value="${item.cantidad - 1}" class="qty-btn">−</button>
+                                                    <button type="submit" name="cantidad" value="${item.cantidad - 1}"
+                                                            class="qty-btn"
+                                                            ${item.cantidad <= 1 ? 'disabled title="Usa Eliminar para quitar este artículo"' : ''}>−</button>
                                                     <input class="qty-input" type="number" value="${item.cantidad}" readonly>
                                                     <button type="submit" name="cantidad" value="${item.cantidad + 1}" class="qty-btn">+</button>
                                                 </div>

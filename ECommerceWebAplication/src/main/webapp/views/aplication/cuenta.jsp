@@ -334,9 +334,13 @@
                                                 </button>
                                             </form>
                                         </c:if>
-                                        <%-- Botón Editar --%>
                                         <button class="btn btn--ghost btn--sm"
-                                                onclick="abrirEditar(${dir.id},'<c:out value="${dir.calle}"/>','<c:out value="${dir.ciudad}"/>','<c:out value="${dir.estado}"/>','<c:out value="${dir.codigoPostal}"/>')">
+                                                data-id="${dir.id}"
+                                                data-calle="<c:out value='${dir.calle}'/>"
+                                                data-ciudad="<c:out value='${dir.ciudad}'/>"
+                                                data-estado="<c:out value='${dir.estado}'/>"
+                                                data-cp="<c:out value='${dir.codigoPostal}'/>"
+                                                onclick="abrirEditar(this)">
                                             Editar
                                         </button>
                                         <%-- Botón Eliminar --%>
@@ -521,13 +525,13 @@
                 document.getElementById('modalAgregar').style.display = 'block';
             }
 
-            function abrirEditar(id, calle, ciudad, estado, cp) {
+            function abrirEditar(btn) {
                 cerrarModales();
-                document.getElementById('editDireccionId').value = id;
-                document.getElementById('editCalle').value       = calle;
-                document.getElementById('editCiudad').value      = ciudad;
-                document.getElementById('editEstado').value      = estado;
-                document.getElementById('editCP').value          = cp;
+                document.getElementById('editDireccionId').value = btn.dataset.id;
+                document.getElementById('editCalle').value       = btn.dataset.calle;
+                document.getElementById('editCiudad').value      = btn.dataset.ciudad;
+                document.getElementById('editEstado').value      = btn.dataset.estado;
+                document.getElementById('editCP').value          = btn.dataset.cp;
                 document.getElementById('modalEditar').style.display = 'block';
             }
 

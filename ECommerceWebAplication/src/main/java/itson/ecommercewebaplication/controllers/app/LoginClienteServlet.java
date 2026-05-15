@@ -8,7 +8,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -63,7 +62,15 @@ public class LoginClienteServlet extends HttpServlet {
             List<DetallePedido> carritoSesion
                     = (List<DetallePedido>) session.getAttribute("carrito");
 
-            List<DetallePedido> carritoFinal = fusionarCarritos(carritoEnBD, carritoSesion);
+            List<DetallePedido> carritoFinal = CarritoBO.fusionar(carritoEnBD, carritoSesion);
+
+            if (carritoSesion != null && !carritoSesion.isEmpty()) {
+                try {
+                    carritoBO.persistirCarrito(usuario, carritoFinal);
+                } catch (Exception ignored) {
+                }
+            }
+
             session.setAttribute("carrito", carritoFinal);
 
             if (redirect != null && !redirect.isBlank()) {
@@ -84,39 +91,4 @@ public class LoginClienteServlet extends HttpServlet {
         }
     }
 
-    /**
-     * Fusiona el carrito de BD con el de sesión (si el usuario agregó algo sin
-     * estar logueado). Los items de sesión tienen prioridad en cantidad si el
-     * producto ya está en BD.
-     */
-    private List<DetallePedido> fusionarCarritos(
-            List<DetallePedido> deBD, List<DetallePedido> deSesion) {
-
-        if (deBD == null || deBD.isEmpty()) {
-            return deSesion != null ? deSesion : new ArrayList<>();
-        }
-        if (deSesion == null || deSesion.isEmpty()) {
-            return deBD;
-        }
-
-        // Usar la BD como base y agregar/actualizar con los de sesión
-        List<DetallePedido> resultado = new ArrayList<>(deBD);
-
-        for (DetallePedido itemSesion : deSesion) {
-            boolean encontrado = false;
-            for (DetallePedido itemBD : resultado) {
-                if (itemBD.getProducto().getId() == itemSesion.getProducto().getId()) {
-                    // Sumar cantidades (el usuario pudo haber agregado más sin loguearse)
-                    itemBD.setCantidad(itemBD.getCantidad() + itemSesion.getCantidad());
-                    encontrado = true;
-                    break;
-                }
-            }
-            if (!encontrado) {
-                resultado.add(itemSesion);
-            }
-        }
-
-        return resultado;
-    }
 }

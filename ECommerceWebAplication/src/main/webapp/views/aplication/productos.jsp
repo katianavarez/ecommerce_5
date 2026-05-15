@@ -32,7 +32,7 @@
                 </nav>
                 <form class="search-form" role="search" method="GET" action="${pageContext.request.contextPath}/app/productos">
                     <input class="search-form__input" type="search" name="busqueda"
-                           placeholder="Buscar prendas..." value="${busqueda}">
+                           placeholder="Buscar prendas..." value="<c:out value='${busqueda}'/>">
                     <button class="search-form__btn" type="submit" aria-label="Buscar">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
                         <circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/>
@@ -138,10 +138,10 @@
                                     </div>
                                 </c:forEach>
                             </div>
-                            <input type="hidden" name="color" id="colorFiltroInput" value="${colorActivo}">
+                            <input type="hidden" name="color" id="colorFiltroInput" value="<c:out value='${colorActivo}'/>">
                             <p id="colorFiltroLabel" style="font-size:var(--fs-xs);color:var(--text-muted);margin-top:var(--sp-2);">
                                 <c:choose>
-                                    <c:when test="${not empty colorActivo}">Color: <strong>${colorActivo}</strong> — <a href="#" onclick="limpiarColor();return false;" style="color:var(--color-secondary);">× Quitar</a></c:when>
+                                    <c:when test="${not empty colorActivo}">Color: <strong><c:out value="${colorActivo}"/></strong> — <a href="#" onclick="limpiarColor();return false;" style="color:var(--color-secondary);">× Quitar</a></c:when>
                                     <c:otherwise>Todos los colores</c:otherwise>
                                 </c:choose>
                             </p>
@@ -155,7 +155,7 @@
                             <div class="price-range">
                                 <input type="range" name="precioMax" id="sliderPrecio"
                                        min="0" max="${precioMaximo}"
-                                       value="${not empty precioMaxActivo ? precioMaxActivo : precioMaximo}"
+                                       value="<c:out value='${not empty precioMaxActivo ? precioMaxActivo : precioMaximo}'/>"
                                        oninput="actualizarPrecio(this.value)"
                                        onchange="aplicarFiltros()">
                                 <div class="price-range__labels">
@@ -255,19 +255,19 @@
                                       style="display:none;">
                                     <input type="hidden" name="pagina" id="inputPagina" value="1">
                                     <c:if test="${not empty busqueda}">
-                                        <input type="hidden" name="busqueda" value="${busqueda}">
+                                        <input type="hidden" name="busqueda" value="<c:out value='${busqueda}'/>">
                                     </c:if>
                                     <c:forEach var="catId" items="${categoriasActivas}">
                                         <input type="hidden" name="categoriaId" value="${catId}">
                                     </c:forEach>
                                     <c:forEach var="t" items="${tallasActivas}">
-                                        <input type="hidden" name="talla" value="${t}">
+                                        <input type="hidden" name="talla" value="<c:out value='${t}'/>">
                                     </c:forEach>
                                     <c:if test="${not empty colorActivo}">
-                                        <input type="hidden" name="color" value="${colorActivo}">
+                                        <input type="hidden" name="color" value="<c:out value='${colorActivo}'/>">
                                     </c:if>
                                     <c:if test="${not empty precioMaxActivo}">
-                                        <input type="hidden" name="precioMax" value="${precioMaxActivo}">
+                                        <input type="hidden" name="precioMax" value="<c:out value='${precioMaxActivo}'/>">
                                     </c:if>
                                     <c:if test="${soloConStockActivo}">
                                         <input type="hidden" name="soloConStock" value="true">

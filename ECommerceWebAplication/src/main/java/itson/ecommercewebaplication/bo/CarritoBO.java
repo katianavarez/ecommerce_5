@@ -193,6 +193,10 @@ public class CarritoBO {
     }
 
     public Carrito actualizarCantidad(Usuario usuario, int productoId, int cantidad) throws Exception {
+        return actualizarCantidad(usuario, productoId, cantidad, null);
+    }
+
+    public Carrito actualizarCantidad(Usuario usuario, int productoId, int cantidad, String talla) throws Exception {
         if (cantidad < 0) {
             throw new Exception("La cantidad no puede ser negativa.");
         }
@@ -201,9 +205,14 @@ public class CarritoBO {
         if (producto == null) {
             throw new Exception("Producto no encontrado.");
         }
-        if (cantidad > 0 && producto.getStock() < cantidad) {
-            throw new Exception("Stock insuficiente. Disponible: " + producto.getStock());
+        if (talla != null && talla.isBlank()) talla = null;
+        if (cantidad > 0) {
+            int stockDisponible = stockDisponiblePara(producto, talla);
+            if (stockDisponible < cantidad) {
+                throw new Exception("Stock insuficiente. Disponible: " + stockDisponible);
+            }
         }
+        final String tallaFinal = talla;
 
         EntityManager em = JPAUtil.getEntityManager();
         try {
@@ -215,11 +224,14 @@ public class CarritoBO {
             Carrito managed = em.find(Carrito.class, carrito.getId());
 
             if (cantidad == 0) {
-                managed.getDetalles().removeIf(d -> d.getProducto().getId() == productoId);
+                managed.getDetalles().removeIf(d ->
+                        d.getProducto().getId() == productoId
+                        && Objects.equals(d.getTalla(), tallaFinal));
             } else {
                 boolean encontrado = false;
                 for (DetallePedido d : managed.getDetalles()) {
-                    if (d.getProducto().getId() == productoId) {
+                    if (d.getProducto().getId() == productoId
+                            && Objects.equals(d.getTalla(), tallaFinal)) {
                         d.setCantidad(cantidad);
                         encontrado = true;
                         break;
@@ -311,5 +323,31 @@ public class CarritoBO {
         double total = carrito.getDetalles().stream()
                 .mapToDouble(d -> d.getPrecioUnidad() * d.getCantidad()).sum();
         carrito.setTotal(total);
+    }
+
+   
+    public static List<DetallePedido> fusionar(List<DetallePedido> deBD, List<DetallePedido> deSesion) {
+        if (deBD == null || deBD.isEmpty()) {
+            return deSesion != null ? new ArrayList<>(deSesion) : new ArrayList<>();
+        }
+        if (deSesion == null || deSesion.isEmpty()) {
+            return new ArrayList<>(deBD);
+        }
+        List<DetallePedido> resultado = new ArrayList<>(deBD);
+        for (DetallePedido itemSesion : deSesion) {
+            boolean encontrado = false;
+            for (DetallePedido itemBD : resultado) {
+                if (itemBD.getProducto().getId() == itemSesion.getProducto().getId()
+                        && Objects.equals(itemBD.getTalla(), itemSesion.getTalla())) {
+                    itemBD.setCantidad(itemBD.getCantidad() + itemSesion.getCantidad());
+                    encontrado = true;
+                    break;
+                }
+            }
+            if (!encontrado) {
+                resultado.add(itemSesion);
+            }
+        }
+        return resultado;
     }
 }

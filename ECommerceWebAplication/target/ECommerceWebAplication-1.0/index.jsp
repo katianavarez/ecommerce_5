@@ -186,7 +186,7 @@
                             </p>
                         </c:otherwise>
                     </c:choose>
-                </div>                </div>
+                </div>
 
                 <div style="text-align:center; margin-top: var(--sp-10);">
                     <a href="${pageContext.request.contextPath}/app/productos" class="btn btn--outline btn--lg">Ver toda la colección</a>

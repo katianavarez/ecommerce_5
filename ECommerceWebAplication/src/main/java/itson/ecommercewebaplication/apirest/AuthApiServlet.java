@@ -53,12 +53,19 @@ public class AuthApiServlet extends HttpServlet {
                 session.setAttribute("clienteLogueado", usuario);
                 session.setAttribute("clienteId", usuario.getId());
                 session.setAttribute("clienteNombre", usuario.getNombre());
-                if (session.getAttribute("carrito") == null) {
-                    List<DetallePedido> carritoEnBD = carritoBO.recuperarItemsDesdeDB(usuario.getId());
-                    if (carritoEnBD != null && !carritoEnBD.isEmpty()) {
-                        session.setAttribute("carrito", carritoEnBD);
+
+                List<DetallePedido> carritoEnBD = carritoBO.recuperarItemsDesdeDB(usuario.getId());
+                @SuppressWarnings("unchecked")
+                List<DetallePedido> carritoSesion
+                        = (List<DetallePedido>) session.getAttribute("carrito");
+                List<DetallePedido> carritoFinal = CarritoBO.fusionar(carritoEnBD, carritoSesion);
+                if (carritoSesion != null && !carritoSesion.isEmpty()) {
+                    try {
+                        carritoBO.persistirCarrito(usuario, carritoFinal);
+                    } catch (Exception ignored) {
                     }
                 }
+                session.setAttribute("carrito", carritoFinal);
             }
 
             Map<String, Object> data = new LinkedHashMap<>();

@@ -1,5 +1,6 @@
 package itson.ecommercewebaplication.controllers.app;
 
+import itson.ecommercewebaplication.bo.CarritoBO;
 import itson.ecommercewebaplication.bo.PedidoBO;
 import itson.ecommercewebaplication.dao.DireccionDAO;
 import itson.ecommercewebaplication.enums.FormaPago;
@@ -18,11 +19,13 @@ import java.util.List;
 public class CheckoutServlet extends HttpServlet {
 
     private PedidoBO pedidoBO;
+    private CarritoBO carritoBO;
     private DireccionDAO direccionDAO;
 
     @Override
     public void init() throws ServletException {
         pedidoBO = new PedidoBO();
+        carritoBO = new CarritoBO();
         direccionDAO = new DireccionDAO();
     }
 
@@ -37,8 +40,8 @@ public class CheckoutServlet extends HttpServlet {
             return;
         }
 
-        @SuppressWarnings("unchecked")
-        List<DetallePedido> carrito = (List<DetallePedido>) session.getAttribute("carrito");
+        List<DetallePedido> carrito = carritoBO.recuperarItemsDesdeDB(usuario.getId());
+        session.setAttribute("carrito", carrito);
         if (carrito == null || carrito.isEmpty()) {
             res.sendRedirect(req.getContextPath() + "/app/carrito");
             return;
@@ -71,8 +74,7 @@ public class CheckoutServlet extends HttpServlet {
                 throw new Exception("Debe iniciar sesión para continuar.");
             }
 
-            @SuppressWarnings("unchecked")
-            List<DetallePedido> carrito = (List<DetallePedido>) session.getAttribute("carrito");
+            List<DetallePedido> carrito = carritoBO.recuperarItemsDesdeDB(usuario.getId());
             if (carrito == null || carrito.isEmpty()) {
                 throw new Exception("El carrito está vacío.");
             }
@@ -85,7 +87,13 @@ public class CheckoutServlet extends HttpServlet {
             );
             FormaPago metodoPago = FormaPago.valueOf(req.getParameter("metodoPago"));
             Pedido pedido = pedidoBO.crearPedido(usuario, direccion, carrito, metodoPago);
+
+            try {
+                carritoBO.vaciar(usuario);
+            } catch (Exception ignored) {
+            }
             session.removeAttribute("carrito");
+
             res.sendRedirect(req.getContextPath() + "/app/confirmacion?pedidoId=" + pedido.getId());
         } catch (Exception e) {
             req.setAttribute("error", "Error al procesar el pedido: " + e.getMessage());

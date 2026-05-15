@@ -104,7 +104,7 @@ public class PedidosApiServlet extends HttpServlet {
             JsonUtil.ok(res, toMapDetalle(pedido));
 
         } catch (IllegalArgumentException e) {
-            JsonUtil.error(res, 400, "metodoPago inválido. Usa: TARJETA, EFECTIVO, TRANSFERENCIA o CONTRA_ENTREGA.");
+            JsonUtil.error(res, 400, "metodoPago inválido. Usa: TARJETA, TRANSFERENCIA o CONTRA_ENTREGA.");
         } catch (NullPointerException e) {
             JsonUtil.error(res, 400, "Faltan campos requeridos: calle, ciudad, estado, codigoPostal, metodoPago.");
         } catch (Exception e) {

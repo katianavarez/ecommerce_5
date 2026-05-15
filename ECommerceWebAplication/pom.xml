@@ -65,33 +65,6 @@
             <version>9.4.0</version>
         </dependency>
 
-        <!-- Jakarta REST API (JAX-RS)
-        Define las anotaciones para crear servicios REST:
-        @Path, @GET, @POST, @Produces, etc. -->
-        <dependency>
-            <groupId>jakarta.ws.rs</groupId>
-            <artifactId>jakarta.ws.rs-api</artifactId>
-            <version>3.1.0</version>
-        </dependency>
-
-        <!-- Jersey Servlet Container
-        Implementación de Jakarta REST que permite ejecutar
-        servicios REST dentro de un contenedor Servlet como Tomcat. -->
-        <dependency>
-            <groupId>org.glassfish.jersey.containers</groupId>
-            <artifactId>jersey-container-servlet</artifactId>
-            <version>3.1.11</version>
-        </dependency>
-
-        <!-- Jersey HK2
-        Sistema de inyección de dependencias usado por Jersey
-        para manejar servicios REST y sus dependencias. -->
-        <dependency>
-            <groupId>org.glassfish.jersey.inject</groupId>
-            <artifactId>jersey-hk2</artifactId>
-            <version>3.1.11</version>
-        </dependency>
-
         <dependency>
 
             <groupId>com.fasterxml.jackson.core</groupId>

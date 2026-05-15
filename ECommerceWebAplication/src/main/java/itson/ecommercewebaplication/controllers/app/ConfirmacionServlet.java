@@ -2,6 +2,7 @@ package itson.ecommercewebaplication.controllers.app;
 
 import itson.ecommercewebaplication.bo.PedidoBO;
 import itson.ecommercewebaplication.models.Pedido;
+import itson.ecommercewebaplication.models.Usuario;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -30,6 +31,14 @@ public class ConfirmacionServlet extends HttpServlet {
             Pedido pedido = pedidoBO.obtenerPorId(pedidoId);
             if (pedido == null) {
                 res.sendRedirect(req.getContextPath() + "/app/productos");
+                return;
+            }
+            HttpSession session = req.getSession(false);
+            Usuario usuario = session != null
+                    ? (Usuario) session.getAttribute("clienteLogueado") : null;
+            if (usuario == null || pedido.getUsuario() == null
+                    || pedido.getUsuario().getId() != usuario.getId()) {
+                res.sendError(HttpServletResponse.SC_FORBIDDEN);
                 return;
             }
             req.setAttribute("pedido", pedido);

@@ -173,6 +173,8 @@ h1, h2, h3, h4, h5 {
 .badge--enviado    { background: var(--badge-enviado-bg);    color: var(--badge-enviado-text); }
 .badge--entregado  { background: var(--badge-entregado-bg);  color: var(--badge-entregado-text); }
 .badge--cancelado  { background: var(--badge-cancelado-bg);  color: var(--badge-cancelado-text); }
+.badge--aprobado   { background: var(--badge-entregado-bg);  color: var(--badge-entregado-text); }
+.badge--rechazado  { background: var(--badge-cancelado-bg);  color: var(--badge-cancelado-text); }
 .badge--sale       { background: var(--color-primary);       color: #fff; }
 .badge--new        { background: var(--color-secondary);     color: #fff; }
 

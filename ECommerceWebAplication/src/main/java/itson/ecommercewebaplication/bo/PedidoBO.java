@@ -69,10 +69,14 @@ public class PedidoBO {
                 }
 
                 String tallaStr = detalle.getTalla();
+                boolean productoTieneTallas = producto.getStockPorTalla() != null
+                        && !producto.getStockPorTalla().isEmpty();
 
-                if (tallaStr != null && !tallaStr.isBlank()
-                        && producto.getStockPorTalla() != null
-                        && !producto.getStockPorTalla().isEmpty()) {
+                if (productoTieneTallas) {
+                    if (tallaStr == null || tallaStr.isBlank()) {
+                        throw new Exception("Debes seleccionar una talla para: "
+                                + producto.getNombre());
+                    }
                     try {
                         itson.ecommercewebaplication.enums.Tallas tallaEnum
                                 = itson.ecommercewebaplication.enums.Tallas.valueOf(tallaStr);
@@ -114,7 +118,12 @@ public class PedidoBO {
                 em.persist(direccion);
             }
 
-            Pago pago = new Pago(total, LocalDate.now(), metodoPago, EstadoPago.PENDIENTE);
+            // Pago: TARJETA y TRANSFERENCIA son pasarelas simuladas — se aprueban
+            // al confirmar el pedido. CONTRA_ENTREGA queda pendiente hasta la entrega.
+            EstadoPago estadoPago = (metodoPago == FormaPago.CONTRA_ENTREGA)
+                    ? EstadoPago.PENDIENTE
+                    : EstadoPago.APROBADO;
+            Pago pago = new Pago(total, LocalDate.now(), metodoPago, estadoPago);
             Pedido pedido = new Pedido(
                     generarNumeroPedido(), LocalDate.now(), total, EstadoPedido.PENDIENTE,
                     em.find(Usuario.class, usuario.getId()), direccion, null, pago
@@ -133,6 +142,7 @@ public class PedidoBO {
             em.persist(pedido);
             pedido.setDetalles(detallesNuevos);
             em.getTransaction().commit();
+            notificarConfirmacionPedido(pedido);
             return pedido;
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
@@ -239,5 +249,25 @@ public class PedidoBO {
 
     public List<Integer> idsProductosTopVentas(int limite) {
         return pedidoDAO.idsProductosTopVentas(limite);
+    }
+
+    public List<Pedido> obtenerTodosConPago() {
+        return pedidoDAO.obtenerTodosConPago();
+    }
+
+    private void notificarConfirmacionPedido(Pedido pedido) {
+        try {
+            Usuario u = pedido.getUsuario();
+            String correo = (u != null) ? u.getCorreo() : "(sin correo)";
+            System.out.println("[Notificacion email] Para: " + correo);
+            System.out.println("                      Asunto: Confirmacion de pedido #" + pedido.getNumPedido());
+            System.out.println("                      Total: $" + pedido.getTotal());
+            System.out.println("                      Estado pedido: " + pedido.getEstado().name());
+            if (pedido.getPago() != null) {
+                System.out.println("                      Pago: " + pedido.getPago().getMetodo().name()
+                        + " (" + pedido.getPago().getEstado().name() + ")");
+            }
+        } catch (Exception ignored) {
+        }
     }
 }

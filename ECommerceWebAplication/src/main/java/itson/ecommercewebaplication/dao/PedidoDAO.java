@@ -233,6 +233,21 @@ public class PedidoDAO {
         }
     }
 
+    public List<Pedido> obtenerTodosConPago() {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            return em.createQuery(
+                    "SELECT DISTINCT p FROM Pedido p "
+                    + "LEFT JOIN FETCH p.pago "
+                    + "LEFT JOIN FETCH p.usuario "
+                    + "WHERE p.pago IS NOT NULL "
+                    + "ORDER BY p.fecha DESC",
+                    Pedido.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
     /**
      * Devuelve los IDs de los productos más vendidos (por cantidad de unidades
      * en pedidos no cancelados), limitado a los primeros 'limite'. En caso de

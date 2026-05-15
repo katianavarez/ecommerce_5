@@ -147,17 +147,10 @@ public class CarritoApiServlet extends HttpServlet {
                 talla = null;
             }
 
-            if (cantidad <= 0) {
-                carritoBO.eliminarItem(usuario, productoId, talla);
-                Carrito carrito = carritoBO.obtenerPorUsuario(usuario.getId());
-                JsonUtil.ok(res, carrito != null ? toMap(carrito)
-                        : Map.of("usuarioId", usuario.getId(), "items", List.of(), "total", 0.0));
-                return;
-            }
-
-            carritoBO.eliminarItem(usuario, productoId, talla);
-            Carrito carrito = carritoBO.agregarItem(usuario, productoId, cantidad, talla);
-            JsonUtil.ok(res, toMap(carrito));
+            int cantidadNorm = Math.max(0, cantidad);
+            Carrito carrito = carritoBO.actualizarCantidad(usuario, productoId, cantidadNorm, talla);
+            JsonUtil.ok(res, carrito != null ? toMap(carrito)
+                    : Map.of("usuarioId", usuario.getId(), "items", List.of(), "total", 0.0));
         } catch (IllegalArgumentException | NullPointerException e) {
             JsonUtil.error(res, 400, "Body inválido. Campos requeridos: productoId, cantidad. Opcional: talla.");
         } catch (Exception e) {

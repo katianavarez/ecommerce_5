@@ -70,6 +70,10 @@
                             <span class="admin-nav__badge admin-nav__badge--warn"><c:out value="${pedidosPendientes}"/></span>
                         </c:if>
                     </a>
+                    <a href="${pageContext.request.contextPath}/admin/pagos" class="admin-nav__link ">
+                        <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="14" x2="10" y2="14"/></svg>
+                        Pagos
+                    </a>
                     <p class="admin-nav__section">Comunidad</p>
                     <a href="${pageContext.request.contextPath}/admin/resenas" class="admin-nav__link ">
                         <svg class="admin-nav__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
@@ -92,7 +96,7 @@
                 <div class="admin-topbar">
                     <div>
                         <h1 class="admin-topbar__title">Gestión de Clientes</h1>
-                        <p class="admin-topbar__subtitle"><c:out value="${clientes.size()}"/> clientes registrados</p>
+                        <p class="admin-topbar__subtitle"><c:out value="${totalRegistros}"/> clientes registrados</p>
                     </div>
                 </div>
                 <div class="admin-body">
