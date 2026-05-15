@@ -39,6 +39,12 @@
                     con todos los detalles.
                 </p>
 
+                <c:set var="subtotalPedido" value="0"/>
+                <c:forEach var="d" items="${pedido.detalles}">
+                    <c:set var="subtotalPedido" value="${subtotalPedido + (d.precioUnidad * d.cantidad)}"/>
+                </c:forEach>
+                <c:set var="envioPedido" value="${pedido.total - subtotalPedido}"/>
+
                 <div class="confirm-details">
                     <div class="confirm-row"><span>Fecha</span><span><c:out value="${pedido.fecha}"/></span></div>
                     <div class="confirm-row"><span>Cliente</span><span><c:out value="${pedido.usuario.nombre}"/></span></div>
@@ -56,6 +62,16 @@
                     <div class="confirm-row">
                         <span>Estado del pedido</span>
                         <span><c:out value="${pedido.estado}"/></span>
+                    </div>
+                    <div class="confirm-row"><span>Subtotal</span><span>$<fmt:formatNumber value="${subtotalPedido}" maxFractionDigits="0"/></span></div>
+                    <div class="confirm-row">
+                        <span>Envío</span>
+                        <span>
+                            <c:choose>
+                                <c:when test="${envioPedido < 1}">Gratis</c:when>
+                                <c:otherwise>$<fmt:formatNumber value="${envioPedido}" maxFractionDigits="0"/></c:otherwise>
+                            </c:choose>
+                        </span>
                     </div>
                     <div class="confirm-row" style="font-weight:600;">
                         <span>Total cobrado</span>

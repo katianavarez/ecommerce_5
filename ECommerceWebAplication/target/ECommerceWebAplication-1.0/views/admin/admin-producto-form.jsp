@@ -107,6 +107,9 @@
                         <c:if test="${not empty producto}">
                             <input type="hidden" name="id" value="${producto.id}">
                         </c:if>
+                        <c:if test="${not empty producto and empty producto.stockPorTalla}">
+                            <input type="hidden" name="stock" value="${producto.stock}">
+                        </c:if>
 
                         <div class="admin-card">
                             <div class="admin-card__header"><h3 class="admin-card__title">Información del Producto</h3></div>

@@ -45,7 +45,7 @@ public class CheckoutServlet extends HttpServlet {
         }
 
         double subtotal = carrito.stream().mapToDouble(d -> d.getPrecioUnidad() * d.getCantidad()).sum();
-        double costoEnvio = 150.0;
+        double costoEnvio = PedidoBO.calcularEnvio(subtotal);
 
         List<Direccion> direcciones = direccionDAO.obtenerPorUsuario(usuario.getId());
         Direccion direccionPrincipal = direcciones.isEmpty() ? null : direcciones.get(0);

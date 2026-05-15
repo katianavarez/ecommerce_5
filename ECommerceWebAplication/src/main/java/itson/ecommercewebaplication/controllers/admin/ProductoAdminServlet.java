@@ -169,6 +169,10 @@ public class ProductoAdminServlet extends HttpServlet {
         int id = Integer.parseInt(req.getParameter("id"));
         Producto p = buildProductoFromRequest(req);
         p.setId(id);
+        Producto existente = productoBO.obtenerPorId(id);
+        if (existente != null) {
+            p.setActivo(existente.isActivo());
+        }
         productoBO.actualizar(p);
         res.sendRedirect(req.getContextPath() + "/admin/productos?success=updated");
     }

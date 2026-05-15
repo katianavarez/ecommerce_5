@@ -18,7 +18,14 @@ import java.util.UUID;
  */
 public class PedidoBO {
 
+    public static final double ENVIO_GRATIS_DESDE = 1500.0;
+    public static final double COSTO_ENVIO = 150.0;
+
     private final PedidoDAO pedidoDAO = new PedidoDAO();
+
+    public static double calcularEnvio(double subtotal) {
+        return subtotal >= ENVIO_GRATIS_DESDE ? 0.0 : COSTO_ENVIO;
+    }
 
     public List<Pedido> obtenerTodos() {
         return pedidoDAO.obtenerTodos();
@@ -100,6 +107,8 @@ public class PedidoBO {
                 producto.setStock(producto.getStock() - detalle.getCantidad());
                 em.merge(producto);
             }
+
+            total += calcularEnvio(total);
 
             if (direccion.getId() == 0) {
                 em.persist(direccion);
