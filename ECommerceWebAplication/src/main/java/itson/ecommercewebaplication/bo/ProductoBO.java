@@ -5,8 +5,15 @@ import itson.ecommercewebaplication.models.Producto;
 import java.util.List;
 
 /**
+ * Lógica de negocio del catálogo. Centraliza las validaciones al crear y
+ * actualizar productos (nombre no vacío, precio positivo, stock no negativo,
+ * categoría obligatoria) y ofrece las consultas que consume tanto el panel
+ * admin como la API del catálogo del cliente.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 public class ProductoBO {
 
@@ -54,6 +61,12 @@ public class ProductoBO {
         return productoDAO.obtenerPorIds(ids);
     }
 
+    /**
+     * Valida y guarda un producto nuevo. Rechaza nombre vacío, precio menor
+     * o igual a cero, stock negativo o categoría faltante.
+     *
+     * @throws Exception si algún campo no cumple las reglas del catálogo
+     */
     public Producto crear(Producto producto) throws Exception {
         if (producto.getNombre() == null || producto.getNombre().isBlank()) {
             throw new Exception("El nombre del producto es requerido.");
@@ -96,6 +109,11 @@ public class ProductoBO {
         return p != null && p.getStock() >= cantidad;
     }
 
+    /**
+     * Descuenta unidades del stock tras verificar que haya suficientes.
+     *
+     * @throws Exception si no hay stock suficiente para la cantidad pedida
+     */
     public void reducirStock(int productoId, int cantidad) throws Exception {
         if (!verificarStock(productoId, cantidad)) {
             throw new Exception("Stock insuficiente.");

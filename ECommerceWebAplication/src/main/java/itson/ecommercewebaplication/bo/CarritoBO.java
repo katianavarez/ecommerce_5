@@ -15,8 +15,18 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * Lógica de negocio del carrito persistente del cliente logueado. Maneja
+ * agregar, actualizar cantidad, eliminar y vaciar items, validando siempre
+ * que haya stock disponible (consultando por talla cuando la prenda la usa).
+ * Incluye además {@link #fusionar(List, List)}, que une el carrito que el
+ * cliente tenía como invitado (guardado en el navegador) con el que ya
+ * tuviera en BD al momento de iniciar sesión, sumando cantidades cuando
+ * coinciden producto y talla.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 public class CarritoBO {
 
@@ -114,6 +124,16 @@ public class CarritoBO {
         return agregarItem(usuario, productoId, cantidad, null);
     }
 
+    /**
+     * Agrega un producto al carrito del usuario. Si ya existía la misma
+     * combinación de producto y talla, suma a la cantidad anterior; si no,
+     * crea una línea nueva. En ambos casos verifica que haya stock suficiente
+     * antes de confirmar.
+     *
+     * @param talla talla seleccionada, o null para productos sin talla
+     * @throws Exception si la cantidad es menor o igual a cero, el producto no
+     *                   existe, o no hay stock suficiente
+     */
     public Carrito agregarItem(Usuario usuario, int productoId, int cantidad, String talla) throws Exception {
         if (cantidad <= 0) {
             throw new Exception("La cantidad debe ser mayor a cero.");
@@ -196,6 +216,15 @@ public class CarritoBO {
         return actualizarCantidad(usuario, productoId, cantidad, null);
     }
 
+    /**
+     * Fija la cantidad de una línea del carrito a un valor exacto. Si la
+     * cantidad es cero, la línea se elimina; si es mayor, se valida que haya
+     * stock suficiente antes de actualizarla.
+     *
+     * @param talla talla de la línea a modificar, o null si no aplica
+     * @throws Exception si la cantidad es negativa, el carrito o la línea no
+     *                   existen, o no hay stock suficiente
+     */
     public Carrito actualizarCantidad(Usuario usuario, int productoId, int cantidad, String talla) throws Exception {
         if (cantidad < 0) {
             throw new Exception("La cantidad no puede ser negativa.");
@@ -326,6 +355,13 @@ public class CarritoBO {
     }
 
    
+    /**
+     * Combina el carrito guardado en BD con el que el cliente traía como
+     * invitado. Cuando una misma combinación de producto y talla aparece en
+     * ambos, suma las cantidades; el resto se agrega tal cual. Se usa al
+     * iniciar sesión para que el cliente no pierda lo que había agregado
+     * antes de loguearse.
+     */
     public static List<DetallePedido> fusionar(List<DetallePedido> deBD, List<DetallePedido> deSesion) {
         if (deBD == null || deBD.isEmpty()) {
             return deSesion != null ? new ArrayList<>(deSesion) : new ArrayList<>();

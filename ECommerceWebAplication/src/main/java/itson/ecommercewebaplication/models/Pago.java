@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package itson.ecommercewebaplication.models;
 
 import itson.ecommercewebaplication.enums.EstadoPago;
@@ -16,7 +12,20 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 
-
+/**
+ * Información de pago asociada a un pedido. Se crea junto con el pedido
+ * en el checkout y guarda el monto cobrado, la fecha, la forma de pago
+ * que eligió el cliente y el estado en el que quedó.
+ * 
+ * Para TARJETA arrancamos en {@link EstadoPago#APROBADO} (pasarela
+ * simulada); el resto entra como {@link EstadoPago#PENDIENTE} hasta que
+ * el admin verifique el cobro fuera del sistema.
+ *
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
+ */
 @Entity
 @Table (name = "pagos")
 public class Pago {

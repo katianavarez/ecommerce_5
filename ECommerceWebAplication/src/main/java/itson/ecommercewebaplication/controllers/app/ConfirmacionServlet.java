@@ -9,8 +9,16 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 
 /**
+ * Controlador de la pantalla de confirmación de pedido. Muestra el detalle de
+ * un pedido recién hecho (o consultado desde el historial) incluyendo su
+ * número único. Antes de mostrarlo verifica que el pedido pertenezca al
+ * cliente en sesión y, si no, responde 403; así nadie puede ver el pedido de
+ * otro cambiando el {@code pedidoId} de la URL.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 @WebServlet(name = "ConfirmacionServlet", urlPatterns = {"/app/confirmacion"})
 public class ConfirmacionServlet extends HttpServlet {

@@ -1,17 +1,17 @@
 /*
- * variables.css — Velour Design Tokens
+ * variables.css 
  * Tienda premium de ropa femenina
  */
 
 :root {
-    /* ─── PALETA PRINCIPAL ─────────────────────────────── */
-    --color-primary:          #1A1A2E; /* Azul noche — primario    */
+    /*  PALETA PRINCIPAL */
+    --color-primary:          #1A1A2E; /* Azul noche  primario    */
     --color-primary-hover:    #16213E;
-    --color-secondary:        #C9A96E; /* Oro cálido — secundario  */
+    --color-secondary:        #C9A96E; /* Oro cálido  secundario  */
     --color-secondary-hover:  #B8924F;
     --color-secondary-light:  #F5EDD9; /* Crema dorada             */
 
-    /* ─── FONDO Y SUPERFICIE ───────────────────────────── */
+    /*  FONDO Y SUPERFICIE  */
     --bg-base:      #FAFAF8; /* Blanco marfil             */
     --bg-surface:   #FFFFFF;
     --bg-muted:     #F4F3EF; /* Beige muy suave           */
@@ -20,7 +20,7 @@
     --bg-input:     #F9F8F5;
     --bg-overlay:   rgba(26,26,46,0.55);
 
-    /* ─── TEXTO ────────────────────────────────────────── */
+    /*  TEXTO  */
     --text-heading: #1A1A2E;
     --text-body:    #3D3B4A;
     --text-muted:   #7A7885;
@@ -28,12 +28,12 @@
     --text-inverse: #FFFFFF;
     --text-accent:  #C9A96E;
 
-    /* ─── BORDES ───────────────────────────────────────── */
+    /*  BORDES  */
     --border-soft:    #E8E5DC;
     --border-medium:  #D1CCBA;
     --border-strong:  #1A1A2E;
 
-    /* ─── COLORES DE ESTADO ────────────────────────────── */
+    /*  COLORES DE ESTADO  */
     --color-success:        #2D7A4F;
     --color-success-bg:     #EDF7F1;
     --color-success-border: #A3D4B8;
@@ -50,37 +50,37 @@
     --color-info-bg:        #EBF4FB;
     --color-info-border:    #93C6E0;
 
-    /* ─── ESTRELLAS / RATINGS ──────────────────────────── */
+    /*  ESTRELLAS / RATINGS */
     --color-star:       #C9A96E;
     --color-star-empty: #E0DCCF;
 
-    /* ─── BADGES PEDIDOS ───────────────────────────────── */
+    /*  BADGES PEDIDOS  */
     --badge-pendiente-bg:   #FEF6E8; --badge-pendiente-text: #C07A1A;
     --badge-enviado-bg:     #EBF4FB; --badge-enviado-text:   #1A5276;
     --badge-entregado-bg:   #EDF7F1; --badge-entregado-text: #2D7A4F;
     --badge-cancelado-bg:   #FDF2F1; --badge-cancelado-text: #C0392B;
 
-    /* ─── FOOTER ───────────────────────────────────────── */
+    /*  FOOTER  */
     --footer-bg:     #1A1A2E;
     --footer-text:   #D8D4C8;
     --footer-link:   #C9A96E;
     --footer-border: #2C2C48;
     --footer-muted:  #7A7885;
 
-    /* ─── TIPOGRAFÍA ───────────────────────────────────── */
-    --font-display: 'Cormorant Garamond', Georgia, serif;   /* Títulos elegantes */
-    --font-body:    'Jost', 'Segoe UI', Helvetica, sans-serif; /* Texto limpio    */
+    /*  TIPOGRAFÍA  */
+    --font-display: 'Cormorant Garamond', Georgia, serif;   
+    --font-body:    'Jost', 'Segoe UI', Helvetica, sans-serif; 
 
-    --fs-xs:   0.75rem;   /* 12px */
-    --fs-sm:   0.8125rem; /* 13px */
-    --fs-base: 0.875rem;  /* 14px */
-    --fs-md:   1rem;      /* 16px */
-    --fs-lg:   1.125rem;  /* 18px */
-    --fs-xl:   1.25rem;   /* 20px */
-    --fs-2xl:  1.5rem;    /* 24px */
-    --fs-3xl:  2rem;      /* 32px */
-    --fs-4xl:  2.5rem;    /* 40px */
-    --fs-5xl:  3.5rem;    /* 56px */
+    --fs-xs:   0.75rem;  
+    --fs-sm:   0.8125rem; 
+    --fs-base: 0.875rem;  
+    --fs-md:   1rem;      
+    --fs-lg:   1.125rem;  
+    --fs-xl:   1.25rem;   
+    --fs-2xl:  1.5rem;   
+    --fs-3xl:  2rem;     
+    --fs-4xl:  2.5rem;    
+    --fs-5xl:  3.5rem;    
 
     --fw-light:   300;
     --fw-regular: 400;
@@ -88,7 +88,7 @@
     --fw-semibold:600;
     --fw-bold:    700;
 
-    /* ─── ESPACIADO ────────────────────────────────────── */
+    /*  ESPACIADO  */
     --sp-1:  0.25rem;
     --sp-2:  0.5rem;
     --sp-3:  0.75rem;
@@ -102,25 +102,25 @@
     --sp-20: 5rem;
     --sp-24: 6rem;
 
-    /* ─── RADIO ────────────────────────────────────────── */
+    /*  RADIO  */
     --r-sm:   3px;
     --r-md:   6px;
     --r-lg:   12px;
     --r-full: 9999px;
 
-    /* ─── SOMBRAS ──────────────────────────────────────── */
+    /*  SOMBRAS  */
     --shadow-xs: 0 1px 3px rgba(26,26,46,0.06);
     --shadow-sm: 0 2px 8px rgba(26,26,46,0.08);
     --shadow-md: 0 4px 20px rgba(26,26,46,0.10);
     --shadow-lg: 0 8px 40px rgba(26,26,46,0.14);
     --shadow-gold: 0 4px 24px rgba(201,169,110,0.25);
 
-    /* ─── TRANSICIONES ─────────────────────────────────── */
+    /*  TRANSICIONES  */
     --t-fast:   0.15s ease;
     --t-normal: 0.3s ease;
     --t-slow:   0.5s ease;
 
-    /* ─── CONTENEDORES ─────────────────────────────────── */
+    /*  CONTENEDORES  */
     --container-sm:  560px;
     --container-md:  800px;
     --container-lg:  1180px;

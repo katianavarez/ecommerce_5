@@ -15,8 +15,17 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * Controlador del catálogo del cliente. Renderiza la página de productos con
+ * su primera tanda de resultados ya pintada desde el servidor (para que se
+ * vea contenido aunque el JavaScript no haya cargado todavía); a partir de
+ * ahí, productos.js toma el control y rehace la búsqueda y los filtros vía
+ * Fetch contra la API REST. Soporta búsqueda por nombre, filtros combinados
+ * (categoría, talla, color, precio máximo, solo con stock) y paginación.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 @WebServlet(name = "ProductosServlet", urlPatterns = {"/app/productos"})
 public class ProductosServlet extends HttpServlet {

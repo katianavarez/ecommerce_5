@@ -1,9 +1,3 @@
-<%-- 
-    Document   : admin-producto-form
-    Created on : 9 abr 2026, 4:45:38 a.m.
-    Author     : PC
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -111,9 +105,6 @@
                         <c:if test="${not empty producto}">
                             <input type="hidden" name="id" value="${producto.id}">
                         </c:if>
-                        <c:if test="${not empty producto and empty producto.stockPorTalla}">
-                            <input type="hidden" name="stock" value="${producto.stock}">
-                        </c:if>
 
                         <div class="admin-card">
                             <div class="admin-card__header"><h3 class="admin-card__title">Información del Producto</h3></div>
@@ -209,8 +200,24 @@
                                         </div>
                                     </div>
 
-                                    <%-- Stock distribuido por talla --%>
+                                    <%-- Toggle: ¿este producto aplica tallas? --%>
+                                    <%-- Default: si edita producto sin stockPorTalla → toggle OFF; en cualquier otro caso ON. --%>
+                                    <c:set var="tieneTallas"
+                                           value="${empty producto or not empty producto.stockPorTalla}"/>
                                     <div class="form-group">
+                                        <label class="form-label" style="display:flex;align-items:center;gap:var(--sp-2);cursor:pointer;">
+                                            <input type="checkbox" id="aplicaTallasToggle"
+                                                   ${tieneTallas ? 'checked' : ''}
+                                                   onchange="toggleTallas(this.checked)">
+                                            <span>Este producto aplica tallas (ropa)</span>
+                                        </label>
+                                        <p style="font-size:var(--fs-xs);color:var(--text-muted);margin-top:4px;">
+                                            Desactívalo para accesorios u otros productos sin tallaje.
+                                        </p>
+                                    </div>
+
+                                    <%-- Stock distribuido por talla (visible solo si toggle ON) --%>
+                                    <div class="form-group" id="bloqueTallas" style="${tieneTallas ? '' : 'display:none;'}">
                                         <label class="form-label">Stock por talla</label>
                                         <p style="font-size:var(--fs-xs);color:var(--text-muted);margin-bottom:var(--sp-3);">
                                             Indica cuántas unidades hay de cada talla. Deja en 0 si esa talla no aplica.
@@ -247,13 +254,21 @@
                                                 });
                                             </script>
                                         </c:if>
-                                        <%-- Si hay stock pero sin distribución por talla, pre-llenar equitativamente --%>
-                                        <c:if test="${not empty producto and producto.stock > 0 and empty producto.stockPorTalla}">
-                                            <p style="font-size:var(--fs-xs);color:var(--text-muted);margin-top:var(--sp-2);">
-                                                Stock actual sin distribución: <strong>${producto.stock}</strong> unidades.
-                                                Distribuye el stock entre las tallas.
-                                            </p>
-                                        </c:if>
+                                    </div>
+
+                                    <%-- Stock total libre (visible solo si toggle OFF) --%>
+                                    <div class="form-group" id="bloqueStockLibre" style="${tieneTallas ? 'display:none;' : ''}">
+                                        <label class="form-label">Stock total *</label>
+                                        <input class="form-control"
+                                               type="number"
+                                               name="stock"
+                                               id="stockLibre"
+                                               min="0"
+                                               value="${not empty producto ? producto.stock : 0}"
+                                               style="max-width:200px;">
+                                        <p style="font-size:var(--fs-xs);color:var(--text-muted);margin-top:4px;">
+                                            Cantidad total de unidades disponibles del producto.
+                                        </p>
                                     </div>
 
                                     <div style="display:flex;gap:var(--sp-3);margin-top:var(--sp-5);">
@@ -315,6 +330,27 @@
                     total += parseInt(inp.value) || 0;
                 });
                 document.getElementById('stockTotalLabel').textContent = total;
+            }
+
+            // ── Toggle entre stock por talla y stock total libre ─
+            function toggleTallas(aplica) {
+                const blqTallas = document.getElementById('bloqueTallas');
+                const blqLibre = document.getElementById('bloqueStockLibre');
+                if (aplica) {
+                    blqTallas.style.display = '';
+                    blqLibre.style.display = 'none';
+                    // Al activar tallas, ignoramos el valor del stock libre para
+                    // que el servlet use solo el stock distribuido por talla.
+                    const libre = document.getElementById('stockLibre');
+                    if (libre) libre.value = 0;
+                } else {
+                    blqTallas.style.display = 'none';
+                    blqLibre.style.display = '';
+                    // Al desactivar tallas, ceros en los inputs por talla para
+                    // que el servlet caiga al fallback de stock total libre.
+                    document.querySelectorAll('.stock-talla-input').forEach(inp => inp.value = 0);
+                    actualizarStockTotal();
+                }
             }
 
             // ── Preview de imagen ──────────────────────────────

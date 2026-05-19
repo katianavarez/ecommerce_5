@@ -13,8 +13,17 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 /**
+ * Controlador de la ficha de producto. El GET solo valida que el id sea
+ * numérico y sirve el esqueleto de la página; los datos del producto y sus
+ * reseñas los carga producto-detalle.js por Fetch a la API REST. El POST es
+ * un respaldo sin JavaScript para publicar una reseña con un formulario
+ * clásico, validando antes que el cliente haya comprado el producto y no
+ * exceda las reseñas permitidas.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 @WebServlet(name = "ProductoDetalleServlet", urlPatterns = {"/app/producto"})
 public class ProductoDetalleServlet extends HttpServlet {
@@ -30,6 +39,12 @@ public class ProductoDetalleServlet extends HttpServlet {
         pedidoBO = new PedidoBO();
     }
 
+    /**
+     * GET sirve el esqueleto HTML; el contenido (producto, reseñas, etc.)
+     * lo carga producto-detalle.js vía Fetch a la API REST.
+     * Solo valida que el id sea numérico — si el producto no existe,
+     * el cliente recibe 404 de /api/productos/{id} y muestra el error.
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
@@ -40,59 +55,21 @@ public class ProductoDetalleServlet extends HttpServlet {
             res.sendRedirect(req.getContextPath() + "/app/productos");
             return;
         }
-
         try {
-            int id = Integer.parseInt(idParam.trim());
-            Producto producto = productoBO.obtenerPorId(id);
-
-            if (producto == null) {
-                res.sendRedirect(req.getContextPath() + "/app/productos");
-                return;
-            }
-
-            req.setAttribute("producto", producto);
-            req.setAttribute("promedio", resenaBO.calcularPromedio(id));
-            req.setAttribute("totalResenas", resenaBO.contarPorProducto(id));
-
-            // Pasar la lista de StockTalla directamente — el JSP la procesa con c:forEach
-            req.setAttribute("stockPorTallaList",
-                    producto.getStockPorTalla() != null
-                    ? producto.getStockPorTalla()
-                    : java.util.Collections.emptyList());
-
-            // Cargar resenias según si hay sesión o no
-            HttpSession session = req.getSession(false);
-            if (session != null && session.getAttribute("clienteLogueado") != null) {
-                Usuario usuario = (Usuario) session.getAttribute("clienteLogueado");
-                req.setAttribute("usuarioLogueado", usuario);
-
-                long compras = pedidoBO.contarComprasDeProducto(usuario.getId(), id);
-                long resenasDadas = resenaBO.contarResenasPorUsuarioYProducto(usuario.getId(), id);
-                long resenasRestantes = compras - resenasDadas;
-
-                req.setAttribute("puedeResenar", resenasRestantes > 0);
-                req.setAttribute("resenasRestantes", resenasRestantes);
-                req.setAttribute("yaCompro", compras > 0);
-
-                // Resenias propias del usuario (todas) + últimas 5 de otros
-                req.setAttribute("resenasUsuario", resenaBO.obtenerDelUsuarioPorProducto(usuario.getId(), id));
-                req.setAttribute("resenasOtros", resenaBO.obtenerRecientesPorProducto(id, usuario.getId(), 5));
-            } else {
-                // Sin sesión: mostrar solo las últimas 5
-                req.setAttribute("resenasUsuario", java.util.Collections.emptyList());
-                req.setAttribute("resenasOtros", resenaBO.obtenerRecientesPorProducto(id, 0, 5));
-            }
-
-            req.getRequestDispatcher("/views/aplication/producto-detalle.jsp").forward(req, res);
-
+            Integer.parseInt(idParam.trim());
         } catch (NumberFormatException e) {
             res.sendRedirect(req.getContextPath() + "/app/productos");
-        } catch (Exception e) {
-            req.setAttribute("error", "No se pudo cargar el producto. Por favor intenta más tarde.");
-            req.getRequestDispatcher("/views/aplication/producto-detalle.jsp").forward(req, res);
+            return;
         }
+
+        req.setAttribute("productoId", idParam.trim());
+        req.getRequestDispatcher("/views/aplication/producto-detalle.jsp").forward(req, res);
     }
 
+    /**
+     * doPost: fallback no-JS para publicar reseña vía form clásico.
+     * El flujo principal va por POST /api/resenas (producto-detalle.js).
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
@@ -107,77 +84,31 @@ public class ProductoDetalleServlet extends HttpServlet {
             return;
         }
 
-        int productoId = -1;
         try {
-            productoId = Integer.parseInt(idParam.trim());
+            int productoId = Integer.parseInt(idParam.trim());
             Producto producto = productoBO.obtenerPorId(productoId);
-
             if (producto == null) {
                 res.sendRedirect(req.getContextPath() + "/app/productos");
                 return;
             }
 
-            // Verificar cuántas resenias puede dejar aún
             long compras = pedidoBO.contarComprasDeProducto(usuario.getId(), productoId);
             long resenasDadas = resenaBO.contarResenasPorUsuarioYProducto(usuario.getId(), productoId);
-            long resenasRestantes = compras - resenasDadas;
-
-            if (compras == 0) {
-                req.setAttribute("errorResena", "Solo puedes reseñar productos que hayas comprado.");
-                cargarDetalle(req, res, productoId, usuario);
-                return;
-            }
-
-            if (resenasRestantes <= 0) {
-                req.setAttribute("errorResena",
-                        "Ya has dejado el máximo de resenias permitidas para este producto (" + compras + ").");
-                cargarDetalle(req, res, productoId, usuario);
+            if (compras == 0 || resenasDadas >= compras) {
+                res.sendRedirect(req.getContextPath() + "/app/producto?id=" + productoId
+                        + "&resenaError=1");
                 return;
             }
 
             int calificacion = Integer.parseInt(req.getParameter("calificacion"));
             String comentario = req.getParameter("comentario");
-
             Resenia resena = new Resenia(calificacion, comentario, LocalDate.now(), producto, usuario);
             resenaBO.crear(resena);
 
             res.sendRedirect(req.getContextPath() + "/app/producto?id=" + productoId + "&resenaOk=1");
 
         } catch (Exception e) {
-            req.setAttribute("errorResena", "No se pudo publicar la reseña: " + e.getMessage());
-            if (productoId > 0) {
-                cargarDetalle(req, res, productoId, usuario);
-            } else {
-                res.sendRedirect(req.getContextPath() + "/app/productos");
-            }
+            res.sendRedirect(req.getContextPath() + "/app/productos");
         }
-    }
-
-    private void cargarDetalle(HttpServletRequest req, HttpServletResponse res,
-            int productoId, Usuario usuario)
-            throws ServletException, IOException {
-        Producto producto = productoBO.obtenerPorId(productoId);
-        req.setAttribute("producto", producto);
-        req.setAttribute("promedio", resenaBO.calcularPromedio(productoId));
-        req.setAttribute("totalResenas", resenaBO.contarPorProducto(productoId));
-        req.setAttribute("usuarioLogueado", usuario);
-
-        // Pasar la lista de StockTalla directamente — el JSP la procesa con c:forEach
-        req.setAttribute("stockPorTallaList",
-                (producto != null && producto.getStockPorTalla() != null)
-                ? producto.getStockPorTalla()
-                : java.util.Collections.emptyList());
-
-        long compras = pedidoBO.contarComprasDeProducto(usuario.getId(), productoId);
-        long resenasDadas = resenaBO.contarResenasPorUsuarioYProducto(usuario.getId(), productoId);
-        long resenasRestantes = compras - resenasDadas;
-
-        req.setAttribute("puedeResenar", resenasRestantes > 0);
-        req.setAttribute("resenasRestantes", resenasRestantes);
-        req.setAttribute("yaCompro", compras > 0);
-        req.setAttribute("resenasUsuario", resenaBO.obtenerDelUsuarioPorProducto(usuario.getId(), productoId));
-        req.setAttribute("resenasOtros", resenaBO.obtenerRecientesPorProducto(productoId, usuario.getId(), 5));
-
-        req.getRequestDispatcher("/views/aplication/producto-detalle.jsp").forward(req, res);
     }
 }

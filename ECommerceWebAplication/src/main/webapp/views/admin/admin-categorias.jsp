@@ -146,7 +146,8 @@
                                                             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                                         </a>
                                                         <form method="POST" action="${pageContext.request.contextPath}/admin/categorias" style="display:inline;"
-                                                              onsubmit="return confirm('¿Eliminar la categoría «${cat.nombre}»? Esta acción no se puede deshacer.');">
+                                                              data-nombre="<c:out value='${cat.nombre}'/>"
+                                                              onsubmit="return confirm('¿Eliminar la categoría «' + (this.dataset.nombre || '') + '»? Esta acción no se puede deshacer.');">
                                                             <input type="hidden" name="accion" value="eliminar">
                                                             <input type="hidden" name="id" value="${cat.id}">
                                                             <button type="submit" class="admin-action-btn admin-action-btn--danger" title="${conteo > 0 ? 'Tiene productos asociados — no se puede eliminar' : 'Eliminar'}" ${conteo > 0 ? 'disabled' : ''} ${conteo > 0 ? 'style="opacity:0.4;cursor:not-allowed;"' : ''}>

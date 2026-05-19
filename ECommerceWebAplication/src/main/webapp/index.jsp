@@ -1,9 +1,3 @@
-<%-- 
-    Document   : index
-    Created on : 4 abr 2026, 7:06:46 p.m.
-    Author     : PC
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -280,6 +274,7 @@
         </footer>
 
         <script type="module" src="${pageContext.request.contextPath}/assets/js/logout.js"></script>
+        <script type="module" src="${pageContext.request.contextPath}/assets/js/header-badge.js"></script>
 
         <script>
             const burger = document.getElementById('burgerBtn');

@@ -12,8 +12,16 @@ import java.io.IOException;
 import java.util.List;
 
 /**
+ * Filtro auxiliar del panel admin que, en cada petición de un admin
+ * autenticado, calcula cuántos pedidos están pendientes y lo deja como
+ * atributo del request. Así el badge de "pedidos pendientes" del menú
+ * lateral aparece en todas las pantallas sin que cada servlet tenga que
+ * recalcularlo. Si algo falla, deja el contador en cero y no rompe la vista.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 @WebFilter(filterName = "AdminDataFilter", urlPatterns = {"/admin/*", "/views/admin/*"})
 public class AdminDataFilter implements Filter {

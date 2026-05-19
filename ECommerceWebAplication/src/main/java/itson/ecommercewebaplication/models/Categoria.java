@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package itson.ecommercewebaplication.models;
 
 import jakarta.persistence.Column;
@@ -15,6 +11,17 @@ import jakarta.persistence.Transient;
 import java.text.Normalizer;
 import java.util.List;
 
+/**
+ * Categoría a la que pertenece una prenda dentro del catálogo
+ * (Vestidos, Blusas, Conjuntos, etc.). Cada producto se asocia con
+ * exactamente una categoría y el cliente puede filtrar el catálogo por
+ * ella desde {@code productos.jsp}.
+ *
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
+ */
 @Entity
 @Table(name = "categorias")
 public class Categoria {
@@ -67,6 +74,11 @@ public class Categoria {
         this.productos = productos;
     }
 
+    /**
+     * Devuelve una versión del nombre sin acentos ni símbolos, en minúsculas,
+     * apta para usar como nombre de archivo o como clase CSS. Por ejemplo,
+     * "Accesorios" → "accesorios" y "Saco / Blazer" → "sacoblazer".
+     */
     @Transient
     public String getSlug() {
         if (nombre == null) return "";

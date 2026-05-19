@@ -1,9 +1,3 @@
-<%-- 
-    Document   : cuenta
-    Created on : 9 abr 2026, 3:40:34 a.m.
-    Author     : PC
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -12,6 +6,8 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="usuario-id" content="${sessionScope.clienteLogueado.id}">
+        <%@ include file="/WEB-INF/jspf/jwt-meta.jspf" %>
         <title>Mi Cuenta — Velour</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/styles/variables.css"/>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/styles/base.css"/>
@@ -71,7 +67,7 @@
                 <aside class="account-sidebar">
                     <div class="account-sidebar__profile">
                         <div class="account-sidebar__avatar">
-                            <c:out value="${sessionScope.clienteLogueado.nombre.substring(0,1).toUpperCase()}"/>
+                            <c:out value="${empty sessionScope.clienteLogueado.nombre ? '?' : sessionScope.clienteLogueado.nombre.substring(0,1).toUpperCase()}"/>
                         </div>
                         <p class="account-sidebar__name"><c:out value="${sessionScope.clienteLogueado.nombre}"/></p>
                         <p class="account-sidebar__email"><c:out value="${sessionScope.clienteLogueado.correo}"/></p>
@@ -102,87 +98,23 @@
                 <%-- Contenido --%>
                 <div class="account-content">
 
-                    <%-- ── PEDIDOS ─────────────────────────────────────────── --%>
+                    <%-- ── PEDIDOS (poblado por cuenta.js vía GET /api/pedidos/usuario/{id}) --%>
                     <div id="section-pedidos">
                         <h2 class="account-section-title">Mis Pedidos</h2>
-                        <c:choose>
-                            <c:when test="${empty pedidos and paginaPedidos == 1}">
-                                <div style="text-align:center;padding:var(--sp-10);color:var(--text-muted);">
-                                    <p style="font-size:var(--fs-lg);margin-bottom:var(--sp-4);">Aún no tienes pedidos</p>
-                                    <a href="${pageContext.request.contextPath}/app/productos" class="btn btn--primary">Explorar colección</a>
-                                </div>
-                            </c:when>
-                            <c:otherwise>
-                                <div class="orders-list">
-                                    <c:forEach var="pedido" items="${pedidos}">
-                                        <div class="order-card">
-                                            <div class="order-card__header">
-                                                <div>
-                                                    <p class="order-card__id">#<c:out value="${pedido.numPedido}"/></p>
-                                                    <p class="order-card__date"><c:out value="${pedido.fecha}"/></p>
-                                                </div>
-                                                <span class="badge badge--${pedido.estado.name().toLowerCase()}">
-                                                    <c:out value="${pedido.estado}"/>
-                                                </span>
-                                            </div>
-                                            <div class="order-card__items">
-                                                <c:forEach var="detalle" items="${pedido.detalles}" end="2">
-                                                    <div class="order-thumb">
-                                                        <img src="${detalle.producto.imagenURL.startsWith('http') ? detalle.producto.imagenURL : pageContext.request.contextPath.concat('/').concat(detalle.producto.imagenURL)}"
-                                                             alt="${detalle.producto.nombre}"
-                                                             style="width:100%;height:100%;object-fit:cover;">
-                                                    </div>
-                                                </c:forEach>
-                                            </div>
-                                            <div class="order-card__footer">
-                                                <div>
-                                                    <p style="font-size:var(--fs-xs);color:var(--text-muted);">
-                                                        <c:out value="${pedido.detalles.size()}"/> artículo(s)
-                                                    </p>
-                                                    <p class="order-total">$<fmt:formatNumber value="${pedido.total}" maxFractionDigits="0"/></p>
-                                                </div>
-                                                <a href="${pageContext.request.contextPath}/app/confirmacion?pedidoId=${pedido.id}"
-                                                   class="btn btn--ghost btn--sm">Ver detalle</a>
-                                            </div>
-                                        </div>
-                                    </c:forEach>
-                                </div>
-
-                                <%-- Paginación de pedidos --%>
-                                <c:if test="${totalPedidos > 0}">
-                                    <div style="display:flex;align-items:center;justify-content:space-between;gap:var(--sp-4);margin-top:var(--sp-6);flex-wrap:wrap;">
-                                        <p style="font-size:var(--fs-xs);color:var(--text-muted);white-space:nowrap;">
-                                            Mostrando
-                                            <strong><c:out value="${(paginaPedidos - 1) * 5 + 1}"/>&#8211;<c:out value="${paginaPedidos * 5 > totalPedidos ? totalPedidos : paginaPedidos * 5}"/></strong>
-                                            de <strong><c:out value="${totalPedidos}"/></strong> pedidos
-                                        </p>
-                                        <c:if test="${totalPagPed > 1}">
-                                            <nav class="pagination" style="margin-top:0;flex-shrink:0;">
-                                                <c:if test="${paginaPedidos > 1}">
-                                                    <a class="pagination__btn" href="${pageContext.request.contextPath}/app/cuenta?seccion=pedidos&paginaPedidos=${paginaPedidos - 1}">&#8249;</a>
-                                                </c:if>
-                                                <c:forEach var="i" begin="1" end="${totalPagPed}">
-                                                    <c:choose>
-                                                        <c:when test="${i == paginaPedidos}">
-                                                            <a class="pagination__btn pagination__btn--active" href="#"><c:out value="${i}"/></a>
-                                                        </c:when>
-                                                        <c:when test="${i == 1 || i == totalPagPed || (i >= paginaPedidos - 1 && i <= paginaPedidos + 1)}">
-                                                            <a class="pagination__btn" href="${pageContext.request.contextPath}/app/cuenta?seccion=pedidos&paginaPedidos=${i}"><c:out value="${i}"/></a>
-                                                        </c:when>
-                                                        <c:when test="${i == paginaPedidos - 2 || i == paginaPedidos + 2}">
-                                                            <span style="display:inline-flex;align-items:center;justify-content:center;width:2.25rem;height:2.25rem;font-size:var(--fs-sm);color:var(--text-muted);">&#8230;</span>
-                                                        </c:when>
-                                                    </c:choose>
-                                                </c:forEach>
-                                                <c:if test="${paginaPedidos < totalPagPed}">
-                                                    <a class="pagination__btn" href="${pageContext.request.contextPath}/app/cuenta?seccion=pedidos&paginaPedidos=${paginaPedidos + 1}">&#8250;</a>
-                                                </c:if>
-                                            </nav>
-                                        </c:if>
-                                    </div>
-                                </c:if>
-                            </c:otherwise>
-                        </c:choose>
+                        <div id="pedidosLoading" style="text-align:center;padding:var(--sp-10);color:var(--text-muted);">
+                            <p>Cargando pedidos…</p>
+                        </div>
+                        <div id="pedidosEmpty" style="display:none;text-align:center;padding:var(--sp-10);color:var(--text-muted);">
+                            <p style="font-size:var(--fs-lg);margin-bottom:var(--sp-4);">Aún no tienes pedidos</p>
+                            <a href="${pageContext.request.contextPath}/app/productos" class="btn btn--primary">Explorar colección</a>
+                        </div>
+                        <div id="pedidosError" style="display:none;text-align:center;padding:var(--sp-6);color:var(--color-error);">
+                            <p>No se pudo cargar el historial de pedidos.</p>
+                        </div>
+                        <div id="pedidosContent" style="display:none;">
+                            <div class="orders-list" id="pedidosList"></div>
+                            <div id="pedidosPaginacion" style="display:flex;align-items:center;justify-content:space-between;gap:var(--sp-4);margin-top:var(--sp-6);flex-wrap:wrap;"></div>
+                        </div>
                     </div>
 
                     <%-- ── PERFIL ──────────────────────────────────────────── --%>
@@ -208,15 +140,15 @@
                                 <input type="hidden" name="accion" value="actualizarPerfil">
                                 <div style="display:flex;flex-direction:column;gap:var(--sp-4);">
                                     <div class="form-group">
-                                        <label class="form-label">Nombre completo</label>
-                                        <input class="form-control" type="text" name="nombre"
+                                        <label class="form-label" for="perfilNombre">Nombre completo</label>
+                                        <input class="form-control" type="text" id="perfilNombre" name="nombre"
                                                value="<c:out value='${sessionScope.clienteLogueado.nombre}'/>"
                                                placeholder="Tu nombre completo" required>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">Correo electrónico</label>
+                                        <label class="form-label" for="perfilCorreo">Correo electrónico</label>
                                         <%-- El correo no es editable: es el identificador único --%>
-                                        <input class="form-control" type="email"
+                                        <input class="form-control" type="email" id="perfilCorreo"
                                                value="<c:out value='${sessionScope.clienteLogueado.correo}'/>"
                                                readonly
                                                style="background:var(--bg-muted,#f5f5f5);cursor:not-allowed;"
@@ -226,8 +158,8 @@
                                         </p>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">Teléfono</label>
-                                        <input class="form-control" type="tel" name="telefono"
+                                        <label class="form-label" for="perfilTelefono">Teléfono</label>
+                                        <input class="form-control" type="tel" id="perfilTelefono" name="telefono"
                                                value="<c:out value='${sessionScope.clienteLogueado.telefono}'/>"
                                                placeholder="+52 55 0000 0000">
                                     </div>
@@ -258,12 +190,12 @@
                                 <input type="hidden" name="accion" value="cambiarContrasena">
                                 <div style="display:flex;flex-direction:column;gap:var(--sp-4);">
                                     <div class="form-group">
-                                        <label class="form-label">Contraseña actual</label>
-                                        <input class="form-control" type="password" name="contrasenaActual"
+                                        <label class="form-label" for="contrasenaActual">Contraseña actual</label>
+                                        <input class="form-control" type="password" id="contrasenaActual" name="contrasenaActual"
                                                placeholder="••••••••" required>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label"
+                                        <label class="form-label" for="nuevaContrasena"
                                                style="display:flex;justify-content:space-between;align-items:center;">
                                             Nueva contraseña
                                             <span id="pwdCounter2" style="font-size:var(--fs-xs);color:var(--text-muted);font-weight:normal;text-transform:none;letter-spacing:normal;">
@@ -275,7 +207,7 @@
                                                minlength="8" required>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">Confirmar nueva contraseña</label>
+                                        <label class="form-label" for="confirmarContrasena">Confirmar nueva contraseña</label>
                                         <input class="form-control" type="password" id="confirmarContrasena"
                                                name="confirmarContrasena" placeholder="Repite la nueva contraseña"
                                                minlength="8" required>
@@ -451,6 +383,7 @@
         <script type="module" src="${pageContext.request.contextPath}/assets/js/logout.js"></script>
 
         <script type="module" src="${pageContext.request.contextPath}/assets/js/cuenta.js"></script>
+        <script type="module" src="${pageContext.request.contextPath}/assets/js/header-badge.js"></script>
 
         <script>
             // Burger menu

@@ -1,5 +1,5 @@
 /*
- * products.css — Catálogo de productos — Velour
+ * products.css Catálogo de productos 
  */
 
 .shop-layout {
@@ -12,7 +12,7 @@
     align-items: start;
 }
 
-/* ─── SIDEBAR FILTROS ────────────────────────────── */
+/*  SIDEBAR FILTROS  */
 
 .filters-sidebar {
     position: sticky;
@@ -103,7 +103,7 @@
     color: var(--text-muted);
 }
 
-/* ─── ÁREA PRINCIPAL ─────────────────────────────── */
+/*  ÁREA PRINCIPAL  */
 
 .shop-main {}
 
@@ -180,7 +180,13 @@
     cursor: pointer;
 }
 
-/* ─── RESPONSIVE ─────────────────────────────────── */
+/*  BARRA MOBILE (búsqueda + botón filtros)  */
+/* Oculta por default; visible solo en mobile vía media query. */
+.shop-mobile-bar { display: none; }
+.filters-sidebar__close { display: none; }
+.filters-overlay { display: none; }
+
+/*  RESPONSIVE  */
 
 /* Tablet (769px – 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {
@@ -207,9 +213,107 @@
 
 @media (max-width: 768px) {
     .shop-layout { grid-template-columns: 1fr; padding: var(--sp-4); }
-    .filters-sidebar {
-        position: static;
-        display: none; /* toggle via JS en versión final */
+
+    /* Barra mobile: search + botón filtros encima del grid. */
+    .shop-mobile-bar {
+        display: flex;
+        gap: var(--sp-2);
+        margin-bottom: var(--sp-5);
+        align-items: stretch;
     }
-    .filters-sidebar.is-open { display: flex; }
+    .shop-mobile-search {
+        flex: 1;
+        display: flex;
+        align-items: stretch;
+        background: var(--bg-input);
+        border: 1.5px solid var(--border-soft);
+        border-radius: var(--r-sm);
+        overflow: hidden;
+    }
+    .shop-mobile-search input {
+        flex: 1;
+        border: none;
+        outline: none;
+        background: transparent;
+        padding: 0 var(--sp-3);
+        font-size: var(--fs-sm);
+        color: var(--text-body);
+        min-width: 0; /* permite que el input se encoja en flex */
+    }
+    .shop-mobile-search button {
+        background: transparent;
+        border: none;
+        padding: 0 var(--sp-3);
+        color: var(--text-muted);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+    }
+    .shop-filter-toggle {
+        background: var(--color-secondary);
+        color: white;
+        border: none;
+        padding: 0 var(--sp-4);
+        border-radius: var(--r-sm);
+        font-size: var(--fs-sm);
+        font-weight: var(--fw-medium);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: var(--sp-2);
+        white-space: nowrap;
+    }
+
+    /* Sidebar como drawer desde la izquierda. */
+    .filters-sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 85%;
+        max-width: 320px;
+        height: 100vh;
+        height: 100dvh; /* en navegadores que soportan, evita gap por barra URL */
+        z-index: 1001;
+        background: var(--bg-base);
+        border: none;
+        border-radius: 0;
+        padding: var(--sp-8) var(--sp-5) var(--sp-5);
+        overflow-y: auto;
+        transition: left var(--t-base);
+        box-shadow: 4px 0 16px rgba(0,0,0,0.15);
+        display: flex; /* override del display:none de antes */
+    }
+    .filters-sidebar.is-open {
+        left: 0;
+    }
+
+    .filters-sidebar__close {
+        display: block;
+        position: absolute;
+        top: var(--sp-3);
+        right: var(--sp-3);
+        background: transparent;
+        border: none;
+        font-size: 28px;
+        line-height: 1;
+        cursor: pointer;
+        color: var(--text-muted);
+        padding: 4px 8px;
+    }
+
+    .filters-overlay {
+        display: block;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 1000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--t-base);
+    }
+    .filters-overlay.is-open {
+        opacity: 1;
+        pointer-events: auto;
+    }
 }

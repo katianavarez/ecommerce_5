@@ -12,19 +12,26 @@ import java.io.IOException;
 import java.util.List;
 
 /**
+ * Controlador de la pantalla de checkout. Solo atiende el GET: arma el
+ * resumen de la compra (items, subtotal, costo de envío y total) y precarga
+ * la dirección principal del cliente. La confirmación del pedido NO se hace
+ * aquí, sino por POST a /api/pedidos desde checkout.js; se quitó el doPost a
+ * propósito para que no exista el riesgo de crear el pedido dos veces (una
+ * por el servlet y otra por el fetch).
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 @WebServlet(name = "CheckoutServlet", urlPatterns = {"/app/checkout"})
 public class CheckoutServlet extends HttpServlet {
 
-    private PedidoBO pedidoBO;
     private CarritoBO carritoBO;
     private DireccionDAO direccionDAO;
 
     @Override
     public void init() throws ServletException {
-        pedidoBO = new PedidoBO();
         carritoBO = new CarritoBO();
         direccionDAO = new DireccionDAO();
     }
@@ -63,41 +70,7 @@ public class CheckoutServlet extends HttpServlet {
         req.getRequestDispatcher("/views/aplication/checkout.jsp").forward(req, res);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
-        HttpSession session = req.getSession();
-        try {
-            Usuario usuario = (Usuario) session.getAttribute("clienteLogueado");
-            if (usuario == null) {
-                throw new Exception("Debe iniciar sesión para continuar.");
-            }
-
-            List<DetallePedido> carrito = carritoBO.recuperarItemsDesdeDB(usuario.getId());
-            if (carrito == null || carrito.isEmpty()) {
-                throw new Exception("El carrito está vacío.");
-            }
-
-            Direccion direccion = new Direccion(
-                    req.getParameter("calle"),
-                    req.getParameter("ciudad"),
-                    req.getParameter("estado"),
-                    req.getParameter("codigoPostal")
-            );
-            FormaPago metodoPago = FormaPago.valueOf(req.getParameter("metodoPago"));
-            Pedido pedido = pedidoBO.crearPedido(usuario, direccion, carrito, metodoPago);
-
-            try {
-                carritoBO.vaciar(usuario);
-            } catch (Exception ignored) {
-            }
-            session.removeAttribute("carrito");
-
-            res.sendRedirect(req.getContextPath() + "/app/confirmacion?pedidoId=" + pedido.getId());
-        } catch (Exception e) {
-            req.setAttribute("error", "Error al procesar el pedido: " + e.getMessage());
-            doGet(req, res);
-        }
-    }
+    // doPost retirado: la creación del pedido se hace 100% por POST /api/pedidos
+    // (PedidosApiServlet) consumido por checkout.js vía Fetch. Esto elimina el
+    // riesgo de pedido duplicado por doble envío (servlet + fetch).
 }

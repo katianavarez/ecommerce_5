@@ -1,8 +1,8 @@
 /*
- * layout.css — Header, Nav, Footer — Velour
+ * layout.css Header, Nav, Footer 
  */
 
-/* ─── HEADER ─────────────────────────────────────── */
+/* HEADER */
 
 .site-header {
     position: sticky;
@@ -174,7 +174,7 @@
     transition: transform var(--t-normal), opacity var(--t-fast);
 }
 
-/* ─── MOBILE NAV ─────────────────────────────────── */
+/*  MOBILE NAV  */
 
 .mobile-nav {
     display: none;
@@ -196,7 +196,7 @@
     border-bottom: 1px solid var(--border-soft);
 }
 
-/* ─── FOOTER ─────────────────────────────────────── */
+/*  FOOTER  */
 
 .site-footer {
     background: var(--footer-bg);
@@ -296,9 +296,9 @@
     letter-spacing: 0.05em;
 }
 
-/* ─── RESPONSIVE ─────────────────────────────────── */
+/*  RESPONSIVE  */
 
-/* ─── TABLET (769px – 1024px) ────────────────────── */
+/*  TABLET (769px – 1024px)  */
 @media (min-width: 769px) and (max-width: 1024px) {
 
     /* Header */
@@ -307,8 +307,9 @@
         gap: var(--sp-4);
     }
 
-    /* Oculta buscador pero mantiene nav visible */
-    .search-form { display: none; }
+    /* Buscador compacto pero visible en tablet (no más display:none). */
+    .search-form { max-width: 200px; }
+    .search-form__input { font-size: var(--fs-xs); padding: 6px 10px; }
 
     /* Nav con menos espacio */
     .main-nav { gap: var(--sp-5); }
@@ -327,7 +328,7 @@
     .header-burger { display: none; }
 }
 
-/* ─── MOBILE (≤ 768px) ───────────────────────────── */
+/*  MOBILE (≤ 768px)  */
 @media (max-width: 768px) {
 
     .main-nav    { display: none; }

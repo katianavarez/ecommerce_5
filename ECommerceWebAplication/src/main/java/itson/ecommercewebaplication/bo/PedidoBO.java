@@ -7,14 +7,26 @@ import itson.ecommercewebaplication.enums.FormaPago;
 import itson.ecommercewebaplication.models.*;
 import itson.ecommercewebaplication.util.JPAUtil;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.LockModeType;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 /**
+ * Lógica de negocio de pedidos. Es la parte más delicada del sistema porque
+ * coordina varias cosas en una sola transacción al confirmar una compra:
+ * valida el stock (por talla cuando aplica), lo descuenta, calcula el total
+ * con envío, crea el pago según la forma elegida y genera el número único
+ * de pedido. También maneja la cancelación, que devuelve el stock reservado.
+ * El descuento de stock usa un bloqueo pesimista para que dos compras
+ * simultáneas del mismo producto no terminen vendiendo más unidades de las
+ * disponibles.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 public class PedidoBO {
 
@@ -43,6 +55,20 @@ public class PedidoBO {
         return pedidoDAO.obtenerPorEstado(estado.name());
     }
 
+    /**
+     * Crea un pedido completo dentro de una sola transacción: recorre cada
+     * detalle bloqueando el producto, valida que haya stock (por talla si la
+     * prenda usa tallas) y lo descuenta, suma el total más el envío, registra
+     * el pago y persiste el pedido con su número único. Si algo falla, se hace
+     * rollback y no queda nada a medias.
+     *
+     * @param usuario   cliente que realiza la compra
+     * @param direccion dirección de envío del pedido
+     * @param detalles  líneas del carrito que se van a comprar
+     * @param metodoPago forma de pago elegida en el checkout
+     * @return el pedido ya persistido, con su número generado
+     * @throws Exception si falta algún dato, no hay stock o falla la transacción
+     */
     public Pedido crearPedido(Usuario usuario, Direccion direccion,
             List<DetallePedido> detalles, FormaPago metodoPago) throws Exception {
         if (usuario == null) {
@@ -63,7 +89,10 @@ public class PedidoBO {
             em.getTransaction().begin();
             double total = 0;
             for (DetallePedido detalle : detalles) {
-                Producto producto = em.find(Producto.class, detalle.getProducto().getId());
+                // PESSIMISTIC_WRITE serializa la lectura+escritura del stock entre
+                // pedidos concurrentes para evitar vender más unidades de las disponibles.
+                Producto producto = em.find(Producto.class, detalle.getProducto().getId(),
+                        LockModeType.PESSIMISTIC_WRITE);
                 if (producto == null) {
                     throw new Exception("Producto no encontrado: " + detalle.getProducto().getId());
                 }
@@ -118,11 +147,12 @@ public class PedidoBO {
                 em.persist(direccion);
             }
 
-            // Pago: TARJETA y TRANSFERENCIA son pasarelas simuladas — se aprueban
-            // al confirmar el pedido. CONTRA_ENTREGA queda pendiente hasta la entrega.
-            EstadoPago estadoPago = (metodoPago == FormaPago.CONTRA_ENTREGA)
-                    ? EstadoPago.PENDIENTE
-                    : EstadoPago.APROBADO;
+            // Solo TARJETA se aprueba al instante (pasarela simulada).
+            // TRANSFERENCIA queda PENDIENTE hasta que se verifique el comprobante,
+            // y CONTRA_ENTREGA queda PENDIENTE hasta la entrega.
+            EstadoPago estadoPago = (metodoPago == FormaPago.TARJETA)
+                    ? EstadoPago.APROBADO
+                    : EstadoPago.PENDIENTE;
             Pago pago = new Pago(total, LocalDate.now(), metodoPago, estadoPago);
             Pedido pedido = new Pedido(
                     generarNumeroPedido(), LocalDate.now(), total, EstadoPedido.PENDIENTE,
@@ -154,6 +184,14 @@ public class PedidoBO {
         }
     }
 
+    /**
+     * Cambia el estado de un pedido (lo usa el admin desde el panel). Si el
+     * nuevo estado es CANCELADO, delega en {@link #cancelarPedido(int)} para
+     * que además se restaure el stock; cualquier otro cambio solo actualiza
+     * el estado.
+     *
+     * @throws Exception si el pedido no existe
+     */
     public Pedido actualizarEstado(int pedidoId, EstadoPedido nuevoEstado) throws Exception {
         Pedido pedido = pedidoDAO.obtenerPorId(pedidoId);
         if (pedido == null) {
@@ -167,6 +205,13 @@ public class PedidoBO {
         return pedidoDAO.actualizar(pedido);
     }
 
+    /**
+     * Cancela un pedido y devuelve a inventario las unidades que tenía
+     * reservadas (tanto el stock total como el stock por talla). No permite
+     * cancelar un pedido ya entregado; si ya estaba cancelado, no hace nada.
+     *
+     * @throws Exception si el pedido no existe o ya fue entregado
+     */
     public void cancelarPedido(int pedidoId) throws Exception {
         EntityManager em = JPAUtil.getEntityManager();
         try {
@@ -222,6 +267,11 @@ public class PedidoBO {
         }
     }
 
+    /**
+     * Arma el número de pedido visible para el cliente combinando un sello
+     * de tiempo con un fragmento de UUID, p. ej. "PED-1716123456789-A1B2C3D4".
+     * La combinación hace prácticamente imposible que dos pedidos colisionen.
+     */
     private String generarNumeroPedido() {
         return "PED-" + System.currentTimeMillis() + "-"
                 + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
@@ -240,6 +290,9 @@ public class PedidoBO {
     }
 
     public long contarPorEstado(String estado) {
+        if (estado == null || estado.isBlank() || "TODOS".equalsIgnoreCase(estado)) {
+            return pedidoDAO.contarTotal();
+        }
         return pedidoDAO.contarPorEstado(estado);
     }
 

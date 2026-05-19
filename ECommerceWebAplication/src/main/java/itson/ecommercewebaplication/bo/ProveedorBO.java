@@ -5,6 +5,17 @@ import itson.ecommercewebaplication.models.Proveedor;
 import java.util.List;
 import java.util.regex.Pattern;
 
+/**
+ * Lógica de negocio de proveedores. Valida los datos de contacto y, en
+ * particular, el formato del RFC mexicano y que sea único entre proveedores.
+ * Las bajas son lógicas (archivar) para conservar la referencia desde los
+ * productos que ese proveedor surtió.
+ *
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
+ */
 public class ProveedorBO {
 
     private final ProveedorDAO proveedorDAO = new ProveedorDAO();
@@ -62,6 +73,13 @@ public class ProveedorBO {
         proveedorDAO.reactivar(id);
     }
 
+    /**
+     * Comprueba los campos obligatorios del proveedor y el formato del RFC
+     * y del correo. Es el punto único de validación que reusan crear y
+     * actualizar.
+     *
+     * @throws Exception con un mensaje específico del primer campo inválido
+     */
     private void validar(Proveedor p) throws Exception {
         if (p.getNombre() == null || p.getNombre().isBlank())
             throw new Exception("El nombre del proveedor es requerido.");

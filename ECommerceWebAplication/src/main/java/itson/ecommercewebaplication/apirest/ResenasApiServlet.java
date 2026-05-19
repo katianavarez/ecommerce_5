@@ -15,8 +15,16 @@ import java.time.LocalDate;
 import java.util.*;
 
 /**
+ * Endpoint REST de reseñas. GET /api/resenas/producto/{id} es público y
+ * devuelve las reseñas de un producto junto con su promedio y total; POST
+ * /api/resenas requiere JWT y crea una reseña, pero antes valida dos reglas
+ * de negocio: que el cliente haya comprado el producto y que no haya dejado
+ * ya una reseña (responde 403 o 409 respectivamente).
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 @WebServlet(name = "ResenasApiServlet", urlPatterns = {"/api/resenas", "/api/resenas/*"})
 public class ResenasApiServlet extends HttpServlet {
@@ -65,7 +73,8 @@ public class ResenasApiServlet extends HttpServlet {
         } catch (NumberFormatException e) {
             JsonUtil.error(res, 400, "ID inválido.");
         } catch (Exception e) {
-            JsonUtil.error(res, 500, e.getMessage());
+            e.printStackTrace();
+            JsonUtil.error(res, 500, "Error interno del servidor.");
         }
     }
 
@@ -78,9 +87,9 @@ public class ResenasApiServlet extends HttpServlet {
 
         try {
             Map<?, ?> body       = JsonUtil.readBody(req, Map.class);
-            int productoId       = ((Number) body.get("productoId")).intValue();
-            int calificacion     = ((Number) body.get("calificacion")).intValue();
-            String comentario    = (String) body.get("comentario");
+            int productoId       = asInt(body.get("productoId"));
+            int calificacion     = asInt(body.get("calificacion"));
+            String comentario    = body.get("comentario") != null ? body.get("comentario").toString() : null;
 
             if (calificacion < 1 || calificacion > 5) {
                 JsonUtil.error(res, 400, "calificacion debe estar entre 1 y 5."); return;
@@ -94,23 +103,32 @@ public class ResenasApiServlet extends HttpServlet {
                 JsonUtil.error(res, 403, "Solo puedes reseñar productos que hayas comprado."); return;
             }
 
-            long compras  = pedidoBO.contarComprasDeProducto(usuarioId, productoId);
-            long dadas    = resenaBO.contarResenasPorUsuarioYProducto(usuarioId, productoId);
-            if (dadas >= compras) {
-                JsonUtil.error(res, 409, "Ya has dejado el máximo de reseñas permitidas para este producto."); return;
+            // Política: 1 reseña por producto por usuario (estándar e-commerce).
+            // El check anterior permitía N reseñas si había N compras, lo cual era
+            // poco intuitivo y poco común en plataformas reales.
+            long dadas = resenaBO.contarResenasPorUsuarioYProducto(usuarioId, productoId);
+            if (dadas > 0) {
+                JsonUtil.error(res, 409, "Ya has dejado una reseña para este producto.");
+                return;
             }
 
             Resenia nueva = new Resenia(calificacion, comentario, LocalDate.now(), producto, usuario);
             Resenia creada = resenaBO.crear(nueva);
 
-            res.setStatus(HttpServletResponse.SC_CREATED);
-            JsonUtil.ok(res, toMap(creada));
+            JsonUtil.created(res, toMap(creada));
 
-        } catch (NullPointerException e) {
-            JsonUtil.error(res, 400, "Faltan campos: productoId, calificacion.");
+        } catch (IllegalArgumentException | NullPointerException | ClassCastException e) {
+            JsonUtil.error(res, 400, "Faltan campos o tipos inválidos: productoId (int), calificacion (int 1-5).");
         } catch (Exception e) {
-            JsonUtil.error(res, 500, e.getMessage());
+            e.printStackTrace();
+            JsonUtil.error(res, 500, "Error interno del servidor.");
         }
+    }
+
+    private static int asInt(Object v) {
+        if (v == null) throw new IllegalArgumentException("valor requerido");
+        if (v instanceof Number) return ((Number) v).intValue();
+        return Integer.parseInt(v.toString().trim());
     }
 
     private Map<String, Object> toMap(Resenia r) {

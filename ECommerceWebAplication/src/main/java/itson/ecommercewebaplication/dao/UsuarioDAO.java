@@ -8,8 +8,18 @@ import jakarta.persistence.TypedQuery;
 import java.util.List;
 
 /**
+ * Acceso a datos de usuarios. Encapsula las consultas JPQL y el manejo del
+ * EntityManager para que el {@code UsuarioBO} trabaje con objetos sin
+ * preocuparse de transacciones ni conexiones.
+ * 
+ * Tanto eliminar como activar trabajan sobre la bandera {@code activo}
+ * (baja lógica), nunca se borra físicamente un usuario para no perder la
+ * trazabilidad de sus pedidos.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 public class UsuarioDAO {
 
@@ -32,6 +42,11 @@ public class UsuarioDAO {
         }
     }
 
+    /**
+     * Busca un usuario por su correo (que es único). Devuelve null si no
+     * existe ninguno, en lugar de propagar la excepción de JPA. Lo usan
+     * el login y la validación de correo duplicado en el registro.
+     */
     public Usuario obtenerPorCorreo(String correo) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
@@ -80,6 +95,7 @@ public class UsuarioDAO {
         }
     }
 
+    /** Baja lógica: marca al usuario como inactivo sin borrarlo de la BD. */
     public void eliminar(int id) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
@@ -100,6 +116,7 @@ public class UsuarioDAO {
         }
     }
 
+    /** Reactiva una cuenta dada de baja (vuelve a poner activo = true). */
     public void activar(int id) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
@@ -115,6 +132,25 @@ public class UsuarioDAO {
                 em.getTransaction().rollback();
             }
             throw e;
+        } finally {
+            em.close();
+        }
+    }
+
+    /** Cuenta usuarios filtrando por rol y opcionalmente por estado activo, sin cargar entidades. */
+    public long contarPorRol(String rolName, Boolean soloActivos) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            String jpql = "SELECT COUNT(u) FROM Usuario u WHERE u.rol = :rol";
+            if (soloActivos != null) {
+                jpql += " AND u.activo = :activo";
+            }
+            jakarta.persistence.TypedQuery<Long> q = em.createQuery(jpql, Long.class);
+            q.setParameter("rol", itson.ecommercewebaplication.enums.Rol.valueOf(rolName));
+            if (soloActivos != null) {
+                q.setParameter("activo", soloActivos);
+            }
+            return q.getSingleResult();
         } finally {
             em.close();
         }

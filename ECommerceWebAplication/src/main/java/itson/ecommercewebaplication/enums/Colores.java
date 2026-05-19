@@ -1,8 +1,15 @@
 package itson.ecommercewebaplication.enums;
 
 /**
+ * Paleta cerrada de colores que la tienda maneja para las prendas.
+ * Cada constante guarda su nombre legible (para mostrar en el catálogo y
+ * en los formularios del admin) y su valor hexadecimal (para las muestras
+ * de color en los CSS y en la ficha de producto).
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 public enum Colores {
     NEGRO("Negro", "#1A1A1A"),

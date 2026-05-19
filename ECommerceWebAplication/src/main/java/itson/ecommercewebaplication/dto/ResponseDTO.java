@@ -1,8 +1,14 @@
 package itson.ecommercewebaplication.dto;
 
 /**
+ * Envoltorio estándar para las respuestas JSON de la API REST. Mantiene una
+ * forma uniforme {@code {success, message, data}} para que el JS del cliente
+ * (api.js) pueda manejar errores y datos sin distinguir endpoint por endpoint.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 public class ResponseDTO {
 

@@ -38,8 +38,11 @@ async function request(method, path, { body, query, auth = true } = {}) {
         body: body !== undefined ? JSON.stringify(body) : undefined
     });
 
-    // 401 - token vencido o cuenta deshabilitada: limpiar sesión local.
-    if (res.status === 401) {
+    // 401 - solo limpiar sesión y mostrar "Sesión expirada" si HABÍA token previo
+    // (token vencido o cuenta deshabilitada). Si no hay token, era un intento de
+    // login fallido: dejamos que el flujo siga al manejo normal de errores para
+    // que el caller (login.js) vea el mensaje real del backend ("Credenciales inválidas").
+    if (res.status === 401 && getToken()) {
         clearSession();
         const err = new Error('Sesión expirada. Inicia sesión de nuevo.');
         err.status = 401;

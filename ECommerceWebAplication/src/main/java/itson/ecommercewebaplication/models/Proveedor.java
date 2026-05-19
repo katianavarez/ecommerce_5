@@ -9,6 +9,19 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.List;
 
+/**
+ * Proveedor de prendas. Lo administra el módulo {@code /admin/proveedores}
+ * y se asocia opcionalmente a cada producto (un producto puede no tener
+ * proveedor asignado si se gestiona de forma propia).
+ * 
+ * Usa baja lógica via {@code activo} para que los productos históricos
+ * mantengan su referencia aunque el proveedor ya no se use.
+ *
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
+ */
 @Entity
 @Table(name = "proveedores")
 public class Proveedor {

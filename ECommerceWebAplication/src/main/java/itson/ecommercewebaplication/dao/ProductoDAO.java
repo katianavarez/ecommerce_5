@@ -10,11 +10,23 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * Acceso a datos del catálogo de productos. Además del CRUD básico,
+ * resuelve las consultas de catálogo del cliente: listado público (solo
+ * activos), búsqueda por nombre, filtros combinados y paginación.
+ * 
+ * Varias consultas que necesitan cargar colecciones (categoría, tallas,
+ * stock por talla) se parten en dos queries con {@code JOIN FETCH}
+ * separados, porque Hibernate no permite hacer fetch de dos listas a la
+ * vez (MultipleBagFetchException).
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 public class ProductoDAO {
 
+    /** Listado público del catálogo: solo productos activos, más recientes primero. */
     public List<Producto> obtenerTodos() {
         EntityManager em = JPAUtil.getEntityManager();
         try {
@@ -126,6 +138,7 @@ public class ProductoDAO {
         }
     }
 
+    /** Búsqueda del catálogo por coincidencia parcial de nombre, sin distinguir mayúsculas. */
     public List<Producto> buscarPorNombre(String nombre) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
@@ -336,6 +349,7 @@ public class ProductoDAO {
         }
     }
 
+    /** Ajusta el stock total sumando el delta indicado (puede ser negativo). */
     public void actualizarStock(int productoId, int delta) {
         EntityManager em = JPAUtil.getEntityManager();
         try {

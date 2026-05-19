@@ -1,9 +1,3 @@
-<%-- 
-    Document   : carrito
-    Created on : 9 abr 2026, 3:56:26 a.m.
-    Author     : PC
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -12,6 +6,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <%@ include file="/WEB-INF/jspf/jwt-meta.jspf" %>
         <title>Carrito — Velour</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/styles/variables.css"/>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/styles/base.css"/>
@@ -158,5 +153,7 @@
         </footer>
 
         <script type="module" src="${pageContext.request.contextPath}/assets/js/carrito.js"></script>
+        <script type="module" src="${pageContext.request.contextPath}/assets/js/carrito-guest.js"></script>
+        <script type="module" src="${pageContext.request.contextPath}/assets/js/header-badge.js"></script>
     </body>
 </html>

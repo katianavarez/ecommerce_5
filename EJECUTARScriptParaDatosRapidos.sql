@@ -24,8 +24,9 @@ INSERT IGNORE INTO proveedores (nombre, rfc, telefono, correo, direccion, activo
     ('Confecciones Velour MX', 'CVM020202CD2', '6442345678', 'contacto@velour.mx', 'Blvd. Las Torres 250, Hermosillo, Sonora', 1),
     ('Importadora Moda Italia', 'IMI030303EF3', '5512345678', 'pedidos@modaitalia.mx', 'Polanco 45, CDMX', 1);
 
--- admin. contraseña: Admin1234
-INSERT IGNORE INTO usuarios (nombre, correo, contraseña, telefono, rol)
+-- admin. contraseña en claro: Admin1234 (UsuarioBO.login la rehashea con BCrypt
+-- automáticamente al primer login — ver bo/UsuarioBO.java líneas 36-41).
+INSERT IGNORE INTO usuarios (nombre, correo, contrasena, telefono, rol)
 VALUES (
     'Martin Bernal',
     'admin@gmail.com',
@@ -34,8 +35,8 @@ VALUES (
     'ADMINISTRADOR'
 );
 
--- cliente. contraseña: Cliente123
-INSERT IGNORE INTO usuarios (nombre, correo, contraseña, telefono, rol)
+-- cliente. contraseña en claro: Cliente123 (igual al admin: se rehashea al login).
+INSERT IGNORE INTO usuarios (nombre, correo, contrasena, telefono, rol)
 VALUES (
     'equipo 5',
     'equipo@gmail.com',
@@ -144,7 +145,24 @@ INSERT INTO productos (nombre, descripcion, precio, imagen_url, stock, color, ac
 
 ('Top Negro Escote Drapeado',
  'Top negro con escote drapeado asimétrico. Sofisticado y atrevido para noches especiales.',
- 560.00, 'assets/img/tops/topNegroEscoteDrapeado.png', 28, 'NEGRO', 1, @tops);
+ 560.00, 'assets/img/tops/topNegroEscoteDrapeado.png', 28, 'NEGRO', 1, @tops),
+
+-- ACCESORIOS (4) — no usan tallas
+('Bolsa Beige Asa Trenzada',
+ 'Bolsa de mano en beige con asa trenzada artesanal. Acabado en piel sintética premium.',
+ 750.00, 'assets/img/accesorios/bolsaBeigeAsaTrenzada.png', 15, 'BEIGE', 1, @accesorios),
+
+('Bolsa Negra Clásica',
+ 'Bolsa estructurada en negro de líneas limpias. Indispensable atemporal en el guardarropa.',
+ 850.00, 'assets/img/accesorios/bolsaNegra.png', 12, 'NEGRO', 1, @accesorios),
+
+('Bolsa Rosa Estructurada',
+ 'Bolsa estructurada en rosa palo con detalles dorados. Toque femenino y sofisticado.',
+ 920.00, 'assets/img/accesorios/bolsaRosaEstructurada.png', 8, 'ROSA', 1, @accesorios),
+
+('Bolsa Vino Grande',
+ 'Bolsa tipo tote en color vino. Espaciosa para llevar todo lo esencial con estilo.',
+ 980.00, 'assets/img/accesorios/bolsaVinoGrande.png', 10, 'VINO', 1, @accesorios);
 
 
 

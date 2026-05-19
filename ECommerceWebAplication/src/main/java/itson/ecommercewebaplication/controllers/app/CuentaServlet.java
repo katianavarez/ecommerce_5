@@ -1,6 +1,5 @@
 package itson.ecommercewebaplication.controllers.app;
 
-import itson.ecommercewebaplication.bo.PedidoBO;
 import itson.ecommercewebaplication.bo.UsuarioBO;
 import itson.ecommercewebaplication.dao.DireccionDAO;
 import itson.ecommercewebaplication.models.Direccion;
@@ -9,26 +8,37 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
-import java.util.List;
 
 /**
+ * Controlador del panel de cuenta del cliente. El GET carga el perfil y las
+ * direcciones (la sección "Mis pedidos" la llena cuenta.js por Fetch). El
+ * POST atiende todas las acciones del panel: actualizar perfil, cambiar
+ * contraseña y el ABC de direcciones (agregar, editar, eliminar y marcar
+ * principal). En cada operación sobre una dirección se verifica que sea del
+ * propio usuario antes de tocarla.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 @WebServlet(name = "CuentaServlet", urlPatterns = {"/app/cuenta"})
 public class CuentaServlet extends HttpServlet {
 
-    private PedidoBO pedidoBO;
     private UsuarioBO usuarioBO;
     private DireccionDAO direccionDAO;
 
     @Override
     public void init() throws ServletException {
-        pedidoBO = new PedidoBO();
         usuarioBO = new UsuarioBO();
         direccionDAO = new DireccionDAO();
     }
 
+    /**
+     * doGet sirve la página de cuenta. La sección "Mis pedidos" se llena
+     * vía Fetch desde cuenta.js (GET /api/pedidos/usuario/{id}).
+     * Aquí solo cargamos direcciones y datos de perfil.
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
@@ -43,34 +53,6 @@ public class CuentaServlet extends HttpServlet {
 
         req.setAttribute("usuario", usuario);
         req.setAttribute("direcciones", direccionDAO.obtenerPorUsuario(usuario.getId()));
-
-        List<itson.ecommercewebaplication.models.Pedido> todosPedidos
-                = pedidoBO.obtenerPorUsuario(usuario.getId());
-        int TAMANO_PEDIDOS = 5;
-        int totalPedidos = todosPedidos.size();
-        int totalPagPed = (totalPedidos == 0) ? 1
-                : (int) Math.ceil((double) totalPedidos / TAMANO_PEDIDOS);
-        String pPedStr = req.getParameter("paginaPedidos");
-        int paginaPedidos = 1;
-        if (pPedStr != null && !pPedStr.isBlank()) {
-            try {
-                paginaPedidos = Integer.parseInt(pPedStr);
-            } catch (NumberFormatException ignored) {
-            }
-        }
-        if (paginaPedidos < 1) {
-            paginaPedidos = 1;
-        }
-        if (paginaPedidos > totalPagPed) {
-            paginaPedidos = totalPagPed;
-        }
-        int desde = (paginaPedidos - 1) * TAMANO_PEDIDOS;
-        int hasta = Math.min(desde + TAMANO_PEDIDOS, totalPedidos);
-
-        req.setAttribute("pedidos", todosPedidos.subList(desde, hasta));
-        req.setAttribute("totalPedidos", totalPedidos);
-        req.setAttribute("totalPagPed", totalPagPed);
-        req.setAttribute("paginaPedidos", paginaPedidos);
 
         if (req.getParameter("seccion") != null) {
             req.setAttribute("seccionActiva", req.getParameter("seccion"));

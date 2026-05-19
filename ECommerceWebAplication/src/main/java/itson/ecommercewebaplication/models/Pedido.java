@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package itson.ecommercewebaplication.models;
 
 import itson.ecommercewebaplication.enums.EstadoPedido;
@@ -21,6 +17,20 @@ import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Pedido confirmado por un cliente. Reúne el usuario, la dirección de envío,
+ * el pago y la lista de detalles (productos comprados). Cada pedido tiene un
+ * número único legible ({@code numPedido}, ej. "PED-1716123456-A1B2C3D4")
+ * que se muestra al cliente en la pantalla de confirmación.
+ * 
+ * El estado se mueve dentro de {@link EstadoPedido} a lo largo del ciclo de
+ * vida (PENDIENTE → ENVIADO → ENTREGADO, o CANCELADO si se aborta antes).
+ *
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
+ */
 @Entity
 @Table(name = "pedidos")
 public class Pedido {

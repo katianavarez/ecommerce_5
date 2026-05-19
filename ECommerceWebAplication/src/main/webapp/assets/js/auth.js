@@ -57,3 +57,26 @@ export function isTokenExpired(token = getToken()) {
     if (!payload || !payload.exp) return true;
     return Date.now() >= payload.exp * 1000;
 }
+
+// Auto-hidratación desde el JSP 
+// Si el usuario inició sesión por el servlet web (no por la API), el servlet
+// pobla la sesión Java y deja el JWT en un <meta name="jwt-token">. Aquí lo
+// trasladamos a localStorage para que el resto del JS pueda consumir la API
+// con Authorization: Bearer.
+(function bootstrapFromMeta() {
+    try {
+        if (getToken()) return; // ya hay token en localStorage
+        const tokMeta = document.querySelector('meta[name="jwt-token"]');
+        if (!tokMeta || !tokMeta.content) return;
+        const get = (n) => document.querySelector(`meta[name="${n}"]`)?.content || null;
+        const id = parseInt(get('jwt-usuario-id') || '0', 10);
+        setSession({
+            token: tokMeta.content,
+            nombre: get('jwt-nombre'),
+            rol: get('jwt-rol'),
+            usuarioId: id > 0 ? id : null
+        });
+    } catch {
+        // Sin DOM disponible o storage bloqueado — silenciamos: la API simplemente fallará 401.
+    }
+})();

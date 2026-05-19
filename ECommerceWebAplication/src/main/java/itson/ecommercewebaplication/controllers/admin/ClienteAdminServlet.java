@@ -13,8 +13,16 @@ import java.util.stream.Collectors;
 import itson.ecommercewebaplication.util.PaginacionUtil;
 
 /**
+ * Controlador de la gestión de clientes en el panel admin. Lista las cuentas
+ * con rol CLIENTE (con tabs para activos, inactivos o todos) y permite darlas
+ * de baja o reactivarlas. Como salvaguarda anti-IDOR, antes de actuar verifica
+ * que la cuenta objetivo realmente tenga rol CLIENTE, de modo que no se pueda
+ * dar de baja a otro administrador manipulando el id.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 @WebServlet(name = "ClienteAdminServlet", urlPatterns = {"/admin/clientes"})
 public class ClienteAdminServlet extends HttpServlet {
@@ -80,12 +88,21 @@ public class ClienteAdminServlet extends HttpServlet {
         try {
             if ("eliminar".equals(accion)) {
                 int id = Integer.parseInt(req.getParameter("id"));
+                // Salvaguarda anti-IDOR: solo permitir acciones sobre cuentas con rol CLIENTE.
+                Usuario objetivo = usuarioBO.obtenerPorId(id);
+                if (objetivo == null || objetivo.getRol() != Rol.CLIENTE) {
+                    throw new Exception("Solo se pueden dar de baja cuentas con rol CLIENTE.");
+                }
                 usuarioBO.eliminar(id);
                 res.sendRedirect(req.getContextPath() + "/admin/clientes?success=deleted" + filtroQs);
                 return;
             }
             if ("reactivar".equals(accion)) {
                 int id = Integer.parseInt(req.getParameter("id"));
+                Usuario objetivo = usuarioBO.obtenerPorId(id);
+                if (objetivo == null || objetivo.getRol() != Rol.CLIENTE) {
+                    throw new Exception("Solo se pueden reactivar cuentas con rol CLIENTE.");
+                }
                 usuarioBO.activar(id);
                 res.sendRedirect(req.getContextPath() + "/admin/clientes?success=reactivated" + filtroQs);
                 return;

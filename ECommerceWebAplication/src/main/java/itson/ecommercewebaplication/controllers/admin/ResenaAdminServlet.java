@@ -8,8 +8,16 @@ import java.io.IOException;
 import itson.ecommercewebaplication.util.PaginacionUtil;
 
 /**
+ * Controlador de la moderación de reseñas en el panel admin. Lista todas las
+ * reseñas (o las de un producto concreto) de forma paginada y permite
+ * eliminar las inapropiadas, cumpliendo el requisito de moderación del
+ * Avance 3. La eliminación se hace por POST para evitar borrados accidentales
+ * vía GET.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 @WebServlet(name = "ResenaAdminServlet", urlPatterns = {"/admin/resenas"})
 public class ResenaAdminServlet extends HttpServlet {
@@ -53,7 +61,9 @@ public class ResenaAdminServlet extends HttpServlet {
             }
         } catch (Exception e) {
             req.setAttribute("error", "No se pudo eliminar la reseña. Intenta nuevamente.");
-            req.setAttribute("resenas", resenaBO.obtenerTodas());
+            // Reusar PaginacionUtil para que la JSP reciba los atributos esperados
+            // (paginaActual, totalPaginas, totalRegistros) y no se rompa la paginación.
+            PaginacionUtil.paginar(req, resenaBO.obtenerTodas(), "resenas", PaginacionUtil.TAMANO_ADMIN);
             req.getRequestDispatcher("/views/admin/admin-resenas.jsp").forward(req, res);
         }
     }

@@ -9,6 +9,19 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Controlador del CRUD de categorías en el panel admin. El GET resuelve si
+ * se muestra el formulario de alta/edición o el listado paginado; el POST
+ * atiende crear, actualizar y eliminar. Las validaciones de negocio (nombre
+ * único, no borrar categorías con productos) viven en {@code CategoriaBO};
+ * aquí solo se enrutan las peticiones y se redirige con mensajes de éxito o
+ * error.
+ *
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
+ */
 @WebServlet(name = "CategoriaAdminServlet", urlPatterns = {"/admin/categorias"})
 public class CategoriaAdminServlet extends HttpServlet {
 

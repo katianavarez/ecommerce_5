@@ -2,6 +2,7 @@ package itson.ecommercewebaplication.listeners;
 
 import itson.ecommercewebaplication.bo.CategoriaBO;
 import itson.ecommercewebaplication.models.Categoria;
+import itson.ecommercewebaplication.util.JPAUtil;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
@@ -9,8 +10,16 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * Listener del ciclo de vida de la aplicación. Al arrancar, siembra las
+ * categorías por defecto de la tienda si la tabla está vacía, de modo que
+ * el catálogo tenga estructura desde el primer despliegue sin depender del
+ * script seed. Al apagarse (o en un redeploy de Tomcat), cierra el
+ * EntityManagerFactory para liberar las conexiones a MySQL.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 @WebListener
 public class AppListener implements ServletContextListener {
@@ -46,6 +55,13 @@ public class AppListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        // nada
+        // Cerrar el EntityManagerFactory en shutdown / hot-redeploy de Tomcat
+        // para liberar el pool de conexiones y evitar leaks del classloader.
+        try {
+            JPAUtil.close();
+            System.out.println("[AppListener] EntityManagerFactory cerrado correctamente.");
+        } catch (Exception e) {
+            System.err.println("[AppListener] Error al cerrar EntityManagerFactory: " + e.getMessage());
+        }
     }
 }

@@ -1,5 +1,5 @@
 /*
- * product-detail.css — Detalle de producto — Velour
+ * product-detail.css Detalle de producto 
  */
 
 .detail-layout {
@@ -12,7 +12,7 @@
     align-items: start;
 }
 
-/* ─── GALERÍA ─────────────────────────────────────── */
+/*  GALERÍA  */
 
 .product-gallery {
     display: grid;
@@ -54,7 +54,7 @@
     top: var(--sp-4); left: var(--sp-4);
 }
 
-/* ─── INFO PRODUCTO ───────────────────────────────── */
+/*  INFO PRODUCTO  */
 
 .product-info {
     padding-top: var(--sp-4);
@@ -234,7 +234,7 @@
     gap: var(--sp-2);
 }
 
-/* ─── TABS (descripción/materiales) ───────────────── */
+/*  TABS (descripción/materiales)  */
 
 .product-tabs {
     max-width: var(--container-xl);
@@ -267,7 +267,7 @@
 .tab-content { display: none; padding: var(--sp-8) 0; }
 .tab-content--active { display: block; }
 
-/* ─── RESEÑAS ─────────────────────────────────────── */
+/*  RESEÑAS  */
 
 .reviews-list {
     display: flex;
@@ -291,7 +291,7 @@
 .review-date { font-size: var(--fs-xs); color: var(--text-muted); }
 .review-text { font-size: var(--fs-sm); color: var(--text-body); line-height: 1.7; }
 
-/* ─── RESPONSIVE ─────────────────────────────────── */
+/*  RESPONSIVE  */
 
 /* Tablet (769px – 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {

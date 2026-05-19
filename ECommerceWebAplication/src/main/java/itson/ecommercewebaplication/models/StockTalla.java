@@ -7,8 +7,15 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 
 /**
+ * Cantidad disponible de una prenda en una talla específica. Se guarda
+ * como tipo embebido dentro de la tabla {@code producto_stock_talla},
+ * que es lo que permite que un mismo Producto tenga inventario distinto
+ * por cada talla (ej. XS=2, M=10, L=4).
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 @Embeddable
 public class StockTalla {

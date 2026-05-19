@@ -1,9 +1,3 @@
-<%-- 
-    Document   : admin-resenas
-    Created on : 9 abr 2026, 4:33:44 a.m.
-    Author     : PC
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -118,7 +112,7 @@
                                         <div class="review-admin-card__header">
                                             <div class="review-admin-card__user">
                                                 <div class="review-admin-card__avatar">
-                                                    <c:out value="${resena.usuario.nombre.substring(0,1).toUpperCase()}"/>
+                                                    <c:out value="${empty resena.usuario.nombre ? '?' : resena.usuario.nombre.substring(0,1).toUpperCase()}"/>
                                                 </div>
                                                 <div>
                                                     <p class="review-admin-card__name"><c:out value="${resena.usuario.nombre}"/></p>

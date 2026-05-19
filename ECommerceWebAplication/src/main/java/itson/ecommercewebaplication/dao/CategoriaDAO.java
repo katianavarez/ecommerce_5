@@ -8,8 +8,15 @@ import jakarta.persistence.TypedQuery;
 import java.util.List;
 
 /**
+ * Acceso a datos de categorías. Aparte del CRUD que usa el panel admin,
+ * ofrece conteos de productos por categoría que sirven para mostrar
+ * cuántas prendas tiene cada una en los filtros del catálogo y en el
+ * dashboard.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 public class CategoriaDAO {
 
@@ -32,6 +39,10 @@ public class CategoriaDAO {
         }
     }
 
+    /**
+     * Busca una categoría por nombre sin distinguir mayúsculas. Devuelve
+     * null si no existe; se usa para evitar categorías duplicadas al crear.
+     */
     public Categoria obtenerPorNombre(String nombre) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
@@ -60,6 +71,11 @@ public class CategoriaDAO {
         }
     }
 
+    /**
+     * Devuelve un mapa {@code categoriaId -> número de productos activos}
+     * en una sola consulta agrupada, para no disparar un COUNT por cada
+     * categoría al pintar los filtros del catálogo.
+     */
     public java.util.Map<Integer, Long> contarProductosPorCategoria() {
         EntityManager em = JPAUtil.getEntityManager();
         try {

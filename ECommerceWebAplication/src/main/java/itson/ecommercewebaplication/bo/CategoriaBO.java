@@ -4,6 +4,16 @@ import itson.ecommercewebaplication.dao.CategoriaDAO;
 import itson.ecommercewebaplication.models.Categoria;
 import java.util.List;
 
+/**
+ * Lógica de negocio de categorías. Valida nombre obligatorio y único,
+ * recorta el largo máximo, y protege contra borrar una categoría que aún
+ * tenga productos asociados (lo que dejaría productos huérfanos).
+ *
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
+ */
 public class CategoriaBO {
 
     private final CategoriaDAO categoriaDAO = new CategoriaDAO();
@@ -51,6 +61,13 @@ public class CategoriaBO {
         return categoriaDAO.actualizar(categoria);
     }
 
+    /**
+     * Elimina una categoría solo si no tiene productos asociados. Si los
+     * tiene, lanza excepción pidiendo reasignarlos primero, para no romper
+     * las FK de los productos.
+     *
+     * @throws Exception si la categoría no existe o aún tiene productos
+     */
     public void eliminar(int id) throws Exception {
         Categoria existente = categoriaDAO.obtenerPorId(id);
         if (existente == null) {

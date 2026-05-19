@@ -19,8 +19,17 @@ import java.util.stream.Collectors;
 import itson.ecommercewebaplication.util.PaginacionUtil;
 
 /**
+ * Controlador del CRUD de productos en el panel admin. Es de los más densos
+ * porque arma un {@link Producto} a partir del formulario, incluyendo el
+ * stock por talla (si la prenda usa tallas) o el stock simple (si es un
+ * accesorio), además del color, la categoría y el proveedor opcional.
+ * Soporta listar con búsqueda, filtro por categoría y ordenamiento, crear,
+ * editar, archivar (soft delete) y reactivar.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 @WebServlet(name = "ProductoAdminServlet", urlPatterns = {"/admin/productos"})
 public class ProductoAdminServlet extends HttpServlet {
@@ -46,11 +55,8 @@ public class ProductoAdminServlet extends HttpServlet {
                 mostrarFormNuevo(req, res);
             } else if ("editar".equals(accion)) {
                 mostrarFormEditar(req, res);
-            } else if ("eliminar".equals(accion)) {
-                eliminar(req, res);
-            } else if ("reactivar".equals(accion)) {
-                reactivar(req, res);
             } else {
+                // eliminar/reactivar solo por POST para evitar CSRF vía <img src>.
                 listar(req, res);
             }
         } catch (Exception e) {
@@ -187,6 +193,12 @@ public class ProductoAdminServlet extends HttpServlet {
         res.sendRedirect(req.getContextPath() + "/admin/productos?success=deleted");
     }
 
+    /**
+     * Construye un Producto a partir de los parámetros del formulario.
+     * Recorre las tallas posibles leyendo un campo {@code stock_<TALLA>} por
+     * cada una; si no se capturó ninguna talla, cae al campo de stock simple
+     * (caso de los accesorios). Resuelve también color, categoría y proveedor.
+     */
     private Producto buildProductoFromRequest(HttpServletRequest req) {
         String nombre = req.getParameter("nombre");
         String descripcion = req.getParameter("descripcion");

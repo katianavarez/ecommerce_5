@@ -1,9 +1,3 @@
-<%-- 
-    Document   : error
-    Created on : 5 abr 2026, 6:45:46 p.m.
-    Author     : PC
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8" isErrorPage="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>

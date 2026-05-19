@@ -1,9 +1,3 @@
-<%-- 
-    Document   : login
-    Created on : 5 abr 2026, 7:53:13 p.m.
-    Author     : PC
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -39,6 +33,16 @@
                         <c:if test="${not empty param.registered}">
                             <div style="background:#d4edda;border:1px solid #c3e6cb;color:#155724;padding:var(--sp-3) var(--sp-4);border-radius:var(--r-md);margin-bottom:var(--sp-4);font-size:var(--fs-sm);">
                                 ✓ Cuenta creada exitosamente. Ya puedes iniciar sesión.
+                            </div>
+                        </c:if>
+
+                        <c:if test="${not empty param.logout}">
+                            <%-- Tras logout limpiamos cualquier JWT residual en localStorage --%>
+                            <script>
+                                try { localStorage.clear(); } catch (_) {}
+                            </script>
+                            <div style="background:#e2e3e5;border:1px solid #d6d8db;color:#383d41;padding:var(--sp-3) var(--sp-4);border-radius:var(--r-md);margin-bottom:var(--sp-4);font-size:var(--fs-sm);">
+                                Sesión cerrada correctamente.
                             </div>
                         </c:if>
 

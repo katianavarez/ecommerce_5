@@ -19,6 +19,22 @@ import jakarta.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Prenda o accesorio del catálogo. Concentra la información que se muestra
+ * tanto en la lista del cliente como en el panel admin: nombre, descripción,
+ * precio, imagen, categoría, proveedor opcional, color y stock.
+ * 
+ * El inventario se maneja de dos formas según el tipo de producto: las
+ * prendas con tallas usan {@code stockPorTalla} (una entrada por talla),
+ * mientras que los accesorios sin talla guardan el inventario únicamente
+ * en el campo {@code stock}. {@link #recalcularStockTotal()} mantiene la
+ * suma consistente con las cantidades por talla.
+ *
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
+ */
 @Entity
 @Table(name = "productos")
 public class Producto {
@@ -36,7 +52,10 @@ public class Producto {
     @Column(nullable = false)
     private double precio;
 
-    @Column(name = "imagen_url", nullable = false)
+    // length=2048: las URLs de imágenes externas (ej. CDNs con tokens, búsquedas
+    // de Brave/Google) pueden pasar fácilmente los 255 chars del default de
+    // Hibernate y romper el INSERT con "Data too long for column".
+    @Column(name = "imagen_url", nullable = false, length = 2048)
     private String imagenURL;
 
     @Column(nullable = false)
@@ -221,6 +240,12 @@ public class Producto {
         return c != null ? c.getHex() : "#CCCCCC";
     }
 
+    /**
+     * Recalcula el stock total como la suma del stock por talla y, de paso,
+     * regenera la lista de tallas disponibles excluyendo aquellas con cero
+     * unidades. Solo aplica si el producto maneja tallas; para accesorios
+     * se conserva el {@code stock} tal cual.
+     */
     public void recalcularStockTotal() {
         if (stockPorTalla != null && !stockPorTalla.isEmpty()) {
             this.stock = stockPorTalla.stream().mapToInt(StockTalla::getCantidad).sum();
@@ -234,6 +259,11 @@ public class Producto {
         }
     }
 
+    /**
+     * Devuelve la cantidad disponible de una talla concreta, o 0 si el
+     * producto no la maneja. Lo usan las JSP de catálogo y producto-detalle
+     * para mostrar "Agotado" en las tallas sin existencia.
+     */
     @Transient
     public int getStockDeTalla(Tallas talla) {
         if (stockPorTalla == null) {

@@ -9,6 +9,19 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Línea individual de un carrito o pedido: producto, cantidad, talla
+ * (si aplica) y el precio que tenía la prenda en el momento de agregarla.
+ * 
+ * Guardamos el precio aquí en lugar de leerlo siempre desde Producto para
+ * que el historial de pedidos respete el precio al que el cliente compró,
+ * aunque después el admin lo cambie en el catálogo.
+ *
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
+ */
 @Entity
 @Table(name = "detalle_pedido")
 public class DetallePedido {

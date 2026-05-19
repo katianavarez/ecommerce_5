@@ -1,9 +1,3 @@
-<%-- 
-    Document   : registro
-    Created on : 5 abr 2026, 6:45:12 p.m.
-    Author     : PC
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>

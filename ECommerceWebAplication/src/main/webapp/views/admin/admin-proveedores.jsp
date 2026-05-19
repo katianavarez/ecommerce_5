@@ -147,7 +147,8 @@
                                                         <c:choose>
                                                             <c:when test="${prov.activo}">
                                                                 <form method="POST" action="${pageContext.request.contextPath}/admin/proveedores" style="display:inline;"
-                                                                      onsubmit="return confirm('¿Archivar «${prov.nombre}»? El proveedor quedará oculto pero los productos asociados se conservan.');">
+                                                                      data-nombre="<c:out value='${prov.nombre}'/>"
+                                                                      onsubmit="return confirm('¿Archivar «' + (this.dataset.nombre || '') + '»? El proveedor quedará oculto pero los productos asociados se conservan.');">
                                                                     <input type="hidden" name="accion" value="archivar">
                                                                     <input type="hidden" name="id" value="${prov.id}">
                                                                     <button type="submit" class="admin-action-btn admin-action-btn--danger" title="Archivar">
@@ -157,7 +158,8 @@
                                                             </c:when>
                                                             <c:otherwise>
                                                                 <form method="POST" action="${pageContext.request.contextPath}/admin/proveedores" style="display:inline;"
-                                                                      onsubmit="return confirm('¿Reactivar «${prov.nombre}»?');">
+                                                                      data-nombre="<c:out value='${prov.nombre}'/>"
+                                                                      onsubmit="return confirm('¿Reactivar «' + (this.dataset.nombre || '') + '»?');">
                                                                     <input type="hidden" name="accion" value="reactivar">
                                                                     <input type="hidden" name="id" value="${prov.id}">
                                                                     <button type="submit" class="admin-action-btn" title="Reactivar" style="color:var(--color-success);">

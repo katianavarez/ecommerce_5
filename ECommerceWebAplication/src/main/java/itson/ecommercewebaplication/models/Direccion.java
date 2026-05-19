@@ -9,6 +9,18 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Dirección de envío. Un usuario puede tener varias guardadas en su cuenta,
+ * pero solo una marcada como principal (la que se selecciona por defecto
+ * en el checkout). El FK al usuario es nullable porque las direcciones que
+ * el cliente teclea en el checkout sin guardarlas en su perfil también se
+ * persisten aquí, asociadas al pedido pero no al usuario.
+ *
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
+ */
 @Entity
 @Table(name = "direcciones")
 public class Direccion {
@@ -124,6 +136,11 @@ public class Direccion {
         this.principal = principal;
     }
 
+    /**
+     * Concatena los cuatro campos en una sola línea legible para mostrar
+     * en las tarjetas de "Mis direcciones" del panel de cuenta y en el
+     * resumen del pedido confirmado.
+     */
     public String getResumen() {
         return calle + ", " + ciudad + ", " + estado + " " + codigoPostal;
     }

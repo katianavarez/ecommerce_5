@@ -14,8 +14,17 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Controlador de la gestión de pedidos en el panel admin. Permite listar con
+ * filtros (estado, búsqueda, orden), ver el detalle de un pedido y cambiar su
+ * estado o cancelarlo. Antes de cambiar el estado compara el estado que vio el
+ * admin contra el actual en BD; si otro admin ya lo movió, redirige con un
+ * aviso de "stale" para no pisar el cambio. Manda cabeceras anti-caché para
+ * que el navegador no muestre un estado desactualizado al volver atrás.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 @WebServlet(name = "PedidoAdminServlet", urlPatterns = {"/admin/pedidos"})
 public class PedidoAdminServlet extends HttpServlet {
@@ -58,7 +67,13 @@ public class PedidoAdminServlet extends HttpServlet {
         try {
             if ("actualizarEstado".equals(accion)) {
                 int id = Integer.parseInt(req.getParameter("id"));
-                EstadoPedido nuevoEstado = EstadoPedido.valueOf(req.getParameter("nuevoEstado"));
+                String nuevoEstadoStr = req.getParameter("nuevoEstado");
+                EstadoPedido nuevoEstado;
+                try {
+                    nuevoEstado = EstadoPedido.valueOf(nuevoEstadoStr);
+                } catch (IllegalArgumentException | NullPointerException ex) {
+                    throw new Exception("Estado de pedido inválido: " + nuevoEstadoStr);
+                }
                 String estadoActualStr = req.getParameter("estadoActual");
 
                 Pedido pedidoActual = pedidoBO.obtenerPorId(id);

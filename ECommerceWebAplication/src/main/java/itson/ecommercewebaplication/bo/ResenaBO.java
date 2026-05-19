@@ -5,8 +5,18 @@ import itson.ecommercewebaplication.models.Resenia;
 import java.util.List;
 
 /**
+ * Lógica de negocio de reseñas. Valida las reseñas antes de guardarlas
+ * (calificación entre 1 y 5, comentario y referencias obligatorias) y
+ * calcula el promedio de un producto para mostrarlo en su ficha.
+ * 
+ * La regla de "una reseña por usuario y producto" y la de "solo reseña
+ * quien compró" se aplican en el servlet de la API, que consulta los
+ * conteos que expone esta clase antes de invocar {@link #crear(Resenia)}.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 public class ResenaBO {
 
@@ -28,6 +38,12 @@ public class ResenaBO {
         return resenaDAO.obtenerPorUsuario(usuarioId);
     }
 
+    /**
+     * Valida y guarda una reseña. Exige calificación entre 1 y 5, comentario
+     * no vacío y que vengan tanto el usuario como el producto.
+     *
+     * @throws Exception si la calificación está fuera de rango o falta algún dato
+     */
     public Resenia crear(Resenia resena) throws Exception {
         if (resena.getCalificacion() < 1 || resena.getCalificacion() > 5) {
             throw new Exception("La calificación debe estar entre 1 y 5");
@@ -51,6 +67,7 @@ public class ResenaBO {
         resenaDAO.eliminar(id);
     }
 
+    /** Promedio de calificaciones de un producto, o 0 si aún no tiene reseñas. */
     public double calcularPromedio(int productoId) {
         List<Resenia> resenas = resenaDAO.obtenerPorProducto(productoId);
         if (resenas.isEmpty()) {

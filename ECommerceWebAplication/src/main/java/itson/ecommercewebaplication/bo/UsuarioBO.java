@@ -10,40 +10,60 @@ import jakarta.persistence.EntityManager;
 import java.util.List;
 
 /**
+ * Lógica de negocio de usuarios: login, registro, edición de perfil, cambio
+ * de contraseña y gestión de cuentas (alta/baja lógica) que usa el admin.
+ * Aquí viven las validaciones y reglas que no deben quedar en los servlets,
+ * como el formato del correo, la longitud mínima de contraseña y el hasheo
+ * con BCrypt antes de tocar la BD.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 public class UsuarioBO {
 
     private final UsuarioDAO usuarioDAO = new UsuarioDAO();
 
+    /**
+     * Valida las credenciales y devuelve el usuario si son correctas.
+     * Usa un mensaje de error idéntico para correo inexistente y contraseña
+     * incorrecta, de modo que un atacante no pueda deducir qué correos están
+     * registrados. Si la contraseña aún está en texto plano (datos del seed),
+     * la re-hashea con BCrypt en este primer login. El estado de la cuenta
+     * (activa/inactiva) solo se revela después de validar la contraseña.
+     *
+     * @throws Exception si las credenciales son inválidas o la cuenta está dada de baja
+     */
     public Usuario login(String correo, String contrasena) throws Exception {
-        if (correo == null || correo.isBlank()) {
-            throw new Exception("El correo es requerido.");
-        }
-        if (contrasena == null || contrasena.isBlank()) {
-            throw new Exception("La contraseña es requerida.");
+        // Mensaje uniforme para no permitir enumeración de cuentas.
+        final String CREDENCIALES_INVALIDAS = "Credenciales inválidas.";
+
+        if (correo == null || correo.isBlank()
+                || contrasena == null || contrasena.isBlank()) {
+            throw new Exception(CREDENCIALES_INVALIDAS);
         }
         Usuario u = usuarioDAO.obtenerPorCorreo(correo);
         if (u == null) {
-            throw new Exception("El correo o la contraseña son incorrectos.");
+            throw new Exception(CREDENCIALES_INVALIDAS);
         }
-        if (!u.isActivo()) {
-            throw new Exception("Esta cuenta ha sido dada de baja. Contacta al administrador.");
-        }
-        String stored = u.getContraseña();
+        String stored = u.getContrasena();
         boolean ok;
         if (PasswordUtil.esHash(stored)) {
             ok = PasswordUtil.verify(contrasena, stored);
         } else {
             ok = stored != null && stored.equals(contrasena);
             if (ok) {
-                u.setContraseña(PasswordUtil.hash(contrasena));
+                u.setContrasena(PasswordUtil.hash(contrasena));
                 usuarioDAO.actualizar(u);
             }
         }
         if (!ok) {
-            throw new Exception("El correo o la contraseña son incorrectos.");
+            throw new Exception(CREDENCIALES_INVALIDAS);
+        }
+        // Solo después de validar credenciales se revela el estado de la cuenta.
+        if (!u.isActivo()) {
+            throw new Exception("Esta cuenta ha sido dada de baja. Contacta al administrador.");
         }
         return u;
     }
@@ -52,6 +72,14 @@ public class UsuarioBO {
         return u != null && u.getRol() == Rol.ADMINISTRADOR;
     }
 
+    /**
+     * Registra un cliente nuevo junto con su dirección principal. Valida los
+     * campos obligatorios, el formato de correo y que no exista otro usuario
+     * con el mismo correo. La contraseña se hashea antes de persistir, y el
+     * usuario y su dirección se guardan en una sola transacción.
+     *
+     * @throws Exception si falta algún dato, el correo ya existe o falla la persistencia
+     */
     public Usuario registrar(Usuario usuario, Direccion direccion) throws Exception {
         if (usuario.getNombre() == null || usuario.getNombre().isBlank()) {
             throw new Exception("El nombre completo es requerido.");
@@ -62,10 +90,10 @@ public class UsuarioBO {
         if (!usuario.getCorreo().matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
             throw new Exception("El formato del correo no es válido.");
         }
-        if (usuario.getContraseña() == null || usuario.getContraseña().isBlank()) {
+        if (usuario.getContrasena() == null || usuario.getContrasena().isBlank()) {
             throw new Exception("La contraseña es requerida.");
         }
-        if (usuario.getContraseña().length() < 8) {
+        if (usuario.getContrasena().length() < 8) {
             throw new Exception("La contraseña debe tener al menos 8 caracteres.");
         }
         if (direccion == null
@@ -81,7 +109,7 @@ public class UsuarioBO {
         if (usuario.getRol() == null) {
             usuario.setRol(Rol.CLIENTE);
         }
-        usuario.setContraseña(PasswordUtil.hash(usuario.getContraseña()));
+        usuario.setContrasena(PasswordUtil.hash(usuario.getContrasena()));
 
         EntityManager em = JPAUtil.getEntityManager();
         try {
@@ -117,6 +145,13 @@ public class UsuarioBO {
         return usuarioDAO.actualizar(usuario);
     }
 
+    /**
+     * Cambia la contraseña verificando primero la actual. Exige que la nueva
+     * tenga al menos 8 caracteres y que coincida con la confirmación, y la
+     * guarda hasheada con BCrypt.
+     *
+     * @throws Exception si la contraseña actual no coincide o la nueva no cumple las reglas
+     */
     public void cambiarContrasena(int usuarioId, String contrasenaActual,
             String nuevaContrasena, String confirmar) throws Exception {
         if (contrasenaActual == null || contrasenaActual.isBlank()) {
@@ -137,7 +172,7 @@ public class UsuarioBO {
             throw new Exception("Usuario no encontrado.");
         }
 
-        String stored = usuario.getContraseña();
+        String stored = usuario.getContrasena();
         boolean ok;
         if (PasswordUtil.esHash(stored)) {
             ok = PasswordUtil.verify(contrasenaActual, stored);
@@ -148,7 +183,7 @@ public class UsuarioBO {
             throw new Exception("La contraseña actual no es correcta.");
         }
 
-        usuario.setContraseña(PasswordUtil.hash(nuevaContrasena));
+        usuario.setContrasena(PasswordUtil.hash(nuevaContrasena));
         usuarioDAO.actualizar(usuario);
     }
 
@@ -183,5 +218,14 @@ public class UsuarioBO {
             throw new Exception("Usuario no encontrado.");
         }
         usuarioDAO.activar(id);
+    }
+
+    /** Conteo eficiente para el dashboard sin traer la lista completa a memoria. */
+    public long contarClientes() {
+        return usuarioDAO.contarPorRol(Rol.CLIENTE.name(), null);
+    }
+
+    public long contarClientesActivos() {
+        return usuarioDAO.contarPorRol(Rol.CLIENTE.name(), Boolean.TRUE);
     }
 }

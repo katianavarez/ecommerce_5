@@ -1,5 +1,6 @@
 package itson.ecommercewebaplication.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import itson.ecommercewebaplication.enums.Rol;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -15,6 +16,20 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.util.List;
 
+/**
+ * Entidad que representa a un usuario del sistema, ya sea cliente o
+ * administrador. Mantiene los datos de identidad (nombre, correo, teléfono),
+ * el rol que define el acceso al panel admin y las relaciones con sus
+ * pedidos, carrito, dirección principal y reseñas.
+ * 
+ * El campo {@code activo} permite hacer baja lógica (soft delete) sin
+ * romper las FK históricas que apuntan a este usuario desde Pedido.
+ *
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
+ */
 @Entity
 @Table(name = "usuarios")
 public class Usuario {
@@ -29,8 +44,13 @@ public class Usuario {
     @Column(nullable = false, unique = true)
     private String correo;
 
-    @Column(nullable = false)
-    private String contraseña;
+    // El campo Java se llama 'contrasena' sin ñ y la columna SQL también es ASCII puro
+    // para evitar problemas de portabilidad con MySQL (charset/collation y lower_case_table_names).
+    // @JsonIgnore: defensa en profundidad para que el hash BCrypt nunca pueda salir
+    // serializado al cliente aunque por error se devuelva un Usuario entero en una respuesta.
+    @JsonIgnore
+    @Column(name = "contrasena", nullable = false)
+    private String contrasena;
 
     // Teléfono opcional: el registro permite dejarlo en blanco.
     @Column(nullable = true)
@@ -59,11 +79,11 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(int id, String nombre, String correo, String contraseña, String telefono, Rol rol, Direccion direccion, List<Pedido> historialPedidos, Carrito carrito, List<Resenia> resenias) {
+    public Usuario(int id, String nombre, String correo, String contrasena, String telefono, Rol rol, Direccion direccion, List<Pedido> historialPedidos, Carrito carrito, List<Resenia> resenias) {
         this.id = id;
         this.nombre = nombre;
         this.correo = correo;
-        this.contraseña = contraseña;
+        this.contrasena = contrasena;
         this.telefono = telefono;
         this.rol = rol;
         this.direccion = direccion;
@@ -72,10 +92,10 @@ public class Usuario {
         this.resenias = resenias;
     }
 
-    public Usuario(String nombre, String correo, String contraseña, String telefono, Rol rol, Direccion direccion, List<Pedido> historialPedidos, Carrito carrito, List<Resenia> resenias) {
+    public Usuario(String nombre, String correo, String contrasena, String telefono, Rol rol, Direccion direccion, List<Pedido> historialPedidos, Carrito carrito, List<Resenia> resenias) {
         this.nombre = nombre;
         this.correo = correo;
-        this.contraseña = contraseña;
+        this.contrasena = contrasena;
         this.telefono = telefono;
         this.rol = rol;
         this.direccion = direccion;
@@ -108,12 +128,12 @@ public class Usuario {
         this.correo = correo;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public String getTelefono() {

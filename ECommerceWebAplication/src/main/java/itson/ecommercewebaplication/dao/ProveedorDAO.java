@@ -5,6 +5,17 @@ import itson.ecommercewebaplication.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import java.util.List;
 
+/**
+ * Acceso a datos de proveedores para el módulo {@code /admin/proveedores}.
+ * Distingue entre listar todos (incluyendo archivados, para el panel) y
+ * listar solo activos (para el dropdown del formulario de producto), y usa
+ * baja lógica vía {@code archivar} en lugar de borrar físicamente.
+ *
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
+ */
 public class ProveedorDAO {
 
     public List<Proveedor> obtenerTodos() {

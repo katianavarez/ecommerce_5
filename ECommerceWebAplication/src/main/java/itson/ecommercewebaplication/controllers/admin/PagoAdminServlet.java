@@ -17,6 +17,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Controlador del historial de pagos en el panel admin (requisito 5.3).
+ * Muestra los pedidos que tienen pago asociado y permite filtrarlos por
+ * estado del pago, método y una búsqueda por número de pedido o cliente,
+ * además de los conteos por estado que alimentan los tabs. Es de solo
+ * lectura: la consulta del historial, sin operaciones de escritura.
+ *
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
+ */
 @WebServlet(name = "PagoAdminServlet", urlPatterns = {"/admin/pagos"})
 public class PagoAdminServlet extends HttpServlet {
 

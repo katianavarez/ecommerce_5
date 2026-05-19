@@ -8,11 +8,22 @@ import jakarta.persistence.TypedQuery;
 import java.util.List;
 
 /**
+ * Acceso a datos de pedidos. Cubre el historial del cliente, los listados
+ * y filtros del panel admin, y las consultas agregadas que alimentan el
+ * dashboard (ventas del mes, productos más vendidos, conteos por estado).
+ * 
+ * Las consultas que recorren los detalles de cada pedido usan
+ * {@code JOIN FETCH} para traer todo en una pasada y evitar el problema
+ * de las N+1 queries.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 public class PedidoDAO {
 
+    /** Lista todos los pedidos (uso del admin), del más reciente al más antiguo. */
     public List<Pedido> obtenerTodos() {
         EntityManager em = JPAUtil.getEntityManager();
         try {
@@ -187,6 +198,17 @@ public class PedidoDAO {
             }
 
             return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    /** Total de pedidos para conteos del dashboard. */
+    public long contarTotal() {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            return em.createQuery("SELECT COUNT(p) FROM Pedido p", Long.class)
+                    .getSingleResult();
         } finally {
             em.close();
         }

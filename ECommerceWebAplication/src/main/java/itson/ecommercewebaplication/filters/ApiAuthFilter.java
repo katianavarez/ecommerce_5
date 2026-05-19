@@ -10,8 +10,18 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * Filtro de autenticación de toda la API REST ({@code /api/*}). Deja pasar
+ * sin token los endpoints públicos (login, registro, logout, el catálogo en
+ * GET y las reseñas por producto) y exige un JWT válido en el header
+ * {@code Authorization: Bearer ...} para el resto. Cuando el token es válido,
+ * resuelve el usuario contra BD, comprueba que siga activo y lo deja en los
+ * atributos de la request para que cada servlet sepa quién está pidiendo.
+ * También responde el preflight CORS (OPTIONS).
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 @WebFilter(filterName = "ApiAuthFilter", urlPatterns = {"/api/*"})
 public class ApiAuthFilter implements Filter {
@@ -24,20 +34,39 @@ public class ApiAuthFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        String uri = req.getRequestURI();
-        boolean getPublico = "GET".equalsIgnoreCase(req.getMethod())
-                && (uri.contains("/api/productos")
-                || uri.contains("/api/resenas/producto"));
-        if (uri.endsWith("/api/auth/login")
-                || uri.endsWith("/api/auth/registro")
-                || uri.endsWith("/api/auth/logout")
-                || getPublico) {
-            chain.doFilter(request, response);
+        String servletPath = req.getServletPath();
+        String pathInfo = req.getPathInfo() != null ? req.getPathInfo() : "";
+        String method = req.getMethod();
+
+        // CORS preflight: responder con headers explícitos y terminar.
+        if ("OPTIONS".equalsIgnoreCase(method)) {
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+            res.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
+            res.setHeader("Access-Control-Max-Age", "3600");
+            res.setStatus(HttpServletResponse.SC_OK);
             return;
         }
 
-        if ("OPTIONS".equalsIgnoreCase(req.getMethod())) {
-            res.setStatus(HttpServletResponse.SC_OK);
+        // Endpoints públicos: match exacto sobre servletPath + método (no usar contains)
+        // para evitar bypass tipo /api/pedidos?x=/api/productos.
+        boolean publicEndpoint = false;
+        if ("/api/auth/login".equals(servletPath)
+                || "/api/auth/registro".equals(servletPath)
+                || "/api/auth/logout".equals(servletPath)) {
+            publicEndpoint = true;
+        }
+        // Catálogo lectura pública: GET /api/productos y /api/productos/{id}
+        if ("GET".equalsIgnoreCase(method) && "/api/productos".equals(servletPath)) {
+            publicEndpoint = true;
+        }
+        // Reseñas por producto: GET /api/resenas/producto/{id}
+        if ("GET".equalsIgnoreCase(method) && "/api/resenas".equals(servletPath)
+                && pathInfo.startsWith("/producto/")) {
+            publicEndpoint = true;
+        }
+
+        if (publicEndpoint) {
             chain.doFilter(request, response);
             return;
         }
@@ -46,6 +75,7 @@ public class ApiAuthFilter implements Filter {
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             res.setContentType("application/json");
+            res.setCharacterEncoding("UTF-8");
             res.getWriter().write("{\"success\":false,\"message\":\"Token requerido\"}");
             return;
         }
@@ -60,6 +90,7 @@ public class ApiAuthFilter implements Filter {
             if (usuario == null || !usuario.isActivo()) {
                 res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 res.setContentType("application/json");
+                res.setCharacterEncoding("UTF-8");
                 res.getWriter().write("{\"success\":false,\"message\":\"Cuenta no disponible\"}");
                 return;
             }
@@ -72,6 +103,7 @@ public class ApiAuthFilter implements Filter {
         } catch (Exception e) {
             res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             res.setContentType("application/json");
+            res.setCharacterEncoding("UTF-8");
             res.getWriter().write("{\"success\":false,\"message\":\"Token inválido o expirado\"}");
         }
     }

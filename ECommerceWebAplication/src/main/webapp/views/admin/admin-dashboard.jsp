@@ -1,9 +1,3 @@
-<%-- 
-    Document   : admin-dashboard
-    Created on : 9 abr 2026, 4:23:40 a.m.
-    Author     : PC
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>

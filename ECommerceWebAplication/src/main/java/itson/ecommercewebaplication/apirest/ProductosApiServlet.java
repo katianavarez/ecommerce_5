@@ -11,8 +11,17 @@ import java.io.IOException;
 import java.util.*;
 
 /**
+ * Endpoint REST público del catálogo. Expone GET /api/productos (listado con
+ * filtros opcionales por categoría, talla, color, precio máximo y stock, más
+ * paginación) y GET /api/productos/{id} (detalle de un producto). Es el que
+ * consume el JavaScript del catálogo y de la ficha de producto vía Fetch.
+ * Las entidades se mapean a Map antes de serializar para entregar solo los
+ * campos necesarios y evitar problemas de lazy-loading.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 @WebServlet(name = "ProductosApiServlet", urlPatterns = {"/api/productos", "/api/productos/*"})
 public class ProductosApiServlet extends HttpServlet {
@@ -128,7 +137,8 @@ public class ProductosApiServlet extends HttpServlet {
         } catch (NumberFormatException e) {
             JsonUtil.error(res, 400, "ID o parámetro numérico inválido.");
         } catch (Exception e) {
-            JsonUtil.error(res, 500, "Error interno: " + e.getMessage());
+            e.printStackTrace();
+            JsonUtil.error(res, 500, "Error interno del servidor.");
         }
     }
 

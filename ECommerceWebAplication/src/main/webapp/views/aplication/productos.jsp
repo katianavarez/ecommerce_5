@@ -1,9 +1,3 @@
-<%-- 
-    Document   : productos
-    Created on : 9 abr 2026, 3:48:47 a.m.
-    Author     : PC
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -12,6 +6,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <%@ include file="/WEB-INF/jspf/jwt-meta.jspf" %>
         <title>Colección — Velour</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/styles/variables.css"/>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/styles/base.css"/>
@@ -82,10 +77,37 @@
         </header>
 
         <main>
+            <%-- Barra mobile: búsqueda + botón filtros (visible solo en mobile vía CSS). --%>
+            <div class="shop-mobile-bar" style="max-width:var(--container-xl);margin:0 auto;padding:var(--sp-4) var(--sp-4) 0;">
+                <form class="shop-mobile-search" role="search" method="GET"
+                      action="${pageContext.request.contextPath}/app/productos">
+                    <input type="search" name="busqueda"
+                           placeholder="Buscar prendas..."
+                           value="<c:out value='${busqueda}'/>">
+                    <button type="submit" aria-label="Buscar">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                            <circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/>
+                        </svg>
+                    </button>
+                </form>
+                <button type="button" class="shop-filter-toggle" id="filtersToggleBtn"
+                        aria-label="Abrir filtros" aria-expanded="false" aria-controls="filtersSidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <line x1="4" y1="6" x2="20" y2="6"/>
+                        <line x1="7" y1="12" x2="17" y2="12"/>
+                        <line x1="10" y1="18" x2="14" y2="18"/>
+                    </svg>
+                    Filtros
+                </button>
+            </div>
+
+            <div class="filters-overlay" id="filtersOverlay"></div>
+
             <div class="shop-layout">
                 <!-- Sidebar filtros -->
                 <%-- ── SIDEBAR FILTROS ─────────────────────────────── --%>
-                <aside class="filters-sidebar">
+                <aside class="filters-sidebar" id="filtersSidebar">
+                    <button type="button" class="filters-sidebar__close" id="filtersCloseBtn" aria-label="Cerrar filtros">×</button>
                     <p class="filters-sidebar__title">Filtros</p>
 
                     <form id="formFiltros" method="GET" action="${pageContext.request.contextPath}/app/productos">
@@ -311,6 +333,7 @@
 
         <%-- Productos vía Fetch (Avance 4): el módulo sobreescribe aplicarFiltros() global. --%>
         <script type="module" src="${pageContext.request.contextPath}/assets/js/productos.js"></script>
+        <script type="module" src="${pageContext.request.contextPath}/assets/js/header-badge.js"></script>
 
         <script>
             // Navegar a otra página preservando todos los filtros activos
@@ -321,6 +344,27 @@
 
             document.getElementById('burgerBtn').addEventListener('click', () =>
                 document.getElementById('mobileNav').classList.toggle('is-open'));
+
+            // ── Toggle del drawer de filtros en mobile ─────────────────
+            const filtersToggle  = document.getElementById('filtersToggleBtn');
+            const filtersSidebar = document.getElementById('filtersSidebar');
+            const filtersOverlay = document.getElementById('filtersOverlay');
+            const filtersClose   = document.getElementById('filtersCloseBtn');
+            function abrirFiltros() {
+                filtersSidebar.classList.add('is-open');
+                filtersOverlay.classList.add('is-open');
+                filtersToggle.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            }
+            function cerrarFiltros() {
+                filtersSidebar.classList.remove('is-open');
+                filtersOverlay.classList.remove('is-open');
+                filtersToggle.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            }
+            if (filtersToggle)  filtersToggle.addEventListener('click', abrirFiltros);
+            if (filtersClose)   filtersClose.addEventListener('click', cerrarFiltros);
+            if (filtersOverlay) filtersOverlay.addEventListener('click', cerrarFiltros);
 
             // ── Aplicar filtros automáticamente al cambiar checkboxes ──
             function aplicarFiltros() {

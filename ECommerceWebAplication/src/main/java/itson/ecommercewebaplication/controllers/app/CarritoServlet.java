@@ -15,8 +15,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Controlador del carrito en su versión sin JavaScript (respaldo del flujo
+ * que normalmente maneja la API REST). Maneja dos escenarios: si el cliente
+ * está logueado, opera sobre el carrito persistente vía {@code CarritoBO};
+ * si es un invitado, trabaja sobre una lista guardada en la sesión. En ambos
+ * casos valida el stock disponible (por talla cuando aplica) antes de agregar
+ * o actualizar cantidades.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 @WebServlet(name = "CarritoServlet", urlPatterns = {"/app/carrito"})
 public class CarritoServlet extends HttpServlet {
@@ -209,6 +218,11 @@ public class CarritoServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Devuelve el stock disponible de un producto para la talla indicada.
+     * Si el producto maneja tallas, busca la cantidad de esa talla; si no,
+     * o si la talla es inválida, regresa el stock general del producto.
+     */
     private int obtenerStockDisponible(Producto producto, String tallaStr) {
         List<StockTalla> stockPorTalla = producto.getStockPorTalla();
         if (stockPorTalla != null && !stockPorTalla.isEmpty() && tallaStr != null) {

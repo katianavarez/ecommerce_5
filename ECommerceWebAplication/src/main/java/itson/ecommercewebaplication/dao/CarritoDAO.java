@@ -7,11 +7,22 @@ import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
 /**
+ * Acceso a datos del carrito persistente. La consulta principal trae el
+ * carrito de un usuario junto con sus detalles y los productos asociados
+ * en una sola query ({@code JOIN FETCH}), para evitar problemas de
+ * lazy-loading al usar el carrito fuera del EntityManager.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 public class CarritoDAO {
 
+    /**
+     * Trae el carrito del usuario con sus detalles y productos ya cargados.
+     * Devuelve null si el usuario todavía no tiene carrito en BD.
+     */
     public Carrito obtenerPorUsuario(int usuarioId) {
         EntityManager em = JPAUtil.getEntityManager();
         try {

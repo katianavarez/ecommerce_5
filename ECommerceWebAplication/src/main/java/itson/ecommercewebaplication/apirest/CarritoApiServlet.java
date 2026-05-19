@@ -12,8 +12,18 @@ import java.io.IOException;
 import java.util.*;
 
 /**
+ * Endpoint REST del carrito del cliente autenticado. Cubre POST (agregar),
+ * GET (ver carrito), PUT (cambiar cantidad) y DELETE (quitar un item o vaciar
+ * todo). Todas las operaciones requieren JWT y trabajan siempre sobre el
+ * carrito del usuario que viene en el token; al consultar por id ajeno
+ * responde 403 para evitar que alguien vea el carrito de otro. Tras cada
+ * cambio sincroniza el atributo de sesión que alimenta el contador del
+ * header en las páginas renderizadas por el servidor.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 @WebServlet(name = "CarritoApiServlet", urlPatterns = {"/api/carrito", "/api/carrito/*"})
 public class CarritoApiServlet extends HttpServlet {
@@ -37,19 +47,21 @@ public class CarritoApiServlet extends HttpServlet {
 
         try {
             Map<?, ?> body = JsonUtil.readBody(req, Map.class);
-            int productoId = ((Number) body.get("productoId")).intValue();
-            int cantidad = ((Number) body.get("cantidad")).intValue();
+            int productoId = asInt(body.get("productoId"));
+            int cantidad = asInt(body.get("cantidad"));
             String talla = body.get("talla") != null ? body.get("talla").toString() : null;
             if (talla != null && talla.isBlank()) {
                 talla = null;
             }
 
             Carrito carrito = carritoBO.agregarItem(usuario, productoId, cantidad, talla);
-            JsonUtil.ok(res, toMap(carrito));
-        } catch (IllegalArgumentException | NullPointerException e) {
-            JsonUtil.error(res, 400, "Body inválido. Campos requeridos: productoId, cantidad. Opcional: talla.");
+            actualizarSessionCarrito(req, carrito);
+            JsonUtil.created(res, toMap(carrito));
+        } catch (IllegalArgumentException | NullPointerException | ClassCastException e) {
+            JsonUtil.error(res, 400, "Body inválido. Campos requeridos: productoId (int), cantidad (int). Opcional: talla.");
         } catch (Exception e) {
-            JsonUtil.error(res, 500, e.getMessage());
+            e.printStackTrace();
+            JsonUtil.error(res, 500, "Error interno del servidor.");
         }
     }
 
@@ -85,7 +97,8 @@ public class CarritoApiServlet extends HttpServlet {
             }
             JsonUtil.ok(res, toMap(carrito));
         } catch (Exception e) {
-            JsonUtil.error(res, 500, e.getMessage());
+            e.printStackTrace();
+            JsonUtil.error(res, 500, "Error interno del servidor.");
         }
     }
 
@@ -103,7 +116,8 @@ public class CarritoApiServlet extends HttpServlet {
         try {
             if (pathInfo == null || pathInfo.equals("/")) {
                 carritoBO.vaciar(usuario);
-                JsonUtil.ok(res, Map.of("success", true, "message", "Carrito vaciado."));
+                actualizarSessionCarrito(req, null);
+                JsonUtil.noContent(res);
                 return;
             }
             String[] parts = pathInfo.split("/");
@@ -120,11 +134,15 @@ public class CarritoApiServlet extends HttpServlet {
                 }
             }
             carritoBO.eliminarItem(usuario, productoId, talla);
-            JsonUtil.ok(res, Map.of("success", true, "message", "Item eliminado del carrito."));
+            // Rehidratar session.carrito releyendo el carrito actualizado de BD.
+            Carrito tras = carritoBO.obtenerPorUsuario(usuario.getId());
+            actualizarSessionCarrito(req, tras);
+            JsonUtil.noContent(res);
         } catch (NumberFormatException e) {
             JsonUtil.error(res, 400, "productoId inválido.");
         } catch (Exception e) {
-            JsonUtil.error(res, 500, e.getMessage());
+            e.printStackTrace();
+            JsonUtil.error(res, 500, "Error interno del servidor.");
         }
     }
 
@@ -140,8 +158,8 @@ public class CarritoApiServlet extends HttpServlet {
 
         try {
             Map<?, ?> body = JsonUtil.readBody(req, Map.class);
-            int productoId = ((Number) body.get("productoId")).intValue();
-            int cantidad = ((Number) body.get("cantidad")).intValue();
+            int productoId = asInt(body.get("productoId"));
+            int cantidad = asInt(body.get("cantidad"));
             String talla = body.get("talla") != null ? body.get("talla").toString() : null;
             if (talla != null && talla.isBlank()) {
                 talla = null;
@@ -149,13 +167,38 @@ public class CarritoApiServlet extends HttpServlet {
 
             int cantidadNorm = Math.max(0, cantidad);
             Carrito carrito = carritoBO.actualizarCantidad(usuario, productoId, cantidadNorm, talla);
+            actualizarSessionCarrito(req, carrito);
             JsonUtil.ok(res, carrito != null ? toMap(carrito)
                     : Map.of("usuarioId", usuario.getId(), "items", List.of(), "total", 0.0));
-        } catch (IllegalArgumentException | NullPointerException e) {
-            JsonUtil.error(res, 400, "Body inválido. Campos requeridos: productoId, cantidad. Opcional: talla.");
+        } catch (IllegalArgumentException | NullPointerException | ClassCastException e) {
+            JsonUtil.error(res, 400, "Body inválido. Campos requeridos: productoId (int), cantidad (int). Opcional: talla.");
         } catch (Exception e) {
-            JsonUtil.error(res, 500, e.getMessage());
+            e.printStackTrace();
+            JsonUtil.error(res, 500, "Error interno del servidor.");
         }
+    }
+
+    /**
+     * Mantiene sincronizado el atributo {@code carrito} de la HttpSession con la BD
+     * después de cada mutación, para que el badge del header en las JSPs autenticadas
+     * refleje el estado real sin esperar a la próxima visita a /app/carrito.
+     */
+    private void actualizarSessionCarrito(HttpServletRequest req, Carrito carrito) {
+        HttpSession session = req.getSession(false);
+        if (session == null) {
+            return;
+        }
+        List<DetallePedido> items = (carrito != null && carrito.getDetalles() != null)
+                ? carrito.getDetalles()
+                : new ArrayList<>();
+        session.setAttribute("carrito", items);
+    }
+
+    /** Acepta Number o String numérico. Lanza IllegalArgumentException si llega null o no es numérico. */
+    private static int asInt(Object v) {
+        if (v == null) throw new IllegalArgumentException("valor requerido");
+        if (v instanceof Number) return ((Number) v).intValue();
+        return Integer.parseInt(v.toString().trim());
     }
 
     private Map<String, Object> toMap(Carrito c) {

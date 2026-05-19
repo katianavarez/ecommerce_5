@@ -1,9 +1,3 @@
-<%-- 
-    Document   : admin-clientes
-    Created on : 9 abr 2026, 4:19:23 a.m.
-    Author     : PC
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -145,7 +139,7 @@
                                                 <td>
                                                     <div style="display:flex;align-items:center;gap:var(--sp-3);">
                                                         <div style="width:36px;height:36px;border-radius:50%;background:var(--color-secondary-light);color:var(--color-secondary-hover);font-family:var(--font-display);font-size:var(--fs-md);font-weight:var(--fw-medium);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                                                            <c:out value="${cliente.nombre.substring(0,1).toUpperCase()}"/>
+                                                            <c:out value="${empty cliente.nombre ? '?' : cliente.nombre.substring(0,1).toUpperCase()}"/>
                                                         </div>
                                                         <p style="font-weight:var(--fw-medium);color:var(--text-heading);"><c:out value="${cliente.nombre}"/></p>
                                                     </div>
@@ -166,7 +160,8 @@
                                                     <c:choose>
                                                         <c:when test="${cliente.activo}">
                                                             <form method="POST" action="${pageContext.request.contextPath}/admin/clientes"
-                                                                  onsubmit="return confirm('¿Dar de baja al cliente ${cliente.nombre}?');" style="display:inline;">
+                                                                  data-nombre="<c:out value='${cliente.nombre}'/>"
+                                                                  onsubmit="return confirm('¿Dar de baja al cliente ' + (this.dataset.nombre || '') + '?');" style="display:inline;">
                                                                 <input type="hidden" name="accion" value="eliminar">
                                                                 <input type="hidden" name="id" value="${cliente.id}">
                                                                 <input type="hidden" name="filtro" value="${filtroActual}">
@@ -177,7 +172,8 @@
                                                         </c:when>
                                                         <c:otherwise>
                                                             <form method="POST" action="${pageContext.request.contextPath}/admin/clientes"
-                                                                  onsubmit="return confirm('¿Reactivar al cliente ${cliente.nombre}?');" style="display:inline;">
+                                                                  data-nombre="<c:out value='${cliente.nombre}'/>"
+                                                                  onsubmit="return confirm('¿Reactivar al cliente ' + (this.dataset.nombre || '') + '?');" style="display:inline;">
                                                                 <input type="hidden" name="accion" value="reactivar">
                                                                 <input type="hidden" name="id" value="${cliente.id}">
                                                                 <input type="hidden" name="filtro" value="${filtroActual}">

@@ -1,5 +1,5 @@
 /*
- * base.css — Reset y estilos globales — Velour
+ * base.css Reset y estilos globales 
  */
 
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap');
@@ -58,7 +58,7 @@ h1, h2, h3, h4, h5 {
     line-height: 1.2;
 }
 
-/* ─── UTILIDADES ─────────────────────────────────── */
+/*  UTILIDADES  */
 
 .container {
     width: 100%;
@@ -79,7 +79,7 @@ h1, h2, h3, h4, h5 {
     white-space: nowrap;
 }
 
-/* ─── BOTONES BASE ───────────────────────────────── */
+/*  BOTONES BASE */
 
 .btn {
     display: inline-flex;
@@ -156,7 +156,7 @@ h1, h2, h3, h4, h5 {
 .btn--lg { padding: var(--sp-4) var(--sp-10); font-size: var(--fs-md); }
 .btn--full { width: 100%; }
 
-/* ─── BADGES ─────────────────────────────────────── */
+/*  BADGES  */
 
 .badge {
     display: inline-flex;
@@ -178,7 +178,7 @@ h1, h2, h3, h4, h5 {
 .badge--sale       { background: var(--color-primary);       color: #fff; }
 .badge--new        { background: var(--color-secondary);     color: #fff; }
 
-/* ─── MENSAJES DE ESTADO ─────────────────────────── */
+/*  MENSAJES DE ESTADO  */
 
 .msg {
     display: flex;
@@ -194,7 +194,7 @@ h1, h2, h3, h4, h5 {
 .msg--warning { background: var(--color-warning-bg); color: var(--color-warning); border-color: var(--color-warning); }
 .msg--info    { background: var(--color-info-bg);    color: var(--color-info);    border-color: var(--color-info); }
 
-/* ─── FORMULARIOS ────────────────────────────────── */
+/*  FORMULARIOS  */
 
 .form-group {
     display: flex;
@@ -226,7 +226,7 @@ h1, h2, h3, h4, h5 {
 }
 .form-control::placeholder { color: var(--text-light); }
 
-/* ─── DIVISOR ─────────────────────────────────────── */
+/*  DIVISOR  */
 .divider {
     width: 100%;
     height: 1px;
@@ -234,7 +234,7 @@ h1, h2, h3, h4, h5 {
     border: none;
 }
 
-/* ─── ESTRELLAS ──────────────────────────────────── */
+/* ESTRELLAS  */
 .stars {
     display: inline-flex;
     gap: 2px;
@@ -242,7 +242,7 @@ h1, h2, h3, h4, h5 {
     font-size: var(--fs-sm);
 }
 
-/* ─── SECTION HEADER ─────────────────────────────── */
+/*  SECTION HEADER  */
 .section-header {
     text-align: center;
     margin-bottom: var(--sp-10);
@@ -269,7 +269,7 @@ h1, h2, h3, h4, h5 {
     margin-right: auto;
 }
 
-/* ─── CARD PRODUCTO ──────────────────────────────── */
+/*  CARD PRODUCTO  */
 .product-card {
     background: var(--bg-card);
     border-radius: var(--r-md);
@@ -334,7 +334,7 @@ h1, h2, h3, h4, h5 {
     text-decoration: line-through;
 }
 
-/* ─── PAGINACIÓN ─────────────────────────────────── */
+/*  PAGINACIÓN  */
 .pagination {
     display: flex;
     justify-content: center;

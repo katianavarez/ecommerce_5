@@ -1,9 +1,3 @@
-<%-- 
-    Document   : checkout
-    Created on : 9 abr 2026, 4:12:38 a.m.
-    Author     : PC
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -12,6 +6,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <%@ include file="/WEB-INF/jspf/jwt-meta.jspf" %>
         <title>Checkout — Velour</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/styles/variables.css"/>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/styles/base.css"/>
@@ -34,7 +29,9 @@
 
         <main>
             <div class="checkout-layout">
-                <form id="checkoutForm" class="checkout-form" method="POST" action="${pageContext.request.contextPath}/app/checkout">
+                <%-- Form sin action/method: el envío lo gestiona 100% checkout.js
+                     mediante POST /api/pedidos (Fetch). CheckoutServlet ya no expone doPost. --%>
+                <form id="checkoutForm" class="checkout-form" onsubmit="return false;">
 
                     <c:if test="${not empty error}">
                         <div style="background:#f8d7da;border:1px solid #f5c6cb;color:#721c24;padding:var(--sp-3) var(--sp-4);border-radius:var(--r-md);margin-bottom:var(--sp-4);">

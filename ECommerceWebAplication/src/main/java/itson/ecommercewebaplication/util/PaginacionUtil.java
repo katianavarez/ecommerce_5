@@ -4,8 +4,19 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * Utilidad para aplicar paginación a una lista en memoria
- * y configurar los atributos del request necesarios para el JSP.
+ * Pagina una lista ya cargada en memoria y deja en el request los
+ * atributos que las JSP del panel admin esperan para pintar la barra de
+ * navegación: la sublista de la página actual, el número de página, el
+ * total de páginas y el total de registros.
+ * 
+ * Se usa cuando los listados del admin son lo suficientemente chicos
+ * como para no necesitar paginar en SQL. Si en el futuro las tablas
+ * crecieran, habría que mover la paginación al nivel del DAO.
+ *
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 public class PaginacionUtil {
 

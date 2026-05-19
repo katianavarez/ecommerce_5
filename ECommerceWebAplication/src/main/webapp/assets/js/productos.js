@@ -59,12 +59,62 @@ async function aplicarFiltrosFetch() {
         const data = await apiGet('/productos', {query, auth: false});
         renderizarGrid(data.productos || []);
         actualizarTitulo(query.busqueda);
+        actualizarContador(data.total || 0, data.page || 1, data.size || PAGE_SIZE);
+        renderPaginacion(data.totalPaginas || 1, data.page || 1);
         actualizarUrl(params);
     } catch (err) {
         showError(err.message || 'No se pudo cargar el catálogo.');
     } finally {
         grid.style.opacity = '1';
     }
+}
+
+function actualizarContador(total, page, size) {
+    if (!contadorMostrando) return;
+    if (total === 0) {
+        contadorMostrando.innerHTML = '';
+        return;
+    }
+    const desde = (page - 1) * size + 1;
+    const hasta = Math.min(page * size, total);
+    contadorMostrando.innerHTML =
+        `Mostrando <strong>${desde}–${hasta}</strong> de <strong>${total}</strong> productos`;
+}
+
+function renderPaginacion(totalPaginas, paginaActualNum) {
+    const nav = document.querySelector('nav.pagination');
+    if (!nav) return;
+
+    if (totalPaginas <= 1) {
+        nav.style.display = 'none';
+        return;
+    }
+    nav.style.display = '';
+
+    const partes = [];
+    if (paginaActualNum > 1) {
+        partes.push(`<button type="button" class="pagination__btn" data-page="${paginaActualNum - 1}">‹</button>`);
+    }
+    for (let i = 1; i <= totalPaginas; i++) {
+        if (i === paginaActualNum) {
+            partes.push(`<a class="pagination__btn pagination__btn--active" href="#">${i}</a>`);
+        } else if (i === 1 || i === totalPaginas || (i >= paginaActualNum - 1 && i <= paginaActualNum + 1)) {
+            partes.push(`<button type="button" class="pagination__btn" data-page="${i}">${i}</button>`);
+        } else if (i === paginaActualNum - 2 || i === paginaActualNum + 2) {
+            partes.push(`<span style="display:inline-flex;align-items:center;justify-content:center;width:2.25rem;height:2.25rem;font-size:var(--fs-sm);color:var(--text-muted);">…</span>`);
+        }
+    }
+    if (paginaActualNum < totalPaginas) {
+        partes.push(`<button type="button" class="pagination__btn" data-page="${paginaActualNum + 1}">›</button>`);
+    }
+    nav.innerHTML = partes.join('');
+
+    nav.querySelectorAll('button[data-page]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            paginaActual = parseInt(btn.dataset.page, 10);
+            aplicarFiltrosFetch();
+        });
+    });
 }
 
 function renderizarGrid(productos) {
@@ -109,6 +159,13 @@ function actualizarUrl(params) {
 }
 
 window.aplicarFiltros = aplicarFiltrosFetch;
+
+// Sobreescribir irAPagina (definida inline en productos.jsp para fallback no-JS)
+// para que use Fetch en lugar de submit del form de paginación.
+window.irAPagina = function (num) {
+    paginaActual = num;
+    aplicarFiltrosFetch();
+};
 
 if (formBusqueda) {
     formBusqueda.addEventListener('submit', (e) => {

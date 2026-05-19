@@ -8,6 +8,18 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 
+/**
+ * Controlador del CRUD de proveedores en el panel admin. Enruta el alta,
+ * edición, archivado (baja lógica) y reactivación, armando el {@link Proveedor}
+ * desde el formulario y delegando las validaciones (RFC, correo, campos
+ * obligatorios) en {@code ProveedorBO}. Si el guardado falla, vuelve a
+ * mostrar el formulario con los datos capturados y el mensaje de error.
+ *
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
+ */
 @WebServlet(name = "ProveedorAdminServlet", urlPatterns = {"/admin/proveedores"})
 public class ProveedorAdminServlet extends HttpServlet {
 

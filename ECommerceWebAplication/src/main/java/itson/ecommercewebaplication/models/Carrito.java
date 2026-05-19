@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package itson.ecommercewebaplication.models;
 
 import jakarta.persistence.CascadeType;
@@ -16,6 +12,20 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.util.List;
 
+/**
+ * Carrito persistente asociado a un usuario logueado. Cada cliente tiene
+ * un único carrito en BD que sobrevive entre sesiones, separado del
+ * carrito en localStorage que usan los visitantes invitados.
+ * 
+ * Los items se modelan con {@link DetallePedido} (la misma entidad que
+ * se reutiliza al confirmar la compra), pero conviven con un FK distinto
+ * ({@code carrito_id}) que se queda en null una vez el pedido se concreta.
+ *
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
+ */
 @Entity
 @Table(name = "carritos")
 public class Carrito{

@@ -1,8 +1,8 @@
 /*
- * admin.css — Panel Administrador — Velour
+ * admin.css  Panel Administrador 
  */
 
-/* ─── LAYOUT ADMIN ───────────────────────────────── */
+/*  LAYOUT ADMIN  */
 
 .admin-layout {
     display: grid;
@@ -11,7 +11,7 @@
     align-items: start;
 }
 
-/* ─── SIDEBAR ADMIN ──────────────────────────────── */
+/*  SIDEBAR ADMIN  */
 
 .admin-sidebar {
     background: var(--color-primary);
@@ -130,7 +130,7 @@
 
 .admin-sidebar__logout:hover { color: var(--color-error-bg); }
 
-/* ─── BOTÓN HAMBURGUESA ADMIN ────────────────────── */
+/*  BOTÓN HAMBURGUESA ADMIN  */
 
 .admin-menu-toggle {
     display: none;
@@ -163,7 +163,7 @@
 }
 .admin-overlay.is-open { display: block; }
 
-/* ─── BADGE "Panel de administración" ────────────── */
+/*  BADGE "Panel de administración"  */
 
 .admin-header-badge {
     font-size: var(--fs-xs);
@@ -177,7 +177,7 @@
     white-space: nowrap;
 }
 
-/* ─── CONTENIDO ADMIN ────────────────────────────── */
+/*  CONTENIDO ADMIN  */
 
 .admin-content {
     background: var(--bg-base);
@@ -219,7 +219,7 @@
 
 .admin-body { padding: var(--sp-8); }
 
-/* ─── KPI CARDS ──────────────────────────────────── */
+/*  KPI CARDS */
 
 .kpi-grid {
     display: grid;
@@ -281,7 +281,7 @@
 .kpi-card__change--up   { color: var(--color-success); }
 .kpi-card__change--down { color: var(--color-error); }
 
-/* ─── TABLA ADMIN ────────────────────────────────── */
+/*  TABLA ADMIN  */
 
 .admin-table-wrap {
     background: var(--bg-surface);
@@ -431,7 +431,7 @@
 .admin-action-btn--danger:hover { border-color: var(--color-error); color: var(--color-error); }
 .admin-action-btn svg { width: 14px; height: 14px; }
 
-/* ─── DOS COLUMNAS ───────────────────────────────── */
+/*  DOS COLUMNAS  */
 
 .admin-two-col {
     display: grid;
@@ -440,7 +440,7 @@
     align-items: start;
 }
 
-/* ─── CARD GENÉRICA ──────────────────────────────── */
+/*  CARD GENÉRICA  */
 
 .admin-card {
     background: var(--bg-surface);
@@ -467,7 +467,7 @@
 
 .admin-card__body { padding: var(--sp-6); }
 
-/* ─── RESEÑAS ────────────────────────────────────── */
+/*  RESEÑAS  */
 
 .review-admin-card {
     background: var(--bg-surface);
@@ -527,7 +527,7 @@
     gap: var(--sp-3);
 }
 
-/* ─── VACÍO ──────────────────────────────────────── */
+/*  VACÍO  */
 
 .admin-empty {
     text-align: center;
@@ -543,7 +543,7 @@
     color: var(--text-heading);
 }
 
-/* ─── TABS ADMIN ─────────────────────────────────── */
+/*  TABS ADMIN  */
 
 .admin-tabs {
     display: flex;
@@ -575,7 +575,7 @@
 .admin-tab:hover { color: var(--text-heading); }
 .admin-tab--active { color: var(--color-primary); border-bottom-color: var(--color-secondary); }
 
-/* ─── FORM PRODUCTO ──────────────────────────────── */
+/*  FORM PRODUCTO */
 
 .product-form {
     display: flex;
@@ -622,11 +622,11 @@
     cursor: pointer;
 }
 
-/* ══════════════════════════════════════════════════
+/* 
    RESPONSIVE — ADMIN
-   ══════════════════════════════════════════════════ */
+*/
 
-/* ─── TABLET (769px – 1024px) ────────────────────── */
+/*  TABLET (769px – 1024px)  */
 
 @media (min-width: 769px) and (max-width: 1024px) {
 
@@ -659,7 +659,7 @@
     .admin-search__input { width: 130px; }
 }
 
-/* ─── MOBILE (≤ 768px) ───────────────────────────── */
+/*  MOBILE (≤ 768px)  */
 
 @media (max-width: 768px) {
 

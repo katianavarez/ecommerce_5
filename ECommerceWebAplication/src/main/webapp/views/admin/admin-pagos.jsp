@@ -1,8 +1,3 @@
-<%--
-    Document   : admin-pagos
-    Author     : PC
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -131,7 +126,7 @@
                                 <div class="admin-search">
                                     <input class="admin-search__input" type="search"
                                            name="busqueda" placeholder="Buscar por # pedido o cliente..."
-                                           value="${busquedaActual}">
+                                           value="<c:out value='${busquedaActual}'/>">
                                     <button class="admin-search__btn" type="submit">
                                         <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
                                     </button>

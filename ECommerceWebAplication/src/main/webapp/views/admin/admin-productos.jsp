@@ -1,9 +1,3 @@
-<%-- 
-    Document   : admin-productos
-    Created on : 9 abr 2026, 4:39:21 a.m.
-    Author     : PC
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -141,7 +135,7 @@
                                 <div class="admin-search">
                                     <input class="admin-search__input" type="search"
                                            name="busqueda" placeholder="Buscar producto..."
-                                           value="${busquedaActual}">
+                                           value="<c:out value='${busquedaActual}'/>">
                                     <button class="admin-search__btn" type="submit">
                                         <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
                                     </button>
@@ -173,7 +167,9 @@
                                             <tr style="${not prod.activo ? 'opacity:0.55;' : ''}">
                                                 <td>
                                                     <div class="admin-table__product">
-                                                        <img class="admin-table__img" src="${prod.imagenURL.startsWith('http') ? prod.imagenURL : pageContext.request.contextPath.concat('/').concat(prod.imagenURL)}" alt="${prod.nombre}">
+                                                        <c:set var="imgSrc" value="${empty prod.imagenURL ? pageContext.request.contextPath.concat('/assets/img/categoria/default.png') : (prod.imagenURL.startsWith('http') ? prod.imagenURL : pageContext.request.contextPath.concat('/').concat(prod.imagenURL))}"/>
+                                                        <img class="admin-table__img" src="<c:out value='${imgSrc}'/>" alt="<c:out value='${prod.nombre}'/>"
+                                                             onerror="this.src='${pageContext.request.contextPath}/assets/img/categoria/default.png';this.onerror=null;">
                                                         <div>
                                                             <p class="admin-table__name"><c:out value="${prod.nombre}"/>
                                                                 <c:if test="${not prod.activo}">
@@ -198,7 +194,8 @@
                                                                     <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                                                 </a>
                                                                 <form method="POST" action="${pageContext.request.contextPath}/admin/productos" style="display:inline;"
-                                                                      onsubmit="return confirm('¿Archivar «${prod.nombre}»? El producto dejará de aparecer en el catálogo pero el historial de pedidos se conserva.');">
+                                                                      data-nombre="<c:out value='${prod.nombre}'/>"
+                                                                      onsubmit="return confirm('¿Archivar «' + (this.dataset.nombre || '') + '»? El producto dejará de aparecer en el catálogo pero el historial de pedidos se conserva.');">
                                                                     <input type="hidden" name="accion" value="eliminar">
                                                                     <input type="hidden" name="id" value="${prod.id}">
                                                                     <button type="submit" class="admin-action-btn admin-action-btn--danger" title="Archivar">
@@ -209,7 +206,8 @@
                                                             <c:otherwise>
                                                                 <%-- Archivado: solo botón reactivar --%>
                                                                 <form method="POST" action="${pageContext.request.contextPath}/admin/productos" style="display:inline;"
-                                                                      onsubmit="return confirm('¿Reactivar «${prod.nombre}»? Volverá a aparecer en el catálogo.');">
+                                                                      data-nombre="<c:out value='${prod.nombre}'/>"
+                                                                      onsubmit="return confirm('¿Reactivar «' + (this.dataset.nombre || '') + '»? Volverá a aparecer en el catálogo.');">
                                                                     <input type="hidden" name="accion" value="reactivar">
                                                                     <input type="hidden" name="id" value="${prod.id}">
                                                                     <button type="submit" class="admin-action-btn" title="Reactivar"

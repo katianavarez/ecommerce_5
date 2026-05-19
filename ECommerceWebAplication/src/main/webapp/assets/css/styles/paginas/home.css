@@ -1,8 +1,8 @@
 /*
- * home.css — Página principal — Velour
+ * home.css Página principal 
  */
 
-/* ─── HERO ───────────────────────────────────────── */
+/*  HERO  */
 
 .hero {
     position: relative;
@@ -88,7 +88,7 @@
     flex-wrap: wrap;
 }
 
-/* ─── CATEGORÍAS DESTACADAS ──────────────────────── */
+/*  CATEGORÍAS DESTACADAS  */
 
 .categories-section {
     padding: var(--sp-20) 0;
@@ -146,7 +146,7 @@
     text-transform: uppercase;
 }
 
-/* ─── PRODUCTOS DESTACADOS ───────────────────────── */
+/*  PRODUCTOS DESTACADOS  */
 
 .featured-section {
     padding: var(--sp-20) 0;
@@ -163,7 +163,7 @@
     grid-template-columns: repeat(3, 1fr);
 }
 
-/* ─── BANNER PROMO ───────────────────────────────── */
+/*  BANNER PROMO  */
 
 .promo-banner {
     background: var(--color-secondary-light);
@@ -206,7 +206,7 @@
     flex-shrink: 0;
 }
 
-/* ─── NEWSLETTER ─────────────────────────────────── */
+/*  NEWSLETTER  */
 
 .newsletter-section {
     background: var(--color-primary);
@@ -231,7 +231,7 @@
 .newsletter-form .form-control::placeholder { color: rgba(255,255,255,0.40); }
 .newsletter-form .form-control:focus { border-color: var(--color-secondary); }
 
-/* ─── RESPONSIVE ─────────────────────────────────── */
+/*  RESPONSIVE  */
 
 /* Tablet (769px – 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {
@@ -252,10 +252,6 @@
 
     .categories-section, .featured-section { padding: var(--sp-16) 0; }
 }
-    .products-grid { grid-template-columns: repeat(3, 1fr); }
-    .categories-grid { grid-template-columns: repeat(2, 1fr); }
-    .cat-card--wide { aspect-ratio: unset; min-height: 200px; }
-
 
 @media (max-width: 768px) {
     .hero { min-height: 100svh; }

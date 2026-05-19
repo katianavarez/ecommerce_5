@@ -268,7 +268,23 @@
       "name": "Pedidos",
       "item": [
         {
-          "name": "CrearPedido",
+          "name": "CrearPedido (TARJETA)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"calle\": \"Villa ITSON 123\",\n  \"ciudad\": \"Cd. Obregón\",\n  \"estado\": \"Sonora\",\n  \"codigoPostal\": \"85000\",\n  \"metodoPago\": \"TARJETA\",\n  \"numTarjeta\": \"4111111111111111\",\n  \"vencimiento\": \"12/28\",\n  \"cvv\": \"123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/pedidos",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "pedidos"]
+            }
+          }
+        },
+        {
+          "name": "CrearPedido (TRANSFERENCIA)",
           "request": {
             "method": "POST",
             "header": [{ "key": "Content-Type", "value": "application/json" }],
@@ -302,6 +318,17 @@
               "raw": "{{baseUrl}}/api/pedidos/usuario/{{usuarioId}}",
               "host": ["{{baseUrl}}"],
               "path": ["api", "pedidos", "usuario", "{{usuarioId}}"]
+            }
+          }
+        },
+        {
+          "name": "CancelarPedido",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/pedidos/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "pedidos", "1"]
             }
           }
         }
@@ -342,6 +369,17 @@
     {
       "name": "Perfil",
       "item": [
+        {
+          "name": "VerPerfil",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios/{{usuarioId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "usuarios", "{{usuarioId}}"]
+            }
+          }
+        },
         {
           "name": "EditarPerfil",
           "request": {

@@ -1,8 +1,8 @@
 /*
- * auth.css — Login, Registro, Cuenta — Velour
+ * auth.css Login, Registro, Cuenta
  */
 
-/* ─── AUTH LAYOUT ─────────────────────────────────── */
+/*  AUTH LAYOUT  */
 
 .auth-page {
     min-height: calc(100svh - 70px);
@@ -116,7 +116,7 @@
     text-underline-offset: 2px;
 }
 
-/* ─── CUENTA / PERFIL ─────────────────────────────── */
+/* CUENTA / PERFIL  */
 
 .account-layout {
     max-width: var(--container-lg);
@@ -228,7 +228,7 @@
 }
 .order-total { font-weight: var(--fw-semibold); }
 
-/* ─── RESPONSIVE ─────────────────────────────────── */
+/*  RESPONSIVE  */
 
 /* Tablet (769px – 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {

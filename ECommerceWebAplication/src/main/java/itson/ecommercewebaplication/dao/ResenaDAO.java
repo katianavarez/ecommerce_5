@@ -7,8 +7,15 @@ import jakarta.persistence.TypedQuery;
 import java.util.List;
 
 /**
+ * Acceso a datos de reseñas. Resuelve tanto las consultas del cliente
+ * (reseñas de un producto, reseñas propias, promedio) como las del admin
+ * para moderación, y los conteos que sirven para aplicar la regla de una
+ * sola reseña por usuario y producto.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 public class ResenaDAO {
 
@@ -94,6 +101,7 @@ public class ResenaDAO {
         }
     }
 
+    /** Borrado físico de una reseña. Lo usa el admin al moderar contenido inapropiado. */
     public void eliminar(int id) {
         EntityManager em = JPAUtil.getEntityManager();
         try {

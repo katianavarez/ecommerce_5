@@ -1,9 +1,3 @@
-<%-- 
-    Document   : confirmacion
-    Created on : 9 abr 2026, 4:12:45 a.m.
-    Author     : PC
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -34,9 +28,12 @@
                 <p class="confirm-order-id">Pedido #<c:out value="${pedido.numPedido}"/></p>
                 <h1 class="confirm-title">¡Gracias por tu compra!</h1>
                 <p class="confirm-text">
-                    Recibirás un correo de confirmación en
+                    Se envió una notificación de confirmación a
                     <strong><c:out value="${pedido.usuario.correo}"/></strong>
                     con todos los detalles.
+                </p>
+                <p class="confirm-text" style="font-size:var(--fs-xs);color:var(--text-muted);margin-top:var(--sp-2);">
+                    (En este entorno de prueba la notificación se imprime en la consola del servidor en lugar de enviarse por SMTP.)
                 </p>
 
                 <c:set var="subtotalPedido" value="0"/>

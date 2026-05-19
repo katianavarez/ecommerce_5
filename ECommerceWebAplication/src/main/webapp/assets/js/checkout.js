@@ -22,6 +22,18 @@ if (form) {
             return;
         }
 
+        // Cuerpo base + datos de tarjeta cuando aplica. El backend valida server-side
+        // (PedidosApiServlet) para que un POST directo no salte la validación del front.
+        const body = { calle, ciudad, estado, codigoPostal, metodoPago };
+        if (metodoPago === 'TARJETA') {
+            const numTarjeta = (document.getElementById('numTarjeta')?.value || '').replace(/\s/g, '');
+            const vencimiento = document.getElementById('vencimiento')?.value || '';
+            const cvv = document.getElementById('cvv')?.value || '';
+            body.numTarjeta = numTarjeta;
+            body.vencimiento = vencimiento;
+            body.cvv = cvv;
+        }
+
         const confirmBtn = document.querySelector('.order-summary .btn--gold');
         const originalText = confirmBtn ? confirmBtn.textContent : '';
         if (confirmBtn) {
@@ -30,9 +42,7 @@ if (form) {
         }
 
         try {
-            const pedido = await apiPost('/pedidos', {
-                calle, ciudad, estado, codigoPostal, metodoPago
-            });
+            const pedido = await apiPost('/pedidos', body);
             const id = pedido && pedido.id != null ? pedido.id : '';
             window.location.assign(`${ctxPath('/app/confirmacion')}?pedidoId=${id}`);
         } catch (err) {

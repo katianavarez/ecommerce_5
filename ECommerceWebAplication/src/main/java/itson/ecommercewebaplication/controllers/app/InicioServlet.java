@@ -14,8 +14,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Controlador de la página de inicio de la tienda. Prepara lo que se muestra
+ * en la portada: las categorías con su conteo de productos y una sección de
+ * destacados con los 4 productos más vendidos (o los 4 más recientes si aún
+ * no hay ventas). Si algo falla, deja listas vacías para que la home cargue
+ * igual.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 @WebServlet(name = "InicioServlet", urlPatterns = {"/", "/inicio"})
 public class InicioServlet extends HttpServlet {

@@ -7,8 +7,15 @@ import jakarta.persistence.TypedQuery;
 import java.util.List;
 
 /**
+ * Acceso a datos de direcciones de envío. Permite listar las direcciones
+ * de un usuario (la principal primero) y garantiza, mediante
+ * {@link #marcarPrincipal(int, int)}, que solo una quede marcada como
+ * principal por usuario.
  *
- * @author PC
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
  */
 public class DireccionDAO {
 

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package itson.ecommercewebaplication.models;
 
 import jakarta.persistence.Column;
@@ -14,8 +10,22 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 
+/**
+ * Reseña que un cliente deja sobre un producto comprado. Lleva una
+ * calificación de 1 a 5 estrellas, un comentario libre y la fecha en que
+ * se escribió. La regla del negocio permite solo una reseña por (usuario,
+ * producto), y exige que el usuario haya comprado el producto antes.
+ * 
+ * El nombre de la tabla es {@code resenias} (sin ñ) por compatibilidad
+ * de charset entre distintas instalaciones de MySQL.
+ *
+ * @author Hector Javier Alonso Zaragoza
+ * @author Freddy Ali Castro Roman
+ * @author Katia Ximena Navarez Espinoza
+ * @author Alejandro Rodriguez Lugo
+ */
 @Entity
-@Table(name = "reseñas")
+@Table(name = "resenias")
 public class Resenia {
 
     @Id

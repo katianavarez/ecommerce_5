@@ -1,13 +1,18 @@
 import { apiPost, ctxPath } from './api.js';
-import { setSession, isLogged } from './auth.js';
+import { setSession, isLogged, clearSession } from './auth.js';
 import { volcarABackend } from './cart-storage.js';
 import { showError } from './ui.js';
 
 const form = document.getElementById('loginForm');
 
 if (form) {
+    // Si la JSP de login se renderizó, server-side ya confirmó que NO hay sesión
+    // Java activa (LoginClienteServlet.doGet redirige a productos si la hay).
+    // Cualquier token JWT residual en localStorage está desincronizado y hay
+    // que limpiarlo — si no, login.js redirigiría a productos y el JSP volvería
+    // a mandar al login (loop infinito).
     if (isLogged()) {
-        window.location.replace(ctxPath('/app/productos'));
+        clearSession();
     }
 
     const errorBox = document.getElementById('loginError');
