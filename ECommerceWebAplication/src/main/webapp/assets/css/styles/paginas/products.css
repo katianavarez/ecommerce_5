@@ -1,0 +1,319 @@
+/*
+ * products.css Catálogo de productos 
+ */
+
+.shop-layout {
+    max-width: var(--container-xl);
+    margin: 0 auto;
+    padding: var(--sp-10) var(--sp-6);
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--sp-10);
+    align-items: start;
+}
+
+/*  SIDEBAR FILTROS  */
+
+.filters-sidebar {
+    position: sticky;
+    top: calc(70px + var(--sp-6));
+    background: var(--bg-surface);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--r-lg);
+    padding: var(--sp-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-6);
+}
+
+.filters-sidebar__title {
+    font-size: var(--fs-xs);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: var(--fw-medium);
+    padding-bottom: var(--sp-4);
+    border-bottom: 1px solid var(--border-soft);
+}
+
+.filter-group__label {
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-medium);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-heading);
+    margin-bottom: var(--sp-4);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+}
+.filter-option {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    font-size: var(--fs-sm);
+    color: var(--text-body);
+    cursor: pointer;
+}
+.filter-option input[type="checkbox"] {
+    width: 15px; height: 15px;
+    border: 1.5px solid var(--border-medium);
+    border-radius: var(--r-sm);
+    accent-color: var(--color-secondary);
+}
+
+.filter-colors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+}
+.color-swatch {
+    width: 24px; height: 24px;
+    border-radius: var(--r-full);
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color var(--t-fast), transform var(--t-fast);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+}
+.color-swatch:hover, .color-swatch--active {
+    border-color: var(--color-secondary);
+    transform: scale(1.15);
+}
+
+.price-range {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+}
+.price-range input[type="range"] {
+    width: 100%;
+    accent-color: var(--color-secondary);
+}
+.price-range__labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--fs-xs);
+    color: var(--text-muted);
+}
+
+/*  ÁREA PRINCIPAL  */
+
+.shop-main {}
+
+.shop-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--sp-6);
+    padding-bottom: var(--sp-4);
+    border-bottom: 1px solid var(--border-soft);
+    gap: var(--sp-4);
+    flex-wrap: wrap;
+}
+
+.shop-breadcrumb {
+    font-size: var(--fs-xs);
+    color: var(--text-muted);
+    display: flex;
+    gap: var(--sp-2);
+    align-items: center;
+    letter-spacing: 0.05em;
+}
+.shop-breadcrumb a { transition: color var(--t-fast); }
+.shop-breadcrumb a:hover { color: var(--color-secondary); }
+.shop-breadcrumb__sep { color: var(--text-light); }
+
+.shop-title {
+    font-family: var(--font-display);
+    font-size: var(--fs-3xl);
+    font-weight: var(--fw-light);
+}
+
+.shop-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-5);
+}
+.shop-count {
+    font-size: var(--fs-sm);
+    color: var(--text-muted);
+}
+.shop-sort {
+    padding: var(--sp-2) var(--sp-4);
+    border: 1.5px solid var(--border-soft);
+    border-radius: var(--r-sm);
+    background: var(--bg-input);
+    font-size: var(--fs-sm);
+    color: var(--text-body);
+    cursor: pointer;
+}
+.shop-sort:focus { outline: none; border-color: var(--color-secondary); }
+
+/* Tags activos */
+.active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    margin-bottom: var(--sp-5);
+}
+.filter-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    padding: var(--sp-1) var(--sp-3);
+    background: var(--color-secondary-light);
+    border: 1px solid var(--color-secondary);
+    border-radius: var(--r-full);
+    font-size: var(--fs-xs);
+    color: var(--color-secondary-hover);
+}
+.filter-tag__remove {
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+/*  BARRA MOBILE (búsqueda + botón filtros)  */
+/* Oculta por default; visible solo en mobile vía media query. */
+.shop-mobile-bar { display: none; }
+.filters-sidebar__close { display: none; }
+.filters-overlay { display: none; }
+
+/*  RESPONSIVE  */
+
+/* Tablet (769px – 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .shop-layout {
+        grid-template-columns: 200px 1fr;
+        gap: var(--sp-5);
+        padding: var(--sp-6) var(--sp-5);
+    }
+
+    .filters-sidebar {
+        top: calc(57px + var(--sp-4));
+    }
+
+    .shop-title { font-size: var(--fs-2xl); }
+
+    .shop-controls { flex-wrap: wrap; gap: var(--sp-2); }
+
+    .products-grid--3 { grid-template-columns: repeat(2, 1fr); gap: var(--sp-4); }
+}
+
+@media (max-width: 1024px) {
+    .shop-layout { grid-template-columns: 220px 1fr; gap: var(--sp-6); }
+}
+
+@media (max-width: 768px) {
+    .shop-layout { grid-template-columns: 1fr; padding: var(--sp-4); }
+
+    /* Barra mobile: search + botón filtros encima del grid. */
+    .shop-mobile-bar {
+        display: flex;
+        gap: var(--sp-2);
+        margin-bottom: var(--sp-5);
+        align-items: stretch;
+    }
+    .shop-mobile-search {
+        flex: 1;
+        display: flex;
+        align-items: stretch;
+        background: var(--bg-input);
+        border: 1.5px solid var(--border-soft);
+        border-radius: var(--r-sm);
+        overflow: hidden;
+    }
+    .shop-mobile-search input {
+        flex: 1;
+        border: none;
+        outline: none;
+        background: transparent;
+        padding: 0 var(--sp-3);
+        font-size: var(--fs-sm);
+        color: var(--text-body);
+        min-width: 0; /* permite que el input se encoja en flex */
+    }
+    .shop-mobile-search button {
+        background: transparent;
+        border: none;
+        padding: 0 var(--sp-3);
+        color: var(--text-muted);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+    }
+    .shop-filter-toggle {
+        background: var(--color-secondary);
+        color: white;
+        border: none;
+        padding: 0 var(--sp-4);
+        border-radius: var(--r-sm);
+        font-size: var(--fs-sm);
+        font-weight: var(--fw-medium);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: var(--sp-2);
+        white-space: nowrap;
+    }
+
+    /* Sidebar como drawer desde la izquierda. */
+    .filters-sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 85%;
+        max-width: 320px;
+        height: 100vh;
+        height: 100dvh; /* en navegadores que soportan, evita gap por barra URL */
+        z-index: 1001;
+        background: var(--bg-base);
+        border: none;
+        border-radius: 0;
+        padding: var(--sp-8) var(--sp-5) var(--sp-5);
+        overflow-y: auto;
+        transition: left var(--t-base);
+        box-shadow: 4px 0 16px rgba(0,0,0,0.15);
+        display: flex; /* override del display:none de antes */
+    }
+    .filters-sidebar.is-open {
+        left: 0;
+    }
+
+    .filters-sidebar__close {
+        display: block;
+        position: absolute;
+        top: var(--sp-3);
+        right: var(--sp-3);
+        background: transparent;
+        border: none;
+        font-size: 28px;
+        line-height: 1;
+        cursor: pointer;
+        color: var(--text-muted);
+        padding: 4px 8px;
+    }
+
+    .filters-overlay {
+        display: block;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 1000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--t-base);
+    }
+    .filters-overlay.is-open {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}

@@ -1,0 +1,9 @@
+<%-- Meta tags para hidratar localStorage con el JWT que el servlet generó al iniciar
+     sesión. auth.js los lee al cargar y guarda el token para que el resto del JS
+     pueda llamar a la API REST con Authorization: Bearer. --%>
+<c:if test="${not empty sessionScope.jwtToken}">
+    <meta name="jwt-token"      content="<c:out value='${sessionScope.jwtToken}'/>">
+    <meta name="jwt-usuario-id" content="${sessionScope.jwtUsuarioId}">
+    <meta name="jwt-nombre"     content="<c:out value='${sessionScope.jwtNombre}'/>">
+    <meta name="jwt-rol"        content="<c:out value='${sessionScope.jwtRol}'/>">
+</c:if>
